@@ -1,23 +1,30 @@
 import { Route, Routes } from "react-router";
-import { lazy, Suspense, useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Loading from "./components/loading/Loading";
-import ViewCartPage from "./pages/viewCartPage/ViewCartPage";
-import WishlistPage from "./pages/wishlistPage/WishListPage";
-import ProtectedRoute from "./utils/ProtectedRoute";
-import ApiLoader from "./components/loading/ApiLoader";
-import AdminLayout from "./components/admin/AdminLayout";
-import AdminProductPage from "./pages/adminProductPage/AdminProductPage";
-import AdminCreateFormPage from "./pages/adminCreateForm/AdminCreateFormPage";
+import { lazy, Suspense } from "react";
 import AdminProtectedRoute from "./utils/AdminProtectedRoute";
-import NotFound from "./pages/notFound/NotfoundPage";
+import ProtectedRoute from "./utils/ProtectedRoute";
+import Loading from "./components/loading/Loading";
+import ApiLoader from "./components/loading/ApiLoader";
+import HelpPage from "./pages/helpPage/jewelryCareGuidePage";
 const Layout = lazy(() => import("./layout/Layout"));
 const ShopPage = lazy(() => import("./pages/shopPage/ShopPage"));
 const HomePage = lazy(() => import("./pages/home/Home"));
 const ProductDetailsPage = lazy(() =>import("./pages/productDetails/ProductDetails"));
-import AdminOrdersPage from "./pages/adminOrder/AdminOrderPage";
-import AboutUsPage from "./pages/aboutusPage/AboutUsPage";
+const AdminOrdersPage = lazy(() =>import("./pages/adminOrder/AdminOrderPage"));
+const AboutUsPage = lazy(() =>import("./pages/aboutusPage/AboutUsPage"));
+const ViewCartPage = lazy(() =>import("./pages/viewCartPage/ViewCartPage"));
+const WishlistPage = lazy(() =>import("./pages/wishlistPage/WishListPage"));
+const AdminLayout = lazy(() =>import("./components/admin/AdminLayout"));
+const AdminProductPage = lazy(() =>import("./pages/adminProductPage/AdminProductPage"));
+const AdminCreateFormPage = lazy(() =>import("./pages/adminCreateForm/AdminCreateFormPage"));
+const NotFound = lazy(() =>import("./pages/notFound/NotfoundPage"));
+import JewelryCareGuidePage from "./pages/helpPage/jewelryCareGuidePage";
+import TermsAndConditionPage from "./pages/helpPage/TermsAndConditionPage";
+import ReturnAndExchangePage from "./pages/helpPage/ReturnAndExchangePage";
+import PrivacyPolicyPage from "./pages/helpPage/PrivacyPolicyPage";
+import ShipingPolicyPage from "./pages/helpPage/ShippingPage";
+import ContactUsPage from "./pages/contactusPage/ContactUsPage";
 function App() {
   return (
     <>
@@ -44,6 +51,42 @@ function App() {
                 <ProtectedRoute>
                   <WishlistPage />
                 </ProtectedRoute>
+              }
+            />
+             <Route
+              path="jewelry-careguide"
+              element={
+                  <JewelryCareGuidePage />
+              }
+            />
+            <Route
+              path="terms-and-conditions"
+              element={
+                  <TermsAndConditionPage />
+              }
+            />
+             <Route
+              path="return-and-exchange"
+              element={
+                  <ReturnAndExchangePage />
+              }
+            />
+              <Route
+              path="privacy-policy"
+              element={
+                  <PrivacyPolicyPage />
+              }
+            />
+            <Route
+              path="shiping"
+              element={
+                  <ShipingPolicyPage />
+              }
+            />
+             <Route
+              path="contact-us"
+              element={
+                  <ContactUsPage />
               }
             />
             <Route path="*" element={<NotFound />} />

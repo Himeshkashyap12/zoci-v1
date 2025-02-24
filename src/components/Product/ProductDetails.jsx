@@ -1,14 +1,17 @@
 import { Col, Collapse, Row } from "antd";
-import React, { useEffect, useState, Component } from "react";
-import { Typography, Rate } from "antd";
+import React, { useEffect, useState } from "react";
+import { Typography } from "antd";
 import { Flex, Progress } from "antd";
 import { useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { getProductApi, getProductDetailsApi } from "../../feature/product/productApi";
-import { addProductDetals, addProducts } from "../../feature/product/productSlice";
+import {
+  getProductDetailsApi,
+} from "../../feature/product/productApi";
+import {
+  addProductDetals,
+} from "../../feature/product/productSlice";
 import "react-inner-image-zoom/lib/InnerImageZoom/styles.css";
 import CustomDrawer from "../CustomDrawer";
-// import starYellow from "../../assets/starYellow.png"
 import starOrange from "../../assets/starOrange.png";
 import "./productDetails.css";
 import bag from "../../assets/icons/greenBag.png";
@@ -18,9 +21,7 @@ import Cart from "../cart/Cart";
 import { addToCartData } from "../../feature/categary/cartApi";
 import { TbPointFilled } from "react-icons/tb";
 import { addToWishlistData } from "../../feature/wishlist/wishlistApi";
-// product details page start here
-
-import { useRazorpay, RazorpayOrderOptions } from "react-razorpay";
+import { useRazorpay } from "react-razorpay";
 import OrderModal from "../order/order";
 import { toast } from "react-toastify";
 
@@ -28,40 +29,29 @@ const ProductDetails = () => {
   const { error, isLoading } = useRazorpay();
   const [counterPeople, setCounterPeople] = useState(5);
   const item = useSelector((state) => state.product?.productDetails);
-
   const dispatch = useDispatch();
   const [activeImageId, setActiveImageId] = useState(1);
-  const data = useSelector((state) => state.product?.products);
-  // const [discountPercentage, setDiscountPercentage] = useState();
   const { id } = useParams();
   const [open, setOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [activeImageUrl, setActiveImageUrl] = useState(item?.images && item?.images[0]);
+  const [activeImageUrl, setActiveImageUrl] = useState( item?.images && item?.images[0]);
   const [cartStatus, setCartStatus] = useState("");
   const isAuth = useSelector((state) => state.auth.isAuthenticated);
   const user = localStorage.getItem("userId");
-  const cart=useSelector(state=>state.cart.cart)
-  const wishlistData=useSelector(state=>state?.wish.wishlist)
-   var token=localStorage.getItem("token")
+  const cart = useSelector((state) => state.cart.cart);
+  const wishlistData = useSelector((state) => state?.wish.wishlist);
+  var token = localStorage.getItem("token");
   const getData = async () => {
     try {
       const data = await getProductDetailsApi(id);
-
       dispatch(addProductDetals(data.product));
-    
-      // Set the active image URL only after fetching is complete
       if (data.product?.images?.length > 0) {
         setActiveImageUrl(data.product.images[0]);
       }
-      
     } catch (error) {
       console.log(error);
-      
-      
     }
-  
   };
-
 
   const activeImageHAndler = (imageUrl, id) => {
     setActiveImageId(id);
@@ -69,8 +59,7 @@ const ProductDetails = () => {
   };
 
   const addCartHandler = async (item) => {
-    
-   if(!token) return toast.error("Please login first");
+    if (!token) return toast.error("Please login first");
     setCartStatus("cart");
     const data = {
       userId: user,
@@ -82,7 +71,7 @@ const ProductDetails = () => {
       const res = await addToCartData(data, token);
       setOpen(true);
       toast.success(res.message);
-      localStorage.setItem("cart",parseInt(cart.length)+1)
+      localStorage.setItem("cart", parseInt(cart.length) + 1);
     } catch (error) {
       console.log(error);
       toast.error(error.response.data.message);
@@ -101,11 +90,15 @@ const ProductDetails = () => {
       const res = await addToWishlistData(data);
       toast.success(res?.message);
       setOpen(true);
-      localStorage.setItem("wish",parseInt(wishlistData.length)+1)  
+      localStorage.setItem("wish", parseInt(wishlistData.length) + 1);
     } catch (error) {
       console.log(error);
       toast.error(error.response.data.message);
     }
+  };
+  const buynowHandler = () => {
+    if (!isAuth) return toast.error("Please login first");
+    setIsModalOpen(true);
   };
   useEffect(() => {
     if (counterPeople === 0) return;
@@ -114,25 +107,15 @@ const ProductDetails = () => {
     }, [7000]);
     clearInterval(counttime);
   }, [counterPeople]);
-
-  // useEffect(() => {
-  //   percentageCalculate();
-  // }, [id, dispatch, data]);
   useEffect(() => {
     getData();
   }, [dispatch, id]);
-  
+
   useEffect(() => {
     if (item?.images?.length > 0) {
       setActiveImageUrl(item?.images[0]);
     }
-  }, [item]); 
-
-  const buynowHandler = () => {
-    if (!isAuth) return toast.error("Please login first");
-    setIsModalOpen(true);
-  };
-
+  }, [item]);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -294,11 +277,13 @@ const ProductDetails = () => {
                 <span className="text-xl font-semibold text-[#214344] ">
                   Rs. {item?.price}
                 </span>
-               {item?.compare_at_price && <><span className="text-lg text-red-300 line-through ">
-                  Rs. {item?.compare_at_price}
-                </span>
-             
-                </>}
+                {item?.compare_at_price && (
+                  <>
+                    <span className="text-lg text-red-300 line-through ">
+                      Rs. {item?.compare_at_price}
+                    </span>
+                  </>
+                )}
               </div>
               <Flex vertical className="p-0">
                 <Progress
@@ -380,15 +365,23 @@ const ProductDetails = () => {
                         ),
                         children: (
                           <div className="flex flex-col gap-3">
-                          <div className="flex gap-2">
-                            <Typography.Text className="text-[14px] font-semibold text-[#214344]">Metal Type :</Typography.Text>
-                            <Typography.Text className="text-[14px] font-[400] text-[#214344]">{item?.metalType}</Typography.Text>
+                            <div className="flex gap-2">
+                              <Typography.Text className="text-[14px] font-semibold text-[#214344]">
+                                Metal Type :
+                              </Typography.Text>
+                              <Typography.Text className="text-[14px] font-[400] text-[#214344]">
+                                {item?.metalType}
+                              </Typography.Text>
+                            </div>
+                            <div className="flex gap-2">
+                              <Typography.Text className="text-[14px] font-semibold text-[#214344]">
+                                Metal color :
+                              </Typography.Text>
+                              <Typography.Text className="text-[14px] font-[400] text-[#214344]">
+                                {item?.ProductColor}
+                              </Typography.Text>
+                            </div>
                           </div>
-                          <div className="flex gap-2">
-                            <Typography.Text className="text-[14px] font-semibold text-[#214344]">Metal color :</Typography.Text>
-                            <Typography.Text className="text-[14px] font-[400] text-[#214344]">{item?.ProductColor}</Typography.Text>
-                          </div>
-                         </div>
                         ),
                       },
                     ]}
@@ -407,10 +400,11 @@ const ProductDetails = () => {
                             Story
                           </Typography.Text>
                         ),
-                        children:
-                          
-                            <Typography.Text className="px-5 font-[400]">{item?.description}</Typography.Text>
-
+                        children: (
+                          <Typography.Text className="px-5 font-[400]">
+                            {item?.description}
+                          </Typography.Text>
+                        ),
                       },
                     ]}
                   />
@@ -422,7 +416,7 @@ const ProductDetails = () => {
 
           <CustomDrawer
             cartStatus={cartStatus}
-            component={<Cart setOpen={setOpen}  />}
+            component={<Cart setOpen={setOpen} />}
             open={open}
             setOpen={setOpen}
             onClose={onClose}
@@ -432,6 +426,7 @@ const ProductDetails = () => {
               setIsModalOpen={setIsModalOpen}
               isModalOpen={isModalOpen}
               item={[item]}
+              cart={false}
             />
           )}
         </Col>
@@ -446,4 +441,3 @@ const ProductDetails = () => {
   );
 };
 export default ProductDetails;
-// product details page end here

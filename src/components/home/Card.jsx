@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
-import {  Tooltip, Typography } from "antd";
-import { 
-  ShareAltOutlined
-} from "@ant-design/icons";
+import { Tooltip, Typography } from "antd";
+import { ShareAltOutlined } from "@ant-design/icons";
 import { Flex, Progress } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,35 +16,31 @@ import { RWebShare } from "react-web-share";
 import { addCategary, addproductToshop } from "../../feature/shop/shopSlice";
 import { getProductFilterApi } from "../../feature/product/productApi";
 import { toast } from "react-toastify";
-const Card = ({ item, shop }) => {
-  const navigate=useNavigate  ();
+const Card = ({ item }) => {
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [cartStatus, setCartStatus] = useState("");
   const [thumbnailButton, setThumbnailButton] = useState(false);
   const dispatch = useDispatch();
-  const [discountPercentage, setDiscountPercentage] = useState();
   var token = localStorage.getItem("token");
   const user = localStorage.getItem("userId");
-  const cart=useSelector(state=>state.cart.cart)
-  const wish=useSelector(state=>state.wish.wishlist)
-  
+  const cart = useSelector((state) => state.cart.cart);
+
   // This function work as add to cart functionality
   const addCartHandler = async (item, status) => {
-    console.log(token);
-    
-    if(!token) return toast.error("Please login first");
+    if (!token) return toast.error("Please login first");
     setCartStatus(status);
     const data = {
       userId: user,
       productId: item._id,
-      quantity:1,
+      quantity: 1,
       price: item.price,
     };
     try {
-      const res = await addToCartData(data); 
+      const res = await addToCartData(data);
       setOpen(true);
       toast.success(res?.message);
-      localStorage.setItem("cart",parseInt(cart.length)+1)
+      localStorage.setItem("cart", parseInt(cart.length) + 1);
     } catch (error) {
       console.log(error.response.data.message);
       toast.error(error.response.data.message);
@@ -58,49 +52,35 @@ const Card = ({ item, shop }) => {
     setOpen(false);
   };
   // This function calculate percentage discount
-  const percentageCalculate = () => {
-    const percentage = Math.floor(
-      ((item?.discountPrice - item?.price) / item?.discountPrice) * 100
-    );
-    setDiscountPercentage(percentage);
-  };
   const addToWishlistHandler = async (item, status) => {
-    if(!token) return toast.error("Please login first");
+    if (!token) return toast.error("Please login first");
     setCartStatus(status);
     const data = { userId: localStorage.getItem("userId"), prodId: item?._id };
 
     try {
       const res = await addToWishlistData(data);
-      localStorage.setItem("wish",parseInt(cart.length)+1)
+      localStorage.setItem("wish", parseInt(cart.length) + 1);
 
       setOpen(true);
       toast.success(res?.message);
-
     } catch (error) {
       console.log(error);
       toast.error(error.response.data.message);
-
     }
   };
-  const similerProductHandler=async() =>{
-    console.log(item.category);
-    const filters={category:item.category}
+  const similerProductHandler = async () => {
+    const filters = { category: item.category };
     try {
-      const res=await getProductFilterApi({filters})
-      console.log(res);
-            dispatch(addproductToshop(res?.products));
-            dispatch(addCategary(item.category));
-            navigate("/shop",{state:"similer"})
-    } catch (error) { 
+      const res = await getProductFilterApi({ filters });
+      dispatch(addproductToshop(res?.products));
+      dispatch(addCategary(item.category));
+      navigate("/shop", { state: "similer" });
+    } catch (error) {
       console.log(error);
     }
-  }
+  };
 
 
-
-  useEffect(() => {
-    percentageCalculate();
-  }, []);
 
   return (
     <>
@@ -225,7 +205,7 @@ const Card = ({ item, shop }) => {
                   <RWebShare
                     data={{
                       text: item?.title,
-                      url: `https://celestial-rho.vercel.app`,
+                      url: `https://zoci.in/product/${item?._id}`,
                       title: "Zoci",
                     }}
                     onClick={() => console.log("shared successfully!")}
@@ -240,7 +220,10 @@ const Card = ({ item, shop }) => {
               )}
               {thumbnailButton && (
                 <Tooltip placement="left" title={"similar"}>
-                  <div onClick={() => similerProductHandler()} className="h-[35px] w-[35px] flex justify-center  items-center p-2  bg-[#214344]  rounded-full ">
+                  <div
+                    onClick={() => similerProductHandler()}
+                    className="h-[35px] w-[35px] flex justify-center  items-center p-2  bg-[#214344]  rounded-full "
+                  >
                     <img
                       className="w-[20px] h-[20px] ps-0.5"
                       src={similarYellow}
@@ -254,42 +237,44 @@ const Card = ({ item, shop }) => {
           {/* Mobile Screen */}
           <div className="sm:hidden block  card-icon absolute left-0 top-10  hover:block hover:left-0  transition-all duration-100 overflow-hidden">
             <div className="flex gap-1.5 flex-col ">
-             
-                <Tooltip placement="left" title={"Cart"}>
-                  <div
-                    onClick={() => {
-                      addCartHandler(item, "cart");
-                    }}
-                    className="h-[35px] w-[35px] flex justify-center items-center rounded-full bg-[#214344] hover:bg-[#214344]  p-2"
-                  >
-                    <img className="h-[20px] w-[20px]" src={bag} />
-                  </div>
-                </Tooltip>
+              <Tooltip placement="left" title={"Cart"}>
+                <div
+                  onClick={() => {
+                    addCartHandler(item, "cart");
+                  }}
+                  className="h-[35px] w-[35px] flex justify-center items-center rounded-full bg-[#214344] hover:bg-[#214344]  p-2"
+                >
+                  <img className="h-[20px] w-[20px]" src={bag} />
+                </div>
+              </Tooltip>
 
-                <Tooltip placement="left" title={"Share"}>
-                  <RWebShare
-                    data={{
-                      text: item?.title,
-                      url: `https://celestial-rho.vercel.app`,
-                      title: "Zoci",
-                    }}
-                    onClick={() => console.log("shared successfully!")}
-                  >
-                    <div className=" bg-[#214344] flex justify-center items-center h-[35px] w-[35px] p-2 rounded-full ">
-                      <ShareAltOutlined
-                        style={{ fontSize: "20px", color: "#F0D5A0" }}
-                      />
-                    </div>
-                  </RWebShare>
-                </Tooltip>
-                <Tooltip placement="left" title={"similar"}>
-                  <div onClick={() => similerProductHandler()} className="h-[35px] w-[35px] flex justify-center  items-center p-2  bg-[#214344]  rounded-full ">
-                    <img
-                      className="w-[20px] h-[20px] ps-0.5"
-                      src={similarYellow}
+              <Tooltip placement="left" title={"Share"}>
+                <RWebShare
+                  data={{
+                    text: item?.title,
+                    url: `https://celestial-rho.vercel.app`,
+                    title: "Zoci",
+                  }}
+                  onClick={() => console.log("shared successfully!")}
+                >
+                  <div className=" bg-[#214344] flex justify-center items-center h-[35px] w-[35px] p-2 rounded-full ">
+                    <ShareAltOutlined
+                      style={{ fontSize: "20px", color: "#F0D5A0" }}
                     />
                   </div>
-                </Tooltip>
+                </RWebShare>
+              </Tooltip>
+              <Tooltip placement="left" title={"similar"}>
+                <div
+                  onClick={() => similerProductHandler()}
+                  className="h-[35px] w-[35px] flex justify-center  items-center p-2  bg-[#214344]  rounded-full "
+                >
+                  <img
+                    className="w-[20px] h-[20px] ps-0.5"
+                    src={similarYellow}
+                  />
+                </div>
+              </Tooltip>
             </div>
           </div>
           {/* Mobile screen */}
@@ -304,7 +289,7 @@ const Card = ({ item, shop }) => {
 
       <CustomDrawer
         cartStatus={cartStatus}
-        component={<Cart  />}
+        component={<Cart />}
         open={open}
         setOpen={setOpen}
         onClose={onClose}

@@ -1,19 +1,8 @@
-import { Drawer, Space, Tooltip } from "antd";
+import { Drawer, Tooltip } from "antd";
 import Cart from "./cart/Cart";
-import {
-  CloseCircleOutlined,
-  EyeFilled,
-  ReloadOutlined,
-  ShoppingCartOutlined,
-} from "@ant-design/icons";
-import { WishListIcon } from "../icons/icon";
-import { FcLike } from "react-icons/fc";
-import { IoMdGitCompare } from "react-icons/io";
 import { useEffect, useState } from "react";
 import wishListYellow from "../assets/icons/wishlistyellow.png";
 import wishListGreen from "../assets/icons/wishlistGreen.png";
-import similerYellow from "../assets/icons/similarYellow.png";
-import similerGreen from "../assets/icons/similarGreen.png";
 import closeIcon from "../assets/closeicon.png";
 import greenBag from "../../src/assets/icons/greenBag.png";
 import yellowBag from "../../src/assets/icons/bagYellow.png";
@@ -21,17 +10,13 @@ import WishList from "./wishlist/WishList";
 
 const CustomDrawer = ({
   setCartOpen,
-  component,
   open,
   onClose,
-  title,
   placement,
   width,
   cartStatus,
 }) => {
   const [activeDrawer, setActiveDrawer] = useState("cart");
-
-
   useEffect(() => {
     setActiveDrawer(cartStatus);
   }, [cartStatus]);
@@ -66,7 +51,6 @@ const CustomDrawer = ({
                 </button>
               </Tooltip>
               <Tooltip placement="left" title={"Add to Wishlist"}>
-                
                 <div className="rounded-full p-2 cursor-pointer">
                   <button
                     onClick={() => {
@@ -78,15 +62,15 @@ const CustomDrawer = ({
                   >
                     <div className="flex items-center justify-center">
                       <div className="h-[24px] w-[24px]">
-                    <img
-                      src={
-                        activeDrawer !="cart"
-                          ? wishListGreen
-                          : wishListYellow
-                      }
-                      className="h-full w-full"
-                    />
-                    </div>
+                        <img
+                          src={
+                            activeDrawer != "cart"
+                              ? wishListGreen
+                              : wishListYellow
+                          }
+                          className="h-full w-full"
+                        />
+                      </div>
                     </div>
                   </button>
                 </div>
@@ -104,7 +88,11 @@ const CustomDrawer = ({
           header: { background: "#214344" },
         }}
       >
-        {activeDrawer == "cart" ? <Cart setCartOpen={setCartOpen} /> : <WishList setCartOpen={setCartOpen} />}
+        {activeDrawer == "cart" ? (
+          <Cart setCartOpen={setCartOpen} />
+        ) : (
+          <WishList setCartOpen={setCartOpen} />
+        )}
       </Drawer>
     </>
   );

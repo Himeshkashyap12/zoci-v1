@@ -1,10 +1,7 @@
-import React, {  useState } from "react";
-import {  Collapse, Drawer, Tooltip, Typography } from "antd";
-import {  NavLink, useNavigate } from "react-router";
-import {
-  SearchOutlined,
-  WhatsAppOutlined,
-} from "@ant-design/icons";
+import React, { useState } from "react";
+import { Collapse, Drawer, Tooltip, Typography } from "antd";
+import { Link, NavLink, useNavigate } from "react-router";
+import { SearchOutlined, WhatsAppOutlined } from "@ant-design/icons";
 import Sider from "antd/es/layout/Sider";
 import {
   FaFacebook,
@@ -26,9 +23,7 @@ import catalogueGreen from "../../assets/icons/catalogueGreen.png";
 import homeYellow from "../../assets/icons/homeYellow.png";
 import profileYellow from "../../assets/icons/profileYellow.png";
 
-import {
-  getProductFilterApi,
-} from "../../feature/product/productApi";
+import { getProductFilterApi } from "../../feature/product/productApi";
 import Catalogue from "../catalogue/Catalogue";
 import WishList from "../wishlist/WishList";
 import "./header.css";
@@ -39,29 +34,27 @@ import { TbBrandLinkedin, TbPointFilled } from "react-icons/tb";
 import { searchProducts } from "../../feature/product/productSlice";
 import { toast } from "react-toastify";
 import { headermenuHandler } from "../../feature/header/headerSlice";
-// this is my mobile nav. start here
 const siderStyle = {
   height: "full",
   textAlign: "center",
   color: "#fff",
   backgroundColor: "#214344",
 };
-const EasyMenuHeader = ({ setCartCounter,setWishCounter }) => {
-  const navigate=useNavigate();
+const EasyMenuHeader = ({ setCartCounter, setWishCounter }) => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   // const [searchData,setSearchData]=useState([]);
   const [activeTab, setActiveTab] = useState("home");
-  const searchData=useSelector(state=>state.product.searchData)
-  const open=useSelector(state=>state.header.headermenu)
+  const searchData = useSelector((state) => state.product.searchData);
+  const open = useSelector((state) => state.header.headermenu);
   const onClose = () => {
-          dispatch(headermenuHandler(false))
+    dispatch(headermenuHandler(false));
   };
 
   const filterSubcategary = async (data) => {
     try {
       const filters = { category: data };
       const res = await getProductFilterApi({ filters });
-
       dispatch(addproductToshop(res?.products));
       dispatch(addCategary(data));
     } catch (error) {
@@ -69,26 +62,19 @@ const EasyMenuHeader = ({ setCartCounter,setWishCounter }) => {
     }
   };
 
+  const searchHandler = async (e) => {
+    try {
+      const search = { title: e.target.value };
+      const res = await getProductFilterApi({ search });
+      dispatch(searchProducts(res.products));
+    } catch (error) {
+      console.log(error);
+      if(error.response.data.message==="No products found"){
+        dispatch(searchProducts([]));
 
-
-  const searchHandler=async(e)=>{
-      try {
-        const search={title:e.target.value}
-        const res= await getProductFilterApi({search})
-        console.log(res);
-   
-        
-        dispatch(searchProducts(res.products))
-        
-        
-      } catch (error) {
-        console.log(error);
-        toast.error(error.response.data.message)
-         
-      }
-    
-  }
-  
+      };
+    }
+  };
 
   return (
     <Drawer
@@ -103,14 +89,15 @@ const EasyMenuHeader = ({ setCartCounter,setWishCounter }) => {
       <div className="flex ">
         <Sider width="16%" style={siderStyle} className="h-[100vh]  ">
           <div className="flex  flex-col justify-between items-center gap-5 py-5 h-[100%]">
-          
-
             <div className="flex-col flex gap-4  items-center  ">
-            <div className="flex justify-center items-center  cursor-pointer" onClick={onClose}>
-              <div className=" w-[20px] h-[20px]  rounded-full flex items-center justify-center  ">
-                <img src={closeIcon} />
+              <div
+                className="flex justify-center items-center  cursor-pointer"
+                onClick={onClose}
+              >
+                <div className=" w-[20px] h-[20px]  rounded-full flex items-center justify-center  ">
+                  <img src={closeIcon} />
+                </div>
               </div>
-            </div>
               <Tooltip placement="left" title={"Home"}>
                 <button
                   onClick={() => setActiveTab("home")}
@@ -212,20 +199,46 @@ const EasyMenuHeader = ({ setCartCounter,setWishCounter }) => {
               </Tooltip>
             </div>
             <div className=" flex flex-col gap-3">
+              <Link
+                to={"https://www.instagram.com/accounts/login/?hl=en"}
+                target="_blank"
+              >
               <FaInstagram style={{ fontSize: "20px", color: "#F0D5A0" }} />
-              <FaFacebook style={{ fontSize: "20px", color: "#F0D5A0" }} />
-              <FaPinterestP style={{ fontSize: "20px", color: "#F0D5A0" }} />
-              <FaYoutube style={{ fontSize: "20px", color: "#F0D5A0" }} />
-              <WhatsAppOutlined  style={{ fontSize: "20px", color: "#F0D5A0" }} />
-              <TbBrandLinkedin style={{ fontSize: "24px", color: "#F0D5A0" }} />
-              
+              </Link>
+              <Link to={"https://www.facebook.com"} target="_blank">
+                <FaFacebook style={{ fontSize: "20px", color: "#F0D5A0" }} />
+              </Link>
+              <Link to={"https://www.pinterest.com"} target="_blank">
+                <FaPinterestP style={{ fontSize: "20px", color: "#F0D5A0" }} />
+              </Link>
+              <Link to={"https://www.youtube.com"} target="_blank">
+                <FaYoutube style={{ fontSize: "20px", color: "#F0D5A0" }} />
+              </Link>
+              <Link to={"https://web.whatsapp.com"} target="_blank">
+                <WhatsAppOutlined
+                  style={{ fontSize: "20px", color: "#F0D5A0" }}
+                />
+              </Link>
+              <Link to={"https://in.linkedin.com"} target="_blank">
+                <TbBrandLinkedin
+                  style={{ fontSize: "24px", color: "#F0D5A0" }}
+                />
+              </Link>
             </div>
           </div>
         </Sider>
         {activeTab == "catalogue" && <Catalogue />}
-        {activeTab == "wishlist" && <div  className=" pt-16 w-full"><WishList /></div>}
-        {activeTab == "profile" && <SignUp setWishCounter={setWishCounter} setCartCounter={setCartCounter} />}
-        {/* {activeTab == "cart" && <SignUp />} */}
+        {activeTab == "wishlist" && (
+          <div className=" pt-16 w-full">
+            <WishList />
+          </div>
+        )}
+        {activeTab == "profile" && (
+          <SignUp
+            setWishCounter={setWishCounter}
+            setCartCounter={setCartCounter}
+          />
+        )}
 
         <div className=" pt-[55px] home-tab">
           {activeTab === "home" && (
@@ -242,23 +255,24 @@ const EasyMenuHeader = ({ setCartCounter,setWishCounter }) => {
                   <SearchOutlined style={{ fontSize: "20px" }} />
                 </div>
               </div>
-              {searchData.map((item,idx)=>{
-                return(
-                  <div className="absolute top-12 z-[99] w-[80%]">
+              {searchData.map((item, idx) => {
+                return (
+                  <Link to={`/product/${item._id}`} onClick={()=>{dispatch(headermenuHandler(false))}} className="absolute top-12 z-[99] w-[80%]">
                     <div className="bg-[#fff] rounded-md">
-                   <div className="flex gap-5 px-2 py-1 shadow-lg rounded-md">
-                    <div className="size-[50px] ">
-                     <img className="rounded-xl" src={item.images[0]}/>
-                     </div>
-                     <div className="flex flex-col">
-                     <Typography.Text className="text-[14px] font-semibold" >{item.title}</Typography.Text>
-                     <Typography.Text>Rs.{item.price}</Typography.Text>
-                     </div>
-
-                   </div>
-                    </ div>
-                  </div>
-                )
+                      <div className="flex gap-5 px-2 py-1 shadow-lg rounded-md">
+                        <div className="size-[50px] ">
+                          <img className="rounded-xl" src={item.images[0]} />
+                        </div>
+                        <div className="flex flex-col">
+                          <Typography.Text className="text-[14px] font-semibold">
+                            {item.title}
+                          </Typography.Text>
+                          <Typography.Text>Rs.{item.price}</Typography.Text>
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                );
               })}
             </div>
           )}
@@ -266,7 +280,7 @@ const EasyMenuHeader = ({ setCartCounter,setWishCounter }) => {
             <div className="flex flex-col px-10 pt-5 gap-2">
               <NavLink
                 onClick={() => {
-                  dispatch(headermenuHandler(false))
+                  dispatch(headermenuHandler(false));
                 }}
                 className="text-[#214344] text-[16px] font-[600] hover:text-[#214344]"
                 to={"/"}
@@ -297,7 +311,8 @@ const EasyMenuHeader = ({ setCartCounter,setWishCounter }) => {
                         <div className="flex flex-col gap-2">
                           <NavLink
                             onClick={() => {
-                              filterSubcategary("pendents"), dispatch(headermenuHandler(false));
+                              filterSubcategary("pendents"),
+                                dispatch(headermenuHandler(false));
                             }}
                             className={"hover:text-[#214344] "}
                             to={"/shop"}
@@ -309,7 +324,8 @@ const EasyMenuHeader = ({ setCartCounter,setWishCounter }) => {
                           </NavLink>
                           <NavLink
                             onClick={() => {
-                              filterSubcategary("ring"), dispatch(headermenuHandler(false));
+                              filterSubcategary("ring"),
+                                dispatch(headermenuHandler(false));
                             }}
                             className={"hover:text-[#214344]"}
                             to={"/shop"}
@@ -321,7 +337,8 @@ const EasyMenuHeader = ({ setCartCounter,setWishCounter }) => {
                           </NavLink>
                           <NavLink
                             onClick={() => {
-                              filterSubcategary("bracelets"), dispatch(headermenuHandler(false));
+                              filterSubcategary("bracelets"),
+                                dispatch(headermenuHandler(false));
                             }}
                             className={"hover:text-[#214344]"}
                             to={"/shop"}
@@ -333,7 +350,8 @@ const EasyMenuHeader = ({ setCartCounter,setWishCounter }) => {
                           </NavLink>
                           <NavLink
                             onClick={() => {
-                              filterSubcategary("earings"), dispatch(headermenuHandler(false));
+                              filterSubcategary("earings"),
+                                dispatch(headermenuHandler(false));
                             }}
                             className={"hover:text-[#214344]"}
                             to={"/shop"}
@@ -345,7 +363,8 @@ const EasyMenuHeader = ({ setCartCounter,setWishCounter }) => {
                           </NavLink>
                           <NavLink
                             onClick={() => {
-                              filterSubcategary("nackeless"), dispatch(headermenuHandler(false));
+                              filterSubcategary("nackeless"),
+                                dispatch(headermenuHandler(false));
                             }}
                             className={"hover:text-[#214344] text-[#214344]"}
                             to={"/shop"}
@@ -365,13 +384,20 @@ const EasyMenuHeader = ({ setCartCounter,setWishCounter }) => {
                 onClick={() => {
                   setActiveTab("cart");
                 }}
-                className="text-[#214344] text-[16px] font-[600] hover:text-[#214344]"  >
+                className="text-[#214344] text-[16px] font-[600] hover:text-[#214344]"
+              >
                 <div className="flex gap-3 items-center h-[18px] w-[18px]">
                   <h6> Bag</h6>
                 </div>
               </NavLink>
-              <NavLink onClick={()=>{dispatch(headermenuHandler(false))}} to={"/aboutus"} className="text-[#214344] text-[16px] font-[600] hover:text-[#214344]">
-                <div  className="flex items-center"> About us</div>
+              <NavLink
+                onClick={() => {
+                  dispatch(headermenuHandler(false));
+                }}
+                to={"/aboutus"}
+                className="text-[#214344] text-[16px] font-[600] hover:text-[#214344]"
+              >
+                <div className="flex items-center"> About us</div>
               </NavLink>
             </div>
           )}
@@ -381,4 +407,3 @@ const EasyMenuHeader = ({ setCartCounter,setWishCounter }) => {
   );
 };
 export default EasyMenuHeader;
-// this is my mobile nav. end here

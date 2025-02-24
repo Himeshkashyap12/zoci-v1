@@ -1,6 +1,6 @@
-import { Avatar, Button, Dropdown, Flex, Input, Layout, Menu, Typography } from "antd";
+import { Avatar, Dropdown, Layout, Typography } from "antd";
 import Sider from "antd/es/layout/Sider";
-import { Content, Footer, Header } from "antd/es/layout/layout";
+import { Content, Header } from "antd/es/layout/layout";
 import logo from "../../assets/header.png";
 import { Link, Outlet } from "react-router";
 import { logOutApi } from "../../feature/auth/authApi";
@@ -42,11 +42,12 @@ const AdminLayout = () => {
     {
       key: "1",
       label: (
-        <Typography.Text  className="text-[#214344] cursor-pointer" onClick={() => {
-          logoutHandler();
-        }}
-      >
-        
+        <Typography.Text
+          className="text-[#214344] cursor-pointer"
+          onClick={() => {
+            logoutHandler();
+          }}
+        >
           Logout
         </Typography.Text>
       ),
@@ -63,7 +64,6 @@ const AdminLayout = () => {
             </div>
             <div className="flex flex-col px-2 gap-3 pt-10 ">
               <div
-              
                 className={` ${
                   activeTab === 1 && "py-1 rounded-md bg-[#f0d5a0]"
                 }`}
@@ -83,7 +83,6 @@ const AdminLayout = () => {
                 </Link>
               </div>
               <div
-              
                 className={`${
                   activeTab === 2 && "py-1 rounded-md bg-[#f0d5a0]"
                 }`}
@@ -109,7 +108,7 @@ const AdminLayout = () => {
           <Header style={headerStyle}>
             <div className="flex justify-end gap-[50px]  ">
               <div className="cursor-pointer">
-                <Dropdown menu={{ items }}  placement="bottomRight" arrow> 
+                <Dropdown menu={{ items }} placement="bottomRight" arrow>
                   <Avatar />
                 </Dropdown>
               </div>
@@ -120,7 +119,6 @@ const AdminLayout = () => {
               <Outlet />
             </div>
           </Content>
-          {/* <Footer style={footerStyle}>Footer</Footer> */}
         </Layout>
       </Layout>
     </>

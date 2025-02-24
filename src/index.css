@@ -59,9 +59,10 @@
 .subCategary:hover img{
   filter: blur(4px);
 }
+  ::-webkit-scrollbar{background-color: gray!important;}
 
-::-webkit-scrollbar{background-color: gray;}
+::-webkit-scrollbar-thumb{background-color: black!important; border-radius: 10px!important;}
 
-::-webkit-scrollbar-thumb{background-color: black; border-radius: 10px;}
+
 
 

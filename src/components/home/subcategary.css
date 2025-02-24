@@ -12,13 +12,11 @@
   margin: 0 10px; /* Add horizontal space between slides */
 }
 
-/* Target the inner list that contains the slides */
 .subcategary .slick-list {
   height: 100%; /* Let it inherit the height of the parent */
   overflow: hidden; 
 }
 
-/* Target the track (slides container) */
 .subcategary .slick-track {
   padding-top: 20px;
   height: 100%; /* Adjust based on the parent height */
@@ -52,6 +50,6 @@ align-items: center;
 
   .subcategary .slick-slider {
     height: 300px;
-    display: flex; /* Optional: Ensures child items are aligned properly */
+    display: flex;
   }
 }

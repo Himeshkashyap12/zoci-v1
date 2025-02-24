@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-const initialState={order:[],categary:[],products:[]}
+const initialState={order:[],category:[],products:[]}
 const adminSlice=createSlice({
     name:"admin",
     initialState,
@@ -8,7 +8,7 @@ const adminSlice=createSlice({
             state.order=action.payload
         },
         addAdminCategary:(state,action)=>{            
-            state.categary=action.payload
+            state.category=action.payload
         },
         addAdminProducts:(state,action)=>{            
             state.products=action.payload

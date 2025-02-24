@@ -20,6 +20,7 @@ export const addOrder = async (data) => {
 
 export const payment = async (data) => {    
     const token=localStorage.getItem("token");
+    const userId=localStorage.getItem("userId")
         try {
             const res = await api.post(`/user/payOrderDueAmount`, data, { 
                 headers: {

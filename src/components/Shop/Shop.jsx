@@ -1,8 +1,6 @@
 import { Col, Row } from "antd";
 import ProductListing from "./ProductListing";
-import {
-  getProductFilterApi,
-} from "../../feature/product/productApi";
+import { getProductFilterApi } from "../../feature/product/productApi";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CustomFilter from "./CustomFlter";
@@ -18,38 +16,20 @@ const Shop = () => {
   const data = useSelector((state) => state?.shop?.shop);
   const categary = useSelector((state) => state.shop.categary);
   const [filter, setFiter] = useState(true);
-  const headermenu=useSelector(state=>state.header.headermenu)
-  console.log(location.state,"location.state");
-  
-
+  const headermenu = useSelector((state) => state.header.headermenu);
   const getProducts = async () => {
     const pagination = { page: 1, limit: 10 };
     const data = await getProductFilterApi(pagination);
-
     dispatch(addproductToshop(data?.products));
   };
-
-  const filterSubcategary = async (data) => {
-    try {
-      const filters = { category: data };
-      const res = await getProductFilterApi({ filters });
-
-      dispatch(addproductToshop(res?.products));
-      dispatch(addCategary(data));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
-
-    if(location.state!=="similer"){
+    if (location.state !== "similer") {
       getProducts();
     }
   }, []);
   useEffect(() => {
     window.scrollTo(0, 0);
-  },[])
+  }, []);
   return (
     <>
       <Row className="md:pt-[110px] pt-[70px]  ">
@@ -83,29 +63,29 @@ const Shop = () => {
         {/* Sticky Banner */}
         <div className=" sticky md:top-[110px] top-[70px]     z-[9999]  ">
           <div className="absolute right-0">
-                        {filter ? ( 
-                          <div>
-             {!headermenu && <div
-                onClick={() => {
-                  setFiter((prev) => !prev);
-                }}
-                className="size-[50px]  p-1  bg-[#214344]  cursor-pointer rounded-l-full  flex justify-center items-center "
-              >
-               <div className="size-[24px]">
-                <img className="w-full h-full" src={filterIcon} />
-                </div>
-              </div>}
+            {filter ? (
+              <div>
+                {!headermenu && (
+                  <div
+                    onClick={() => {
+                      setFiter((prev) => !prev);
+                    }}
+                    className="size-[50px]  p-1  bg-[#214344]  cursor-pointer rounded-l-full  flex justify-center items-center "
+                  >
+                    <div className="size-[24px]">
+                      <img className="w-full h-full" src={filterIcon} />
+                    </div>
+                  </div>
+                )}
               </div>
             ) : (
               <div className="sticky top-[100px] z-[9999]  bg-white shadow-md min-w-[350px]   transition-all  duration-500 rounded-l-full">
                 <div className="flex items-center justify-between px-3  ">
-                 
-                  <Sorting setFiter={setFiter}/>
+                  <Sorting setFiter={setFiter} />
                 </div>
               </div>
             )}
-            </div>
-
+          </div>
         </div>
 
         <Col span={24}>

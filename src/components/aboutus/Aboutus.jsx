@@ -4,6 +4,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Link } from "react-router";
+import { useEffect } from "react";
 const AboutUs = () => {
   var settings = {
     dots: false,
@@ -12,6 +13,9 @@ const AboutUs = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
+   useEffect(() => {
+            window.scrollTo(0, 0);
+          }, []);
   return (
     <>
       <Row className="bg-[#9f9f9f] pt-[120px]  w-full">
@@ -41,8 +45,7 @@ const AboutUs = () => {
           </div>
         </Col>
         <Col xl={12} lg={12} md={12} sm={24} xs={24}>
-        <div className="w-full px-5">
-        </div>
+          <div className="w-full px-5"></div>
         </Col>
       </Row>
       <Row className="bg-[#efe6dc]">
@@ -71,7 +74,14 @@ const AboutUs = () => {
         <Col xl={12} lg={12} md={12} sm={24} xs={24}></Col>
       </Row>
       <Row className="bg-[#efe6dc]">
-        <Col xl={12} lg={12} md={12} sm={24} xs={24} className="md:px-20 px-8 py-20">
+        <Col
+          xl={12}
+          lg={12}
+          md={12}
+          sm={24}
+          xs={24}
+          className="md:px-20 px-8 py-20"
+        >
           <Slider {...settings}>
             <div className="w-full">
               <img src={modalImage} />
@@ -124,11 +134,11 @@ const AboutUs = () => {
           <div className="flex flex-col gap-4 md:ps-20 px-5 py-20 ">
             <div>
               <Button className="font-semibold text-[12px] text-[#FFF] hover:!text-[#000] bg-[#599078] rounded-full px-4 py-1 border-none tracking-wide">
-               RESPONSIBLE FOR NATURE
+                RESPONSIBLE FOR NATURE
               </Button>
             </div>
             <Typography.Text className="md:text-[35px] text-[24px] font-semibold  text-[#000]">
-            Modern jobs with modern tools
+              Modern jobs with modern tools
             </Typography.Text>
             <Typography.Text className="text-[16px] text-justify text-[#214344]">
               Ninetheme is powered by a simple idea: Women are superheroes. Our
@@ -148,27 +158,25 @@ const AboutUs = () => {
         <Col xl={12} lg={12} md={12} sm={24} xs={24}></Col>
       </Row>
       <Row className="bg-[#f0d5a0]">
-      <div className="flex flex-col justify-center items-center gap-4 max-md:px-5 py-20 md:w-[70%] mx-auto ">
-            <div>
-              <Button className="font-semibold text-[12px] text-[#fff] hover:!text-[#000] bg-[#000] rounded-full px-4 py-1 border-none tracking-wide">
-               Notes
-              </Button>
-            </div>
-
-            <Typography.Text className="md:text-[40px]  text-[24px] font-semibold text-center text-[#214344]">
-            The most important advantage of working with an experienced specialist is time saving, do not eliminate it!
-            </Typography.Text>
-            <Link
-              to={"/shop"}
-              className="text-[16px] font-bold text-[#214344] hover:text-[#214344] bg-[#fff]  px-3 py-2 mt-10 rounded-full"
-            >
-              Shop Now.
-            </Link>
+        <div className="flex flex-col justify-center items-center gap-4 max-md:px-5 py-20 md:w-[70%] mx-auto ">
+          <div>
+            <Button className="font-semibold text-[12px] text-[#fff] hover:!text-[#000] bg-[#000] rounded-full px-4 py-1 border-none tracking-wide">
+              Notes
+            </Button>
           </div>
-        
-      </Row>
 
-     
+          <Typography.Text className="md:text-[40px]  text-[24px] font-semibold text-center text-[#214344]">
+            The most important advantage of working with an experienced
+            specialist is time saving, do not eliminate it!
+          </Typography.Text>
+          <Link
+            to={"/shop"}
+            className="text-[16px] font-bold text-[#214344] hover:text-[#214344] bg-[#fff]  px-3 py-2 mt-10 rounded-full"
+          >
+            Shop Now.
+          </Link>
+        </div>
+      </Row>
     </>
   );
 };

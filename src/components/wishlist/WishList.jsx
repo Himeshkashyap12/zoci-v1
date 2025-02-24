@@ -49,7 +49,11 @@ const WishList=({setCartOpen})=>{
             {wishlistData?.length==0 && <Empty imageStyle={{height:"200px"}}  description={<div >
             <h3  className="text-center font-[400] text-[24px] text-[#000]">Empty Wishlist</h3>
             <h4 className="text-center font-[400] text-[15px] text-[#000] py-3">You have no items in your wishlist. Start adding!</h4>
-            <button onClick={()=>navigate("/shop")} className="bg-[#214344] text-[#fff] px-10 py-3 rounded-full text-[16px]">Shop</button>
+            <button onClick={()=>{
+                navigate("/shop")
+                setCartOpen(false)
+            }} 
+            className="bg-[#214344] text-[#fff] px-10 py-3 rounded-full text-[16px]">Shop</button>
             </div>} />}
         { wishlistData?.map((item,idx)=>{
             return(

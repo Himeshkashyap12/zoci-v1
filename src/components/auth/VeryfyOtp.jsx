@@ -7,9 +7,7 @@ import { toast } from "react-toastify";
 
 const VerifyOtp=({mobile})=>{
       const [otp, setOtp] = useState("");
-      const dispatch=useDispatch()
-   console.log(mobile);
-   
+      const dispatch=useDispatch()   
       const onChange = (value) => {
         setOtp(value);
       };
@@ -26,9 +24,7 @@ const VerifyOtp=({mobile})=>{
             role: "user",
           });
     
-          if (res.status) {
-            console.log(res);
-            
+          if (res.status) {            
             toast.success(res.message);
             localStorage.setItem("token", res.data?.token);
             localStorage.setItem("userId", res.data?._id);
