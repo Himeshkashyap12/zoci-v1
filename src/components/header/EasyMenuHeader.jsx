@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Collapse, Drawer, Tooltip, Typography } from "antd";
 import { Link, NavLink, useNavigate } from "react-router";
 import { SearchOutlined, WhatsAppOutlined } from "@ant-design/icons";
@@ -40,9 +40,10 @@ const siderStyle = {
   color: "#fff",
   backgroundColor: "#214344",
 };
-const EasyMenuHeader = ({ setCartCounter, setWishCounter }) => {
+const EasyMenuHeader = ({ setCartCounter, setWishCounter,setCartOpen,setCartStatus }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [searchInput,setSearchInput]=useState('');
   // const [searchData,setSearchData]=useState([]);
   const [activeTab, setActiveTab] = useState("home");
   const searchData = useSelector((state) => state.product.searchData);
@@ -52,30 +53,42 @@ const EasyMenuHeader = ({ setCartCounter, setWishCounter }) => {
   };
 
   const filterSubcategary = async (data) => {
+    console.log(data);
+    
     try {
       const filters = { category: data };
       const res = await getProductFilterApi({ filters });
       dispatch(addproductToshop(res?.products));
       dispatch(addCategary(data));
     } catch (error) {
-      console.log(error);
+      if(error.response.data.message==="No products found"){
+        dispatch(addproductToshop([]));
+        dispatch(addCategary(data));
+      };
     }
   };
 
   const searchHandler = async (e) => {
     try {
-      const search = { title: e.target.value };
+      const search = { title: searchInput };
       const res = await getProductFilterApi({ search });
       dispatch(searchProducts(res.products));
     } catch (error) {
       console.log(error);
       if(error.response.data.message==="No products found"){
         dispatch(searchProducts([]));
-
       };
     }
   };
 
+  useEffect(()=>{
+    if(searchInput.length===0){
+       dispatch(searchProducts([])); 
+    }else{
+      searchHandler();    
+    }
+    
+  },[searchInput])
   return (
     <Drawer
       placement={"left"}
@@ -95,7 +108,7 @@ const EasyMenuHeader = ({ setCartCounter, setWishCounter }) => {
                 onClick={onClose}
               >
                 <div className=" w-[20px] h-[20px]  rounded-full flex items-center justify-center  ">
-                  <img src={closeIcon} />
+                  <img src={closeIcon}  alt="closeIcon"/>
                 </div>
               </div>
               <Tooltip placement="left" title={"Home"}>
@@ -109,16 +122,17 @@ const EasyMenuHeader = ({ setCartCounter, setWishCounter }) => {
                     <img
                       className="w-full h-full"
                       src={activeTab === "home" ? homeGreen : homeYellow}
+                      alt="home"
                     />
                   </div>
                 </button>
               </Tooltip>
               <Tooltip placement="left" title={"Shop"}>
                 <button
-                  onClick={() => setActiveTab("cart")}
+                  onClick={() => {navigate("/shop"),dispatch(headermenuHandler(false))}}
                   className={` rounded-full p-2   ${
                     activeTab === "cart" ? "bg-[#F0D5A0] " : "bg-transparent"
-                  } `}
+                  }`}
                 >
                   <div className="h-[24px] w-[24px] flex items-center">
                     <img
@@ -126,6 +140,7 @@ const EasyMenuHeader = ({ setCartCounter, setWishCounter }) => {
                       src={
                         activeTab === "cart" ? shopingCartYellow : shopingCart
                       }
+                      alt="shopingCart"
                     />
                   </div>
                 </button>
@@ -148,6 +163,7 @@ const EasyMenuHeader = ({ setCartCounter, setWishCounter }) => {
                             ? wishListGreen
                             : wishListYellow
                         }
+                        alt="wishlist"
                       />
                     </div>
                   </button>
@@ -171,6 +187,7 @@ const EasyMenuHeader = ({ setCartCounter, setWishCounter }) => {
                             ? catalogueGreen
                             : catalogueYellow
                         }
+                        alt="catalogue"
                       />
                     </div>
                   </button>
@@ -192,6 +209,7 @@ const EasyMenuHeader = ({ setCartCounter, setWishCounter }) => {
                         src={
                           activeTab == "profile" ? profileGreen : profileYellow
                         }
+                        alt="profile"
                       />
                     </div>
                   </button>
@@ -247,7 +265,7 @@ const EasyMenuHeader = ({ setCartCounter, setWishCounter }) => {
                 <input
                   placeholder="Search your products"
                   onChange={(e) => {
-                    searchHandler(e);
+                    setSearchInput(e.target.value);
                   }}
                   className=" bg-[#fff] rounded-full px-5 py-2 md:w-[300px]    "
                 />
@@ -256,22 +274,25 @@ const EasyMenuHeader = ({ setCartCounter, setWishCounter }) => {
                 </div>
               </div>
               {searchData.map((item, idx) => {
+                
                 return (
-                  <Link to={`/product/${item._id}`} onClick={()=>{dispatch(headermenuHandler(false))}} className="absolute top-12 z-[99] w-[80%]">
+                  <div className="pt-2" key={idx}>
+                  <Link to={`/product/${item?.title?.charAt(0)?.toLowerCase()+item?.title?.slice(1)}/${item?._id}`} onClick={()=>{dispatch(headermenuHandler(false))}}  >
                     <div className="bg-[#fff] rounded-md">
                       <div className="flex gap-5 px-2 py-1 shadow-lg rounded-md">
                         <div className="size-[50px] ">
-                          <img className="rounded-xl" src={item.images[0]} />
+                          <img className="rounded-xl" src={item?.images?.productImage}  alt="productimage"/>
                         </div>
                         <div className="flex flex-col">
                           <Typography.Text className="text-[14px] font-semibold">
-                            {item.title}
+                            {item?.title}
                           </Typography.Text>
-                          <Typography.Text>Rs.{item.price}</Typography.Text>
+                          <Typography.Text>Rs.{item?.price}</Typography.Text>
                         </div>
                       </div>
                     </div>
                   </Link>
+                  </div>
                 );
               })}
             </div>
@@ -286,7 +307,6 @@ const EasyMenuHeader = ({ setCartCounter, setWishCounter }) => {
                 to={"/"}
               >
                 <div className="flex gap-2 items-center h-[20px] w-[20px]">
-                  {/* <img src={homeGreen} /> */}
                   <h6> Home</h6>
                 </div>
               </NavLink>
@@ -303,7 +323,6 @@ const EasyMenuHeader = ({ setCartCounter, setWishCounter }) => {
                       key: "1",
                       label: (
                         <div className="flex gap-2 items-center h-[20px] w-[20px]">
-                          {/* <img src={shopingCartYellow} /> */}
                           <h6 className="text-[#214344] text-[16px]"> Shop</h6>
                         </div>
                       ),
@@ -311,7 +330,7 @@ const EasyMenuHeader = ({ setCartCounter, setWishCounter }) => {
                         <div className="flex flex-col gap-2">
                           <NavLink
                             onClick={() => {
-                              filterSubcategary("pendents"),
+                              filterSubcategary("Pendants"),
                                 dispatch(headermenuHandler(false));
                             }}
                             className={"hover:text-[#214344] "}
@@ -319,38 +338,12 @@ const EasyMenuHeader = ({ setCartCounter, setWishCounter }) => {
                           >
                             <div className="flex gap-2 items-center text-[#214344]">
                               <TbPointFilled />
-                              Pendents
+                              Pendants
                             </div>
                           </NavLink>
                           <NavLink
                             onClick={() => {
-                              filterSubcategary("ring"),
-                                dispatch(headermenuHandler(false));
-                            }}
-                            className={"hover:text-[#214344]"}
-                            to={"/shop"}
-                          >
-                            <div className="flex gap-2 items-center text-[#214344]">
-                              <TbPointFilled />
-                              Rings
-                            </div>
-                          </NavLink>
-                          <NavLink
-                            onClick={() => {
-                              filterSubcategary("bracelets"),
-                                dispatch(headermenuHandler(false));
-                            }}
-                            className={"hover:text-[#214344]"}
-                            to={"/shop"}
-                          >
-                            <div className="flex gap-2 items-center text-[#214344]">
-                              <TbPointFilled />
-                              Bracelets
-                            </div>
-                          </NavLink>
-                          <NavLink
-                            onClick={() => {
-                              filterSubcategary("earings"),
+                              filterSubcategary("Earings"),
                                 dispatch(headermenuHandler(false));
                             }}
                             className={"hover:text-[#214344]"}
@@ -363,7 +356,33 @@ const EasyMenuHeader = ({ setCartCounter, setWishCounter }) => {
                           </NavLink>
                           <NavLink
                             onClick={() => {
-                              filterSubcategary("nackeless"),
+                              filterSubcategary("Chains"),
+                                dispatch(headermenuHandler(false));
+                            }}
+                            className={"hover:text-[#214344]"}
+                            to={"/shop"}
+                          >
+                            <div className="flex gap-2 items-center text-[#214344]">
+                              <TbPointFilled />
+                              Chains
+                            </div>
+                          </NavLink>
+                          <NavLink
+                            onClick={() => {
+                              filterSubcategary("Bracelets"),
+                                dispatch(headermenuHandler(false));
+                            }}
+                            className={"hover:text-[#214344]"}
+                            to={"/shop"}
+                          >
+                            <div className="flex gap-2 items-center text-[#214344]">
+                              <TbPointFilled />
+                              Bracelets
+                            </div>
+                          </NavLink>
+                          <NavLink
+                            onClick={() => {
+                              filterSubcategary("Cufflinks"),
                                 dispatch(headermenuHandler(false));
                             }}
                             className={"hover:text-[#214344] text-[#214344]"}
@@ -371,7 +390,7 @@ const EasyMenuHeader = ({ setCartCounter, setWishCounter }) => {
                           >
                             <div className="flex gap-2 items-center">
                               <TbPointFilled />
-                              Nackless
+                              Cufflinks
                             </div>
                           </NavLink>
                         </div>
@@ -382,7 +401,7 @@ const EasyMenuHeader = ({ setCartCounter, setWishCounter }) => {
               </NavLink>
               <NavLink
                 onClick={() => {
-                  setActiveTab("cart");
+                  dispatch(headermenuHandler(false)),setCartStatus("cart"),setCartOpen(true);
                 }}
                 className="text-[#214344] text-[16px] font-[600] hover:text-[#214344]"
               >

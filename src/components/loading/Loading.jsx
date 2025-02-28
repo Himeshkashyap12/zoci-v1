@@ -11,22 +11,14 @@ const Loading = () => {
   };
 
   return (
-    <div style={loadingStyle} className="bg-[rgba(0,0,0,0.5)] h-[100vh] fixed left-0 right-0 mx-auto  z-[9999]">
-      <video width="80px" height="80px" muted loop autoPlay>
-        <source
-          src={
-            "https://zoci-data.s3.ap-south-1.amazonaws.com/productVideos/1739968128208_loader.mp4"
-          }
-          type="video/mp4"
-        />
-        <source
-          src={
-            "https://zoci-data.s3.ap-south-1.amazonaws.com/productVideos/1739968128208_loader.mp4"
-          }
-          type="video/ogg"
-        />
-      </video>
+    <div className="fixed inset-0 bg-[rgba(0,0,0,0.5)] backdrop-blur-sm z-[9998]">
+    <div
+      style={loadingStyle}
+      className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 size-[70px] z-[9999]"
+    >
+      <img src="https://zoci-data.s3.ap-south-1.amazonaws.com/productVideos/1740724998454_ZOCI.gif" alt="loading" />
     </div>
+  </div>
   );
 };
 

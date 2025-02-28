@@ -58,7 +58,7 @@ const AdminProducts = () => {
                 style={{ height: "50px", width: "50px" }}
                 size={70}
                 className="rounded-full"
-                src={text[0]}
+                src={text.productImage}
               />
             </div>
           </>
@@ -117,7 +117,7 @@ const AdminProducts = () => {
               deleteProductHandler(record._id);
             }}
           >
-            <img src={deleteIcon} />
+            <img src={deleteIcon} alt="deleteIcon"/>
           </div>
           <div
             className="h-[20px] w-[20px] cursor-pointer"

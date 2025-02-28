@@ -65,7 +65,7 @@ const ShopCard = ({ item, shop }) => {
   return (
     <>
       <div className="relative shopcard">
-        <Link to={`/product/${item?._id}`}>
+       <Link to={`/product/${item?.title?.charAt(0)?.toLowerCase()+item?.title?.slice(1)}/${item?._id}`}>
           <div
             onMouseEnter={() => {
               setThumbnailButton(true);
@@ -80,7 +80,7 @@ const ShopCard = ({ item, shop }) => {
                 {!thumbnailButton && (
                   <img
                     className="rounded-t-2xl sm:border-[5px] border-[3px] border-[#214344] w-full  h-full object-cover "
-                    src={item?.images[0]}
+                    src={item?.images.productImage}
                     alt="product image "
                   />
                 )}
@@ -110,7 +110,7 @@ const ShopCard = ({ item, shop }) => {
               >
                 <div>
                   <h5 className="md:text-[16px] text-[16px] font-[500]   text-white">
-                    {item?.title}
+                  {item?.title?.charAt(0)?.toUpperCase()+item?.title?.slice(1)}
                   </h5>
                 </div>
                 <div className="flex items-center justify-between ">
@@ -165,7 +165,7 @@ const ShopCard = ({ item, shop }) => {
               }}
               className="bg-[#214344] rounded-full sm:p-2 p-1.5 cursor-pointer"
             >
-              <img src={wishlist} />
+              <img src={wishlist}  alt="wishlist"/>
             </div>
           </Tooltip>
           {/* {thumbnailButton &&<Tooltip placement="left" title={"Compare"}> <button  className="text-[#fff] bg-[#214344] p-2 rounded-full text-sm"><ReloadOutlined   style={{fontSize:"20px" ,color:"#F0D5A0"}} /></button></Tooltip>} */}
@@ -181,7 +181,7 @@ const ShopCard = ({ item, shop }) => {
                     }}
                     className="text-white bg-[#214344] hover:bg-[#214344]  text-sm  p-2  rounded-full text-center"
                   >
-                    <img className="h-[20px] w-[20px]" src={bag} />
+                    <img className="h-[20px] w-[20px]" src={bag}  alt="bag"/>
                   </button>
                 </Tooltip>
               )}
@@ -190,7 +190,7 @@ const ShopCard = ({ item, shop }) => {
                   <RWebShare
                     data={{
                       text: item?.title,
-                      url: `https://celestial-rho.vercel.app`,
+                      url: `https://zoci.in/product/${item?.title?.charAt(0)?.toLowerCase()+item?.title?.slice(1)}/${item?._id}`,
                       title: "Zoci",
                     }}
                     onClick={() => console.log("shared successfully!")}
@@ -216,14 +216,14 @@ const ShopCard = ({ item, shop }) => {
                   }}
                   className="text-white bg-[#214344] hover:bg-[#214344]  text-sm  p-2 size-[24px] rounded-full text-center"
                 >
-                  <img src={bag} />
+                  <img src={bag}  alt="bag"/>
                 </button>
               </Tooltip>
               <Tooltip placement="left" title={"Share"}>
                 <RWebShare
                   data={{
                     text: item?.title,
-                    url: `https://celestial-rho.vercel.app`,
+                    url: `https://zoci.in/product/${item?.title?.charAt(0)?.toLowerCase()+item?.title?.slice(1)}/${item?._id}`,
                     title: "Zoci",
                   }}
                   onClick={() => console.log("shared successfully!")}

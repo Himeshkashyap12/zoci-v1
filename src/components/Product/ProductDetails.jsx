@@ -34,19 +34,20 @@ const ProductDetails = () => {
   const { id } = useParams();
   const [open, setOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [activeImageUrl, setActiveImageUrl] = useState( item?.images && item?.images[0]);
+  const [activeImageUrl, setActiveImageUrl] = useState( item?.images?.productImage);
   const [cartStatus, setCartStatus] = useState("");
   const isAuth = useSelector((state) => state.auth.isAuthenticated);
   const user = localStorage.getItem("userId");
   const cart = useSelector((state) => state.cart.cart);
   const wishlistData = useSelector((state) => state?.wish.wishlist);
   var token = localStorage.getItem("token");
+  const n=3;
   const getData = async () => {
     try {
       const data = await getProductDetailsApi(id);
       dispatch(addProductDetals(data.product));
-      if (data.product?.images?.length > 0) {
-        setActiveImageUrl(data.product.images[0]);
+      if (data.product?.images?.productImage) {
+        setActiveImageUrl(data?.product?.images?.productImage);
       }
     } catch (error) {
       console.log(error);
@@ -101,11 +102,13 @@ const ProductDetails = () => {
     setIsModalOpen(true);
   };
   useEffect(() => {
-    if (counterPeople === 0) return;
+    if (counterPeople === 0) return setCounterPeople(5); // Stop when counter reaches 0
+
     const counttime = setInterval(() => {
       setCounterPeople((prev) => prev - 1);
-    }, [7000]);
-    clearInterval(counttime);
+    }, 300000);
+
+    return () => clearInterval(counttime); // Cleanup interval on unmount or update
   }, [counterPeople]);
   useEffect(() => {
     getData();
@@ -133,69 +136,91 @@ const ProductDetails = () => {
               sm={{ span: 24, order: 2 }}
               xs={{ span: 24, order: 2 }}
             >
-              <div className="flex lg:flex-col  items-center    max-lg:py-3  gap-[20px] max-lg:justify-center">
+              <div className="flex lg:flex-col  items-center    max-lg:py-3  gap-[24px] max-lg:justify-center">
                 <div
                   onClick={() => {
-                    activeImageHAndler(item?.images[0], 1);
+                    activeImageHAndler(item?.images?.productImage, 1);
                   }}
-                  className={`md:size-[90px] size-[70px] cursor-pointer ${
+                  className={`md:size-[65px] size-[50px] cursor-pointer ${
                     activeImageId == 1 &&
                     "border-[2px] border-[#214343] rounded-md"
                   } `}
                 >
-                  {item?.images?.length > 0 && (
+                  {item?.images?.productImage!=null && (
                     <img
                       className="w-[100%] h-[100%] rounded"
-                      src={item?.images[0]}
+                      src={item?.images?.productImage}
+                      alt="productImage"
                     />
                   )}
                 </div>
                 <div
                   onClick={() => {
-                    activeImageHAndler(item?.images[1], 2);
+                    activeImageHAndler(item?.images?.modalImage, 2);
                   }}
-                  className={`md:size-[90px] size-[70px] cursor-pointer ${
+                  className={`md:size-[65px] size-[50px] cursor-pointer ${
                     activeImageId == 2 &&
                     "border-[2px] border-[#214343] rounded-md"
                   } `}
                 >
-                  {item?.images?.length > 0 && (
+                  {item?.images?.modalImage!=null && (
                     <img
                       className="w-[100%] h-[100%] rounded"
-                      src={item?.images[1]}
+                      src={item?.images?.modalImage}
+                      alt="modalImage"
                     />
                   )}
                 </div>
                 <div
                   onClick={() => {
-                    activeImageHAndler(item?.images[2], 3);
+                    activeImageHAndler(item?.images?.additional1, 3);
                   }}
-                  className={`md:size-[90px] size-[70px] cursor-pointer ${
+                  className={`md:size-[65px] size-[50px] cursor-pointer ${
                     activeImageId == 3 &&
                     "border-[2px] border-[#214343] rounded-md"
                   } `}
                 >
-                  {item?.images?.length > 0 && (
+                  {item?.images?.additional1 !==null && (
                     <img
                       className="w-[100%] h-[100%] rounded"
-                      src={item.images[2]}
+                      src={item?.images?.additional1}
+                      alt="additional1"
                     />
                   )}
                 </div>
                 <div
                   onClick={() => {
-                    activeImageHAndler(item?.images[3], 4);
+                    activeImageHAndler(item?.images?.additional2, 4);
                   }}
-                  className={`md:size-[90px] size-[70px] cursor-pointer ${
+                  className={`md:size-[65px] size-[50px] cursor-pointer ${
                     activeImageId == 4 &&
                     "border-[2px] border-[#214343] rounded-md"
                   } `}
                 >
-                  {item?.images?.length > 0 && (
+                  {item?.images?.additional2 !==null && (
                     <img
                       className="w-[100%] h-[100%] rounded"
-                      src={item.images[3]}
+                      src={item?.images?.additional2}
+                      alt="additional2"
                     />
+                  )}
+                </div>
+                <div
+                  onClick={() => {
+                    activeImageHAndler(item?.video[0], 5);
+                  }}
+                  className={`md:size-[65px] size-[50px] cursor-pointer ${
+                    activeImageId == 5 &&
+                    "border-[2px] border-[#214343] rounded-md"
+                  } `}
+                >
+                  {item?.video?.length > 0 && (
+                  <div className=" w-full h-full flex justify-center items-center rounded-md ">
+                  <video className="w-full h-full object-cover rounded-md" autoPlay muted loop >
+                  <source src={item?.video[0]} type="video/mp4" />
+                  <source src={item?.video[0]} type="video/ogg" />
+                </video>
+                </div>
                   )}
                 </div>
               </div>
@@ -218,7 +243,15 @@ const ProductDetails = () => {
                 </Typography.Text>
               </div>
               <div className="md:h-[430px]     md:w-[430px] mx-auto relative max-md:pt-2">
-                {item?.images?.length > 0 && (
+                {activeImageId===5 && (
+                  <div className=" w-full h-full flex justify-center items-center rounded-md ">
+                  <video className="w-full h-full object-cover rounded-xl" autoPlay muted loop>
+                    <source src={item?.video[0]} type="video/mp4" />
+                    <source src={item?.video[0]} type="video/ogg" />
+                  </video>
+                </div>
+                )}
+                {activeImageId!=5  && (
                   <InnerImageZoom
                     fadeDuration={0}
                     fullscreenOnMobile={true}
@@ -255,16 +288,26 @@ const ProductDetails = () => {
                 <div className="flex max-sm:flex-col justify-between md:items-center">
                   <div>
                     <h5 className="md:text-[30px] text-[24px] font-semibold tracking-tight text-[#214344]">
-                      {item?.title}
+                    {item?.title?.charAt(0)?.toUpperCase()+item?.title?.slice(1)}
+
                     </h5>
                   </div>
                   <div>
                     <div className="flex gap-2 items-center py-4">
-                      {item?.rating?.map((item) => {
+                      {[...Array(n)]?.map((item) => {
                         return (
                           <>
                             <div className="h-[18px] w-[18px]">
-                              <img src={starOrange} />
+                              <img src={starOrange} alt="star" />
+                            </div>
+                          </>
+                        );
+                      })}
+                      {[...Array(5 - n)]?.map((item) => {
+                        return (
+                          <>
+                            <div className="h-[18px] w-[18px]">
+                              <img src={starOrange}  alt="star"/>
                             </div>
                           </>
                         );
@@ -296,7 +339,7 @@ const ProductDetails = () => {
                 <div className="flex justify-between">
                   <div className="flex gap-1">
                     <Typography.Text className="font-semibold text-[16px] text-[#214344] ">
-                      Sold :{" "}
+                      Sold :
                     </Typography.Text>
                     <Typography.Text className="font-bold text-[16px] text-[#214344] ">
                       {item?.sold}
@@ -320,7 +363,7 @@ const ProductDetails = () => {
                   className=" rounded-full cursor-pointer"
                 >
                   <div className="p-2 h-[45px] w-[40px] cursor-pointer">
-                    <img src={bag} className="h-full w-full" />
+                    <img src={bag} className="h-full w-full" alt="bag" />
                   </div>
                 </button>
                 <button
@@ -335,13 +378,13 @@ const ProductDetails = () => {
                   }}
                   className="size-[30px]  cursor-pointer"
                 >
-                  <img src={wishlist} />
+                  <img src={wishlist} alt="wishlist" />
                 </button>
               </div>
               <div className="flex flex-col   gap-[20px] ">
                 <div className="w-[100%] shadow-xl bg-[#fffcf2]   rounded-full flex justify-start md:px-5 ps-4 pe-6  items-center h-[50px]">
                   <div className=" flex items-center h-[20px] w-[20px]">
-                    <img className="w-[100%] " src={bag} />
+                    <img className="w-[100%] " src={bag} alt="bag" />
                   </div>
                   <marquee direction="left">
                     <Typography.Text className="max-sm:ps-1 sm:ps-4 text-[16px]">
@@ -378,7 +421,8 @@ const ProductDetails = () => {
                                 Metal color :
                               </Typography.Text>
                               <Typography.Text className="text-[14px] font-[400] text-[#214344]">
-                                {item?.ProductColor}
+                                {item?.metalColor?.charAt(0)?.toUpperCase() +
+                                  item?.metalColor?.slice(1)}
                               </Typography.Text>
                             </div>
                           </div>

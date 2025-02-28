@@ -10,9 +10,11 @@ const CustomFilter = () => {
       const res = await getProductFilterApi({ filters });
       dispatch(addproductToshop(res?.products));
     } catch (error) {
-      console.log(error);
+   if(error?.response?.data?.message==="No products found"){
+      dispatch(addproductToshop([]));};
     }
   };
+
   return (
     <>
       <div className="filter flex flex-wrap max-md:justify-center items-center gap-5">
@@ -28,7 +30,7 @@ const CustomFilter = () => {
           </Button>
           <Button
             onClick={() => {
-              filterSubcategary("madefor", "Men");
+              filterSubcategary("madeFor", "Men");
             }}
             className=" w-[150px] py-2 hover:!text-[#214344]  hover:!border-[#214344]  rounded-full bg-[#214344] text-[#F0D5A0]  text-[14px]"
           >
@@ -44,7 +46,7 @@ const CustomFilter = () => {
           </Button>
           <Button
             onClick={() => {
-              filterSubcategary("madefor", "Men");
+              filterSubcategary("madeFor", "Men");
             }}
             className=" w-[150px] py-2 hover:!text-[#214344]  hover:!border-[#214344]  rounded-full bg-[#214344] text-[#F0D5A0]  text-[14px]"
           >
@@ -62,5 +64,6 @@ const CustomFilter = () => {
       </div>
     </>
   );
-};
+}
+
 export default CustomFilter;

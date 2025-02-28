@@ -7,6 +7,7 @@ import { addToWishList } from "../../feature/wishlist/wishlistSlice";
 import { deleteWishlistData, getWishlistData } from "../../feature/wishlist/wishlistApi";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
+import { headermenuHandler } from "../../feature/header/headerSlice";
 const WishList=({setCartOpen})=>{
     
     const dispatch=useDispatch();
@@ -51,6 +52,7 @@ const WishList=({setCartOpen})=>{
             <h4 className="text-center font-[400] text-[15px] text-[#000] py-3">You have no items in your wishlist. Start adding!</h4>
             <button onClick={()=>{
                 navigate("/shop")
+                dispatch(headermenuHandler(false))
                 setCartOpen(false)
             }} 
             className="bg-[#214344] text-[#fff] px-10 py-3 rounded-full text-[16px]">Shop</button>
@@ -61,7 +63,7 @@ const WishList=({setCartOpen})=>{
        <div className="flex justify-between px-5 pt-5  w-full">
         <div  className=" flex gap-3">
             <div className="h-[100px] w-[100px]">
-        <img src={item.image[0]} className="w-full h-full rounded-xl"/>
+        <img src={item.image[0]} className="w-full h-full rounded-xl" alt=" item"/>
         </div>
         <div className="flex flex-col pt-2">
             <Typography.Text className="text-[16px] font-[400] ">{item?.title}</Typography.Text>

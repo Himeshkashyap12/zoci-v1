@@ -55,7 +55,7 @@ const Sorting = ({  setFiter }) => {
               }}
               className=" cursor-pointer rounded-full  size-[20px]"
             >
-              <img className="h-full w-full" src={closeIcon} />
+              <img className="h-full w-full" src={closeIcon}  alt="closeIcon"/>
             </div>
           </div>
           <div
@@ -64,7 +64,7 @@ const Sorting = ({  setFiter }) => {
               filterHandler();
             }}
           >
-          <img src={filterIcon} />
+          <img src={filterIcon} alt="filterIcon"/>
           </div>
           <ConfigProvider
             theme={{

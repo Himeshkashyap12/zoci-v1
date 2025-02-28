@@ -1,7 +1,4 @@
 import { Col, Row } from "antd";
-import divyanshi from "../../assets/Divyanshi.jpg";
-import manya from "../../assets/Manya.png";
-import pritiImage from "../../assets/Priti.jpg";
 const Testimonial = () => {
   return (
     <div className="textimonial md:pb-20  ">
@@ -17,7 +14,8 @@ const Testimonial = () => {
               {/* Rotate only the parent container */}
               <img
                 className=" rounded-full border-[5px] border-[#214344] "
-                src={manya}
+                src={"https://zoci-data.s3.ap-south-1.amazonaws.com/productImages/1740736559262_Manya.png"}
+                alt="manya"
               />
             </div>
             <h4 className="text-[16px] font-[400] underline text-[#214344]">
@@ -42,7 +40,8 @@ const Testimonial = () => {
               {/* Rotate only the parent container */}
               <img
                 className=" rounded-full border-[5px] border-[#BFA785] "
-                src={pritiImage}
+                src={"https://zoci-data.s3.ap-south-1.amazonaws.com/productImages/1740736491260_Priti.jpg"}
+                alt="manya"
               />
             </div>
             <h4 className="text-[18px] font-[400] underline text-[#BFA785]">
@@ -62,7 +61,8 @@ const Testimonial = () => {
               {/* Rotate only the parent container */}
               <img
                 className=" rounded-full border-[5px] border-[#214344]"
-                src={divyanshi}
+                src={"https://zoci-data.s3.ap-south-1.amazonaws.com/productImages/1740736619361_Divyanshi.jpg"}
+                alt="manya"
               />
             </div>
             <h4 className="text-[16px] font-[400] underline text-[#214344]">

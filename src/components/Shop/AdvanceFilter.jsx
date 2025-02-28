@@ -1,4 +1,4 @@
-import React  from "react";
+import React, { useState }  from "react";
 import {
   Drawer,
   Slider,
@@ -8,12 +8,15 @@ import {
 } from "antd";
 import { PlusOutlined, MinusOutlined } from "@ant-design/icons";
 import "./advancefilter.css";
-import { getProductFilterApi } from "../../feature/product/productApi";
-import { addproductToshop } from "../../feature/shop/shopSlice";
+import { getProductbyMinAndMaxPrice, getProductFilterApi } from "../../feature/product/productApi";
+import { addCategary, addproductToshop } from "../../feature/shop/shopSlice";
 import { useDispatch } from "react-redux";
+import { headermenuHandler } from "../../feature/header/headerSlice";
 const { Panel } = Collapse;
 const AdvanceFilter = ({ open, setOpen }) => {
   const dispatch = useDispatch();
+  const [range, setRange] = useState([100, 1000]);
+
   const handleCategoryChange = async (category, type) => {
     switch (type) {
       case "metalColor":
@@ -23,7 +26,11 @@ const AdvanceFilter = ({ open, setOpen }) => {
           setOpen(false);
           dispatch(addproductToshop(res?.products));
         } catch (error) {
-          console.log(error);
+          if(error?.response.data.message==="No products found"){
+            dispatch(addproductToshop([]));
+          setOpen(false);
+
+          }
         }
         break;
       case "metalType":
@@ -33,20 +40,36 @@ const AdvanceFilter = ({ open, setOpen }) => {
           setOpen(false);
           dispatch(addproductToshop(res?.products));
         } catch (error) {
-          console.log(error);
-        }
+          if(error?.response.data.message==="No products found"){
+            dispatch(addproductToshop([]));
+          setOpen(false);
 
+          }
+        }
         break;
     }
   };
   const onClose = () => {
     setOpen(false);
   };
-  const onChange = (value) => {
-    console.log("onChange: ", value);
-  };
-  const onChangeComplete = (value) => {
-  };
+ 
+  
+    const handleChange = async(value) => {
+      setRange(value);
+    try {
+      const pricerange = { min:range[0], max:range[1] } 
+      const res = await getProductbyMinAndMaxPrice( pricerange );
+      dispatch(addproductToshop(res?.products));
+      dispatch(headermenuHandler(false))
+
+    } catch (error) {
+      if(error.response.data.message==="No products found"){
+        dispatch(headermenuHandler(false))
+        dispatch(addproductToshop([]));
+
+      };
+    }
+    };
 
   return (
     <ConfigProvider
@@ -57,7 +80,7 @@ const AdvanceFilter = ({ open, setOpen }) => {
             colorText: "#214344",
           },
           Checkbox: {
-            colorPrimary: "#214344", r
+            colorPrimary: "#214344", 
           },
           Slider: {
             colorPrimary: "#214344",
@@ -83,14 +106,16 @@ const AdvanceFilter = ({ open, setOpen }) => {
             <Typography.Title level={5} style={{ color: "#214344" }}>
               Filter by price
             </Typography.Title>
-
             <Slider
-              range
-              step={10}
-              defaultValue={[100, 10000]}
-              onChange={onChange}
-              onChangeComplete={onChangeComplete}
-            />
+                range
+                min={0}
+                max={5000}
+                step={100}
+                value={range}
+                onChange={handleChange}
+                trackStyle={{ backgroundColor: "#214344" }}
+                handleStyle={{ borderColor: "#214344" }}
+              />
             <Collapse
               expandIcon={({ isActive }) =>
                 isActive ? (
@@ -110,7 +135,7 @@ const AdvanceFilter = ({ open, setOpen }) => {
                 style={{ background: "#214344", margin: "10px 0" }}
               >
                 <div className="flex flex-col gap-2 py-3">
-                  {["Silver"].map((metalType) => (
+                  {[,"Gold", "Platinum", "Silver"].map((metalType) => (
                     <h6
                       className="text-[#214344] cursor-pointer"
                       onClick={() =>
@@ -130,7 +155,7 @@ const AdvanceFilter = ({ open, setOpen }) => {
                 style={{ background: "#214344" }}
               >
                 <div className="flex flex-col gap-2">
-                  {["Red", "White", "Yellow"].map((metalColor) => (
+                  {["Rose", "White", "Yellow","Black","Titanium","Green","Purple"].map((metalColor) => (
                     <h6
                       className="text-[#214344] cursor-pointer"
                       onClick={() =>

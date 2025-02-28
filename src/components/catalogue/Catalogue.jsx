@@ -1,45 +1,35 @@
 import { Card, Col, Row } from "antd";
 import { useState } from "react";
 import ring from "../../assets/rings.jpg";
+import { getallCategaryApi } from "../../feature/admin/adminApi";
+import { addAdminCategary } from "../../feature/admin/adminSlice";
+import { useDispatch, useSelector } from "react-redux";
 const Catalogue = () => {
-  const [activeTab, setActiveTab] = useState("men");
-  const [catalogueData, setCatalogueData] = useState([
-    "Earring",
-    "Cufflinks",
-    "Bracelets",
-    "Rings",
-    "Pendants",
-    "Brooches",
-    "Chains",
-    "Walletchains",
-  ]);
+  const [activeTab, setActiveTab] = useState("Women");
   const [hoverActive, setHoverActive] = useState(false);
   const [hoverId, setHoverId] = useState(null);
-  const activeTabHandler = (categary) => {
-    setActiveTab(categary);
-    if (categary === "men") {
-      setCatalogueData([
-        "Launch Soon",
-        "Launch Soon",
-        "Launch Soon",
-        "Launch Soon",
-        "Launch Soon",
-        "Launch Soon",
-        "Launch Soon",
-        "Launch Soons",
-      ]);
-    } else {
-      setCatalogueData([
-        "Necklace",
-        "Brooch",
-        "Watch clip",
-        "Cufflinks",
-        "Bracelet",
-        "Rings",
-        "Earrings",
-        "Pendant",
-      ]);
-    }
+  const dispatch=useDispatch();
+  const catalogueData=useSelector(state=>state?.admin?.category)
+  const getCategary = async(key) => {
+    setActiveTab(key)
+       if(key==="Men"){ dispatch(addAdminCategary([
+         {title:"Launching Soon"},
+         {title:"Launching Soon"},
+         {title:"Launching Soon"},
+         {title:"Launching Soon"},
+         {title:"Launching Soon"},
+         {title:"Launching Soon"},
+         {title:"Launching Soon"},
+       ]))
+     } else{
+       try{
+         const data={madeFor:key??"Women"}
+         const res=await getallCategaryApi(data)      
+         dispatch(addAdminCategary(res?.categories));
+       }catch(error){
+         console.log(error);
+     };
+   }
   };
 
   return (
@@ -50,9 +40,9 @@ const Catalogue = () => {
         </h2>
         <div className="flex gap-[34px] pt-5">
           <button
-            onClick={() => activeTabHandler("men")}
+            onClick={() => getCategary("Men")}
             className={`${
-              activeTab == "men"
+              activeTab == "Men"
                 ? "bg-[#214344] text-[#efe6dc]"
                 : "border-[3px] border-[#214344] text-[#214344]"
             } md:w-[160px] w-[100px] py-2 rounded-full `}
@@ -60,9 +50,9 @@ const Catalogue = () => {
             Men's
           </button>
           <button
-            onClick={() => activeTabHandler("women")}
+            onClick={() => getCategary("Women")}
             className={`${
-              activeTab == "women"
+              activeTab == "Women"
                 ? "bg-[#214344] text-[#efe6dc]"
                 : "border-[3px] border-[#214344] text-[#214344]"
             }  md:w-[160px] w-[100px] py-2 rounded-full `}
@@ -86,8 +76,7 @@ const Catalogue = () => {
                       margin: "0 auto",
                       width: "100%",
                       justifyContent: "center",
-                      alignItems: "center",
-                      // height: '100vh',
+                      alignItems: "center"
                     }}
                   >
                     <Card
@@ -124,11 +113,11 @@ const Catalogue = () => {
                       >
                         <div className="absolute flex items-center  justify-center   ">
                           <div className="w-[50px] h-[60px] flex items-center justify-center">
-                            <img className="w-full h-[30px] " src={ring} />
+                            <img className="w-full h-[30px] " src={ring} alt="ring"/>
                           </div>
                           {hoverActive && hoverId === idx && (
                             <h4 className="absolute left-0 right-0 mx-auto flex justify-center text-[12px]   text-[#214344] font-bold    ">
-                              {item}
+                              {item?.title}
                             </h4>
                           )}
                         </div>

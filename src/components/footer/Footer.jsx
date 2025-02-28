@@ -42,7 +42,7 @@ const Footer = () => {
         <Row>
           <Col xl={6} lg={6} md={8} sm={12} xs={24}>
             <div className="flex h-full justify-end   items-center px-10">
-              <img className="" src={footerImage} />
+              <img className="" src={footerImage} alt="footerImage" />
             </div>
           </Col>
           <Col xl={6} lg={6} md={8} sm={12} xs={24}>
@@ -78,9 +78,12 @@ const Footer = () => {
                 <Link className="text-[#fff] hover:text-[#fff] text-[18px] ">
                   FAQ
                 </Link>
-                <Link to={"contact-us"} className="text-[#fff] hover:text-[#fff] text-[18px] ">
+                <Link to={"/contact-us"} className="text-[#fff] hover:text-[#fff] text-[18px] ">
                   Contact Us
                 </Link>
+               {localStorage.getItem("role")==="admin" && <Link to={"/admin/products"} className="text-[#fff] hover:text-[#fff] text-[18px] ">
+                  Go to admin pannel
+                </Link>}
               </div>
             </div>
           </Col>
@@ -93,18 +96,27 @@ const Footer = () => {
                 <Link
                   className="text-[#fff] hover:text-[#fff] text-[18px] cursor-pointer"
                   to={"/shop"}
+                  onClick={() => {
+                    filterSubcategary("Signature Collection");
+                  }}
                 >
                   Signature Collection
                 </Link>
                 <Link
                   className="text-[#fff] hover:text-[#fff] text-[18px] cursor-pointer"
                   to={"/shop"}
+                  onClick={() => {
+                    filterSubcategary("Personalized Pieces");
+                  }}
                 >
                   Personalized Pieces
                 </Link>
                 <Link
                   className="text-[#fff] hover:text-[#fff] text-[18px] cursor-pointer"
                   to={"/shop"}
+                  onClick={() => {
+                    filterSubcategary("Regular Upkeep");
+                  }}
                 >
                   Regular Upkeep
                 </Link>

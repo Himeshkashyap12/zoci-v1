@@ -84,22 +84,22 @@ const AboutUs = () => {
         >
           <Slider {...settings}>
             <div className="w-full">
-              <img src={modalImage} />
+              <img src={modalImage} alt="modalImage" />
             </div>
             <div>
-              <img src={modalImage} />
+              <img src={modalImage} alt="modalImage"/>
             </div>
             <div>
-              <img src={modalImage} />
+              <img src={modalImage}  alt="modalImage"/>
             </div>
             <div>
-              <img src={modalImage} />
+              <img src={modalImage}  alt="modalImage"/>
             </div>
             <div>
-              <img src={modalImage} />
+              <img src={modalImage} alt="modalImage"/>
             </div>
             <div>
-              <img src={modalImage} />
+              <img src={modalImage}alt="modalImage" />
             </div>
           </Slider>
         </Col>

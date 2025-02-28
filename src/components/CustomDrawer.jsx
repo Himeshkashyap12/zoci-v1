@@ -27,7 +27,7 @@ const CustomDrawer = ({
         title={
           <div className="flex justify-between items-center">
             <div onClick={onClose} className="h-[20px] w-[20px]">
-              <img src={closeIcon} />
+              <img src={closeIcon} alt="closeIcon" />
             </div>
             <div className="flex items-center gap-3">
               <Tooltip placement="left" title={"Cart"}>
@@ -42,9 +42,9 @@ const CustomDrawer = ({
                   <div className="flex justify-center items-center">
                     <div className="h-[26px] w-[22px]">
                       {activeDrawer === "cart" ? (
-                        <img className="h-full w-full" src={greenBag} />
+                        <img className="h-full w-full" src={greenBag} alt="greenBag" />
                       ) : (
-                        <img className="h-full w-full" src={yellowBag} />
+                        <img className="h-full w-full" src={yellowBag} alt="greenBag" />
                       )}
                     </div>
                   </div>
@@ -63,6 +63,7 @@ const CustomDrawer = ({
                     <div className="flex items-center justify-center">
                       <div className="h-[24px] w-[24px]">
                         <img
+                        alt="greenBag"
                           src={
                             activeDrawer != "cart"
                               ? wishListGreen

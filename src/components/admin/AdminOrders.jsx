@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { formatDate } from "../common/dateConvertFunction";
 import { toast } from "react-toastify";
 import CustomPagination from "../CustomPagination";
-
+import "./admin.css";
 const AdminOrders = () => {
   const dispatch = useDispatch();
   const data = useSelector((state) => state?.admin?.order);
@@ -40,10 +40,12 @@ const AdminOrders = () => {
       width: 150,
       align: "center",
       render: (text) => {
+        console.log(text,"image");
+        
         return (
           <div className="flex !justify-center ">
             <div className="size-[50px] ">
-              <img className="rounded-full" src={text[0].images[0]} />
+              <img className="rounded-full" src={text[0]?.images?.productImage} alt="productimage" />
             </div>
           </div>
         );

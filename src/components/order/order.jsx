@@ -30,13 +30,14 @@ const OrderModal = ({ isModalOpen, setIsModalOpen, item, cart }) => {
     });
   };
   const orderFormHandler = async () => {
+    if(orderInput?.pincode?.length !==6) return toast.error("Please enter valid pincode");
     if (
       orderInput.firstname == "" ||
       orderInput.lastname == "" ||
       orderInput.address == "" ||
       orderInput.city == "" ||
       orderInput.state == "" ||
-      orderInput.pincode == ""
+     ( orderInput.pincode == "")
     ) {
       return toast.error("Please enter all the details");
     }
@@ -70,8 +71,7 @@ const OrderModal = ({ isModalOpen, setIsModalOpen, item, cart }) => {
   const getCartDataHandler = async () => {
     try {
       const response = await getCartData();
-
-      dispatch(addToCart(data));
+        dispatch(addToCart(data));
     } catch (error) {
       if (error?.response?.data?.message === "No items in the cart") {
         dispatch(addToCart([]));
@@ -119,11 +119,12 @@ const OrderModal = ({ isModalOpen, setIsModalOpen, item, cart }) => {
 
     const options = {
       key: import.meta.env.VITE_RAZORPAY_KEY,
+      redirect: false,
       amount: parseInt(order.paymentAmount * 100),
       currency: "INR",
       name: "Zoci",
-      description: order.description,
-      order_id: order.razorpayOrderId,
+      description: order?.description,
+      order_id: order?.razorpayOrderId,
       image:
         "https://zoci-data.s3.ap-south-1.amazonaws.com/productImages/1740047051814_Screenshot%202025-02-20%20155231.png",
       handler: function (response) {
@@ -153,11 +154,10 @@ const OrderModal = ({ isModalOpen, setIsModalOpen, item, cart }) => {
     paymentObject.on("payment.failed", function (response) {
       console.error("Payment failed:", response.error);
       setIsModalOpen(false);
-      toast.error("Payment failed");
       alert("Payment failed, try again");
       paymentWindow.close();
     });
-    paymentObject.open("", "_blank", "width=500,height=700");
+    paymentObject.open("", "_self", "width=500,height=700");
   };
 
   const getUserHandler = async () => {
@@ -192,7 +192,7 @@ const OrderModal = ({ isModalOpen, setIsModalOpen, item, cart }) => {
                   onChange={(e) => {
                     orderInputHandler(e);
                   }}
-                  value={orderInput.firstname}
+                  value={orderInput?.firstname}
                   className="rounded-full"
                   placeholder="Enter your First Name"
                 />
@@ -202,7 +202,7 @@ const OrderModal = ({ isModalOpen, setIsModalOpen, item, cart }) => {
                   onChange={(e) => {
                     orderInputHandler(e);
                   }}
-                  value={orderInput.lastname}
+                  value={orderInput?.lastname}
                   className="rounded-full"
                   placeholder="Enter your Last Name"
                 />
@@ -212,7 +212,7 @@ const OrderModal = ({ isModalOpen, setIsModalOpen, item, cart }) => {
                     orderInputHandler(e);
                   }}
                   name="address"
-                  value={orderInput.address}
+                  value={orderInput?.address}
                   className="rounded-full"
                   placeholder="Enter your Address"
                 />
@@ -222,7 +222,7 @@ const OrderModal = ({ isModalOpen, setIsModalOpen, item, cart }) => {
                     orderInputHandler(e);
                   }}
                   name="city"
-                  value={orderInput.city}
+                  value={orderInput?.city}
                   className="rounded-full"
                   placeholder="Enter your City"
                 />
@@ -232,14 +232,15 @@ const OrderModal = ({ isModalOpen, setIsModalOpen, item, cart }) => {
                     orderInputHandler(e);
                   }}
                   name="state"
-                  value={orderInput.state}
+                  value={orderInput?.state}
                   className="rounded-full"
                   placeholder="Enter your State"
                 />
 
                 <Input
                   name="pincode"
-                  value={orderInput.pincode}
+                  type="number"
+                  value={orderInput?.pincode}
                   onChange={(e) => {
                     orderInputHandler(e);
                   }}
@@ -266,9 +267,9 @@ const OrderModal = ({ isModalOpen, setIsModalOpen, item, cart }) => {
                   <div key={idx} className="flex  gap-5">
                     <div className="size-[100px]">
                       <img
-                        src={ele?.images[0]}
+                        src={ele?.images?.productImage}
                         className="rounded-md object-cover"
-                        alt=""
+                        alt="product"
                       />
                     </div>
                     <div className="flex flex-col gap-2">

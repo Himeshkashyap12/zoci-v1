@@ -6,19 +6,24 @@ import AdminProtectedRoute from "./utils/AdminProtectedRoute";
 import ProtectedRoute from "./utils/ProtectedRoute";
 import Loading from "./components/loading/Loading";
 import ApiLoader from "./components/loading/ApiLoader";
-import HelpPage from "./pages/helpPage/jewelryCareGuidePage";
 const Layout = lazy(() => import("./layout/Layout"));
 const ShopPage = lazy(() => import("./pages/shopPage/ShopPage"));
 const HomePage = lazy(() => import("./pages/home/Home"));
-const ProductDetailsPage = lazy(() =>import("./pages/productDetails/ProductDetails"));
-const AdminOrdersPage = lazy(() =>import("./pages/adminOrder/AdminOrderPage"));
-const AboutUsPage = lazy(() =>import("./pages/aboutusPage/AboutUsPage"));
-const ViewCartPage = lazy(() =>import("./pages/viewCartPage/ViewCartPage"));
-const WishlistPage = lazy(() =>import("./pages/wishlistPage/WishListPage"));
-const AdminLayout = lazy(() =>import("./components/admin/AdminLayout"));
-const AdminProductPage = lazy(() =>import("./pages/adminProductPage/AdminProductPage"));
-const AdminCreateFormPage = lazy(() =>import("./pages/adminCreateForm/AdminCreateFormPage"));
-const NotFound = lazy(() =>import("./pages/notFound/NotfoundPage"));
+const ProductDetailsPage = lazy(() =>
+  import("./pages/productDetails/ProductDetails")
+);
+const AdminOrdersPage = lazy(() => import("./pages/adminOrder/AdminOrderPage"));
+const AboutUsPage = lazy(() => import("./pages/aboutusPage/AboutUsPage"));
+const ViewCartPage = lazy(() => import("./pages/viewCartPage/ViewCartPage"));
+const WishlistPage = lazy(() => import("./pages/wishlistPage/WishListPage"));
+const AdminLayout = lazy(() => import("./components/admin/AdminLayout"));
+const AdminProductPage = lazy(() =>
+  import("./pages/adminProductPage/AdminProductPage")
+);
+const AdminCreateFormPage = lazy(() =>
+  import("./pages/adminCreateForm/AdminCreateFormPage")
+);
+const NotFound = lazy(() => import("./pages/notFound/NotfoundPage"));
 import JewelryCareGuidePage from "./pages/helpPage/jewelryCareGuidePage";
 import TermsAndConditionPage from "./pages/helpPage/TermsAndConditionPage";
 import ReturnAndExchangePage from "./pages/helpPage/ReturnAndExchangePage";
@@ -34,7 +39,10 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<HomePage />} />
-            <Route path="product/:id" element={<ProductDetailsPage />} />
+            <Route
+              path="product/:category/:id"
+              element={<ProductDetailsPage />}
+            />
             <Route path="shop" element={<ShopPage />} />
             <Route path="aboutus" element={<AboutUsPage />} />
             <Route
@@ -53,42 +61,21 @@ function App() {
                 </ProtectedRoute>
               }
             />
-             <Route
+            <Route
               path="jewelry-careguide"
-              element={
-                  <JewelryCareGuidePage />
-              }
+              element={<JewelryCareGuidePage />}
             />
             <Route
               path="terms-and-conditions"
-              element={
-                  <TermsAndConditionPage />
-              }
-            />
-             <Route
-              path="return-and-exchange"
-              element={
-                  <ReturnAndExchangePage />
-              }
-            />
-              <Route
-              path="privacy-policy"
-              element={
-                  <PrivacyPolicyPage />
-              }
+              element={<TermsAndConditionPage />}
             />
             <Route
-              path="shiping"
-              element={
-                  <ShipingPolicyPage />
-              }
+              path="return-and-exchange"
+              element={<ReturnAndExchangePage />}
             />
-             <Route
-              path="contact-us"
-              element={
-                  <ContactUsPage />
-              }
-            />
+            <Route path="privacy-policy" element={<PrivacyPolicyPage />} />
+            <Route path="shiping" element={<ShipingPolicyPage />} />
+            <Route path="contact-us" element={<ContactUsPage />} />
             <Route path="*" element={<NotFound />} />
           </Route>
           <Route

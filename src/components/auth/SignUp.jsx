@@ -16,7 +16,7 @@ const SignUp = ({ setWishCounter, setCartCounter }) => {
       <div className="px-5  w-[100%] flex flex-col h-[100%]  items-center justify-center pt-10">
         <div className="w-[150px] h-[150px] rounded-full flex justify-center items-center  bg-[#fff]  border-[2px] border-[#dfb38e] ">
           <div className="p-2">
-            <img className="w-full h-full" src={profile} />
+            <img className="w-full h-full" src={profile}  alt="Profile"/>
           </div>
         </div>
         {!isAuth && (

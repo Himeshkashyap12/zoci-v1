@@ -1,29 +1,9 @@
 import Slider from "react-slick";
 import { Card } from "antd";
 import diamond from "../../assets/diamond.webp";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import "./subcategary.css";
-import { getallCategaryApi } from "../../feature/admin/adminApi";
-const womensData = [
-  "Earing",
-  "Bracelets",
-  "Ring",
-  "Pendents",
-  "Necklaces",
-  "Band",
-  "Watch",
-  "Jackets",
-];
-const mensData = [
-  "Launching Soon",
-  "Launching Soon",
-  "Launching Soon",
-  "Launching Soon",
-  "Launching Soon",
-  "Launching Soon",
-  "Launching Soon",
-  "Launching Soon",
-];
+import { useSelector } from "react-redux";
 const settings = {
   className: "center",
   dots: false,
@@ -84,11 +64,14 @@ const settings = {
 const SubCategary = ({ categary }) => {
   const [hoverSub, setHoverSub] = useState();
   const [hoverId, setHoverId] = useState(null);
-
+  const categaryData=useSelector(state=>state.admin.category)
+  
   const hoverSubHandler = (idx) => {
     setHoverSub(true);
     setHoverId(idx);
   };
+
+
 
 
   
@@ -100,7 +83,7 @@ const SubCategary = ({ categary }) => {
     <div className="md:px-1 px-0  subcategary md:my-10  mx-auto w-full">
       <div className="   md:w-[78%] w-[100%] mx-auto  ">
         <Slider {...settings}>
-          {(categary === "Women" ? womensData : mensData)?.map((item, idx) => {
+          {categaryData?.map((item, idx) => {
             return (
               <>
                 <div
@@ -114,7 +97,6 @@ const SubCategary = ({ categary }) => {
                     width: "100%",
                     justifyContent: "center",
                     alignItems: "center",
-                    // height: '100vh',
                   }}
                 >
                   <Card
@@ -151,11 +133,11 @@ const SubCategary = ({ categary }) => {
                     >
                       <div className="absolute flex items-center  justify-center   ">
                         <div className="w-[90px] h-[60px] flex items-center justify-center">
-                          <img className="w-full h-[40px] " src={diamond} />
+                          <img className="w-full h-[40px] " src={diamond} alt="diamond" />
                         </div>
                         {hoverSub && hoverId === idx && (
                           <h4 className="absolute left-0 right-0 mx-auto flex justify-center text-[20px]   text-[#214344] font-bold    ">
-                            {item}
+                            {item.title}
                           </h4>
                         )}
                       </div>

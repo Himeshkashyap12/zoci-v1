@@ -29,27 +29,44 @@ const CreateAdminProduct = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [videoUrl, setVideoUrl] = useState([]);
-  const [preview, setPreview] = useState([]);
-  const [productImagesUrl, setProductImagesUrl] = useState([]);
+  const [preview, setPreview] = useState({
+    modalImage: null,
+    productImage: null,
+    additional1: null,
+    additional2: null,
+  });
+  const [productImagesUrl, setProductImagesUrl] = useState({
+    modalImage: null,
+    productImage: null,
+    additional1: null,
+    additional2: null,
+  });
   const [metalType, setMetalType] = useState("Gold");
   const [category, setCategary] = useState("Nackless");
   const editData = location?.state?.product;
-  const [image, setImage] = useState(null);
+  console.log(editData, "editData");
+
   const dispatch = useDispatch();
   const categories = useSelector((state) => state?.admin?.category);
-  console.log(categories, "categaries");
-  
+
   const [productFormInput, setProductFormInput] = useState({
     title: "",
     price: "",
     description: "",
     quantity: "",
-    weight: "",
-    size: "",
+    length: "",
+    length: "",
     madefor: "",
     metalColor: "",
-    compare_at_price:""
+    compare_at_price: "",
+    sku: "",
+    lengthUnit: "",
+    metalShape: "",
   });
+
+  const handleChange = (value) => {
+    setMetalType(value);
+  };
   const getCategary = async () => {
     try {
       const res = await getallCategaryApi();
@@ -107,8 +124,9 @@ const CreateAdminProduct = () => {
   }
 
   const createProductHandler = async () => {
-    if (!editData && (productImagesUrl.length < 4 || videoUrl.length < 1))
+    if (!editData && (productImagesUrl?.productImage===null || productImagesUrl?.modalImage===null || productImagesUrl?.additional1===null || productImagesUrl?.additional2==null || videoUrl?.length < 1 )) {
       return toast.error("Please add all images and videos");
+    }
     const data = {
       ...productFormInput,
       images: productImagesUrl,
@@ -116,8 +134,6 @@ const CreateAdminProduct = () => {
       metalType,
       category: category,
     };
-    console.log(data);
-    
 
     if (!editData) {
       try {
@@ -131,14 +147,14 @@ const CreateAdminProduct = () => {
     } else {
       const newData = {
         ...productFormInput,
-        images: productImagesUrl, // Ensure this includes existing or new images
-        video: videoUrl, // Ensure this includes existing or new video
+        images: productImagesUrl,
+        video: videoUrl,
         metalType,
-        category,
-        compare_at_price: 1200,
+        category: category,
       };
-
       const changedData = deepCompareArraysOnly(editData, newData);
+
+
       if (Object.keys(changedData).length === 0) {
         return toast.info("No changes detected.");
       }
@@ -153,12 +169,22 @@ const CreateAdminProduct = () => {
       }
     }
   };
-  const handleChange = (value) => {
-    
-    setMetalType(value);
-  };
 
-  const videoHandler = async (e) => {
+  const imageHandler = async (e, i) => {
+    const file = e.target.files[0];
+    setPreview({ ...preview, [i]: URL.createObjectURL(file) });
+    const formData = new FormData();
+    formData.append("productImages", file);
+    try {
+      const res = await uploadProductImages(formData);
+      setProductImagesUrl({ ...productImagesUrl, [i]: res?.images[0] });
+      toast.success(res.message);
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    }
+  };
+  const videoHandler = async (e) => {    
     const selectedVideo = e.target.files[0]; // Get the selected file
     if (!selectedVideo) {
       return;
@@ -174,54 +200,19 @@ const CreateAdminProduct = () => {
       toast.error(error.response.data.message);
     }
   };
-
-
-  const removeImage=async(i)=>{
+  const removeImage = async (i) => {
     try {
-      const data={imageUrl:productImagesUrl[i]}
-      const res=await deleteProductImage(data);
-      console.log(res);
-      
-      debugger
-      productImagesUrl.splice(i,1);
-      preview.splice(i,1);
-      console.log(deletedData);
-      
-      setProductImagesUrl([productImagesUrl]);
-      setPreview(preview)
-      console.log(productImagesUrl);
-      
-      
-    } catch (error) {
-      
-    }
-    console.log(i);
-    console.log(productImagesUrl[i]);
-    
-    
-  }
-  const imageHandler = async (e, i) => {
-    const file = e.target.files[0];
-    setImage(file);
-    if (!file) {
-      return;
-    }
-    setPreview([...preview, URL.createObjectURL(file)]);
-    const formData = new FormData();
-    formData.append("productImages", file);
-    try {
-      const res = await uploadProductImages(formData);
-      if (editData) {
-        const updaateimage = res.images.splice(i, 1, res.images[i]);
-        setProductImagesUrl([...productImagesUrl, updaateimage]);
-      }
-      setProductImagesUrl([...productImagesUrl, res?.images[0]]);
+      const data = { imageUrl: productImagesUrl[i] };
+      const res = await deleteProductImage(data);
+      setProductImagesUrl({ ...productImagesUrl, [i]: null });
+      setPreview({ ...preview, [i]: null });
+
       toast.success(res.message);
     } catch (error) {
-      console.log(error);
-      toast.error(error.response.data.message);
+      throw error;
     }
   };
+
   useEffect(() => {
     getCategary();
 
@@ -280,9 +271,11 @@ const CreateAdminProduct = () => {
                     onChange={handleChange}
                     className="w-full rounded-md"
                     options={[
-                      { value: "Gold", label: "Gold" },
-                      { value: "Silver", label: "Silver (9-5)" },
-                      { value: "Platinum", label: "Platinum" },
+                      { value: "Gold(18kt)", label: "Gold (18kt)" },
+                      { value: "Gold(22kt)", label: "Gold (22kt)" },
+                      { value: "Gold(24kt)", label: "Gold (24kt)" },
+                      { value: "Silver(925)", label: "Silver (925)" },
+                      { value: "Platinum(950)", label: "Platinum (950)" },
                       { value: "Diamond", label: "Diamond" },
                       { value: "Brass", label: "Brass" },
                       { value: "Others", label: "Others" },
@@ -295,37 +288,38 @@ const CreateAdminProduct = () => {
               <Col span={12}>
                 <Form.Item>
                   <Typography.Text className="text-[14px] font-semibold">
+                    SKU Id
+                  </Typography.Text>
+                  <div className="pt-2">
+                    <Input
+                      name="sku"
+                      onChange={(e) => createProductInputHandler(e)}
+                      value={productFormInput?.sku}
+                      placeholder="Enter Product Id"
+                      className="py-1 rounded-full"
+                    />
+                  </div>
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item>
+                  <Typography.Text className="text-[14px] font-semibold">
                     Product Name
                   </Typography.Text>
                   <div className="pt-2">
                     <Input
                       name="title"
                       onChange={(e) => createProductInputHandler(e)}
-                      value={productFormInput?.title??"Men"}
+                      value={productFormInput?.title}
                       placeholder="Enter Product Name"
                       className="py-1 rounded-full"
                     />
                   </div>
                 </Form.Item>
               </Col>
-             
-                <Col span={12}>
-                <Typography.Text className="text-[14px] font-semibold">
-                  Metal Color
-                </Typography.Text>
-                <div className="pt-2">
-                  <Input
-                    name="metalColor"
-                    className="py-1  rounded-full"
-                    onChange={(e) => createProductInputHandler(e)}
-                    value={productFormInput?.metalColor}
-                    placeholder="Enter Metal Color"
-                  />
-                </div>
-              </Col>
             </Row>
             <Row gutter={[20, 20]}>
-            <Col span={12}>
+              <Col span={12}>
                 <Form.Item>
                   <Typography.Text className="text-[14px] font-semibold">
                     Price
@@ -344,7 +338,7 @@ const CreateAdminProduct = () => {
               <Col span={12}>
                 <Form.Item>
                   <Typography.Text className="text-[14px] font-semibold">
-                    Actual Price
+                    Compare at Price
                   </Typography.Text>
                   <div className="pt-2">
                     <Input
@@ -360,23 +354,6 @@ const CreateAdminProduct = () => {
             </Row>
 
             <Row gutter={[20, 20]}>
-              <Col span={24}>
-                <Typography.Text className="text-[14px] font-semibold">
-                  Description
-                </Typography.Text>
-                <div className="pt-2">
-                  <TextArea
-                    name="description"
-                    value={productFormInput?.description}
-                    placeholder="Enter Description"
-                    allowClear
-                    onChange={(e) => createProductInputHandler(e)}
-                  />
-                </div>
-              </Col>
-            </Row>
-
-            <Row gutter={[20, 20]} className="pt-[24px]">
               <Col span={12}>
                 <Typography.Text className="text-[14px] font-semibold">
                   Quantity
@@ -406,22 +383,85 @@ const CreateAdminProduct = () => {
                 </div>
               </Col>
             </Row>
-            <Row gutter={[20, 20]} className="pt-[24px] pb-5">
+            <Row gutter={[20, 20]} className="pt-[24px]">
               <Col span={12} className="px-1">
                 <Typography.Text className="text-[14px] font-semibold">
                   Size
                 </Typography.Text>
                 <div className="pt-2">
-                   <Input
-                    name="size"
+                  <Input
+                    name="length"
                     className="py-1  rounded-full"
                     onChange={(e) => createProductInputHandler(e)}
-                    value={productFormInput?.size}
+                    value={productFormInput?.length}
                     placeholder="Enter product Size"
                   />
                 </div>
               </Col>
               <Col span={12} className="px-1">
+                <Typography.Text className="text-[14px] font-semibold">
+                  Size Unit
+                </Typography.Text>
+                <div className="pt-2">
+                  <Input
+                    name="lengthUnit"
+                    className="py-1  rounded-full"
+                    onChange={(e) => createProductInputHandler(e)}
+                    value={productFormInput?.lengthUnit}
+                    placeholder="Enter product size Unit"
+                  />
+                </div>
+              </Col>
+            </Row>
+            <Row gutter={[20, 20]} className="pt-[24px] ">
+              <Col span={12}>
+                <Typography.Text className="text-[14px] font-semibold">
+                  Metal Color
+                </Typography.Text>
+                <div className="pt-2">
+                  <Input
+                    name="metalColor"
+                    className="py-1  rounded-full"
+                    onChange={(e) => createProductInputHandler(e)}
+                    value={productFormInput?.metalColor}
+                    placeholder="Enter Metal Color"
+                  />
+                </div>
+              </Col>
+              <Col span={12}>
+                <Typography.Text className="text-[14px] font-semibold">
+                  Metal Shape
+                </Typography.Text>
+                <div className="pt-2">
+                  <Input
+                    name="metalShape"
+                    className="py-1  rounded-full"
+                    onChange={(e) => createProductInputHandler(e)}
+                    value={productFormInput?.metalShape}
+                    placeholder="Enter Metal Shape"
+                  />
+                </div>
+              </Col>
+            </Row>
+
+            <Row gutter={[20, 20]} className="pt-[24px] ">
+              <Col span={24}>
+                <Typography.Text className="text-[14px] font-semibold">
+                  Description
+                </Typography.Text>
+                <div className="pt-2">
+                  <TextArea
+                    name="description"
+                    value={productFormInput?.description}
+                    placeholder="Enter Description"
+                    allowClear
+                    onChange={(e) => createProductInputHandler(e)}
+                  />
+                </div>
+              </Col>
+            </Row>
+            <Row>
+              <Col span={12} className="pt-[24px] pb-5">
                 <Typography.Text className="text-[14px] font-semibold">
                   Made for
                 </Typography.Text>
@@ -441,148 +481,173 @@ const CreateAdminProduct = () => {
                 </div>
               </Col>
             </Row>
-          
             <Row gutter={[20, 20]} className=" bg-[#fff] rounded-md px-2 py-5">
               <Col span={24}>
                 <Typography.Text className="text-[18px] font-semibold ">
                   Upload Media files
                 </Typography.Text>
 
-                <div className="flex flex-wrap justify-between gap-5 pt-5">
-                  <div>
+                {/* <div className="flex flex-wrap justify-between gap-5 pt-5"> */}
+                <Row gutter={[40, 40]}>
+                  <Col span={12}>
                     <Typography.Text className="text-[14px] font-[600] text-[#214344]">
                       Modal Image
                     </Typography.Text>
-                    <div className="flex justify-between items-center ">
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) => {
-                          imageHandler(e, 1);
-                        }}
-                      />
-                     {productImagesUrl?.length>0 && productImagesUrl[0]!=undefined && <div onClick={() => removeImage(0)} className="size-[14px] me-2">
-                     <img src="https://zoci-data.s3.ap-south-1.amazonaws.com/productImages/1740223367652_GreenDelete.png"/>
-                     
-                     </div>}
-                      {preview && (
+                    <div className="flex justify-between items-center">
+                      {productImagesUrl["modalImage"] === null && (
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => imageHandler(e, "modalImage")}
+                        />
+                      )}
+
+                      {preview["modalImage"] !== null && (
+                        <div
+                          onClick={() => removeImage("modalImage")}
+                          className="left-[20px] size-[14px] me-2 cursor-pointer"
+                        >
+                          <img
+                            src="https://zoci-data.s3.ap-south-1.amazonaws.com/productImages/1740223367652_GreenDelete.png"
+                            alt="Delete"
+                          />
+                        </div>
+                      )}
+
+                      {preview["modalImage"] !== null && (
                         <img
-                          className="pt-1 rounded-full"
-                          src={
-                            preview[0] ??
-                            "https://zoci-data.s3.ap-south-1.amazonaws.com/productImages/1739966281003_no-image-found-360x250.webp"
-                          }
+                          className="pt-1 rounded-full size-[100px]"
+                          src={preview["modalImage"] ?? noImage}
                           alt="Preview"
-                          width="50px"
                         />
                       )}
                     </div>
-                  </div>
-                  <div>
+                  </Col>
+                  <Col span={12}>
                     <Typography.Text className="text-[14px] font-[600] text-[#214344]">
                       Product Image
                     </Typography.Text>
                     <div className="flex justify-between items-center">
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) => {
-                          imageHandler(e, 2);
-                        }}
-                      />
-                      { productImagesUrl?.length>0 && productImagesUrl[1]!=undefined && <div className="size-[14px] me-2" onClick={()=>{removeImage(1)}} >
-                     <img  src="https://zoci-data.s3.ap-south-1.amazonaws.com/productImages/1740223367652_GreenDelete.png"/>
-                     </div>}
-                      {preview && (
+                      {productImagesUrl["productImage"] === null && (
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => imageHandler(e, "productImage")}
+                        />
+                      )}
+
+                      {preview["productImage"] !== null && (
+                        <div
+                          onClick={() => removeImage("productImage")}
+                          className="left-[20px] size-[14px] me-2 cursor-pointer"
+                        >
+                          <img
+                            src="https://zoci-data.s3.ap-south-1.amazonaws.com/productImages/1740223367652_GreenDelete.png"
+                            alt="Delete"
+                          />
+                        </div>
+                      )}
+
+                      {preview["productImage"] !== null && (
                         <img
-                          className="pt-1 rounded-full"
-                          src={
-                            preview[1] ??
-                            "https://zoci-data.s3.ap-south-1.amazonaws.com/productImages/1739966281003_no-image-found-360x250.webp"
-                          }
+                          className="pt-1 rounded-full size-[100px]"
+                          src={preview["productImage"] ?? noImage}
                           alt="Preview"
-                          width="50px"
                         />
                       )}
                     </div>
-                  </div>
-                  <div>
+                  </Col>
+                  <Col span={12}>
                     <Typography.Text className="text-[14px] font-[600] text-[#214344]">
                       Additional Image 1
                     </Typography.Text>
-                    <div className="flex justify-between items-center ">
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) => {
-                          imageHandler(e, 3);
-                        }}
-                      />
-                  {productImagesUrl?.length>0 &&  productImagesUrl[2]!=undefined &&    <div onClick={()=>{removeImage(2)}} className="size-[14px] me-2">
-                     <img src="https://zoci-data.s3.ap-south-1.amazonaws.com/productImages/1740223367652_GreenDelete.png"/>
-                     </div>}
-                      {preview && (
+                    <div className="flex justify-between items-center">
+                      {productImagesUrl["additional1"] === null && (
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => imageHandler(e, "additional1")}
+                        />
+                      )}
+
+                      {preview["additional1"] !== null && (
+                        <div
+                          onClick={() => removeImage("additional1")}
+                          className="left-[20px] size-[14px] me-2 cursor-pointer"
+                        >
+                          <img
+                            src="https://zoci-data.s3.ap-south-1.amazonaws.com/productImages/1740223367652_GreenDelete.png"
+                            alt="Delete"
+                          />
+                        </div>
+                      )}
+
+                      {preview["additional1"] !== null && (
                         <img
-                          className="pt-1 rounded-full"
-                          src={
-                            preview[2] ??
-                            "https://zoci-data.s3.ap-south-1.amazonaws.com/productImages/1739966281003_no-image-found-360x250.webp"
-                          }
+                          className="pt-1 rounded-full size-[100px]"
+                          src={preview["additional1"] ?? noImage}
                           alt="Preview"
-                          width="50px"
                         />
                       )}
                     </div>
-                  </div>
-                  <div>
+                  </Col>
+                  <Col span={12}>
                     <Typography.Text className="text-[14px] font-[600] text-[#214344]">
-                      Additional Image 1
+                      Additional Image 2
                     </Typography.Text>
-                    <div className="flex justify-between items-center ">
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) => {
-                          imageHandler(e, 4);
-                        }}
-                      />
-                      {productImagesUrl?.length !=0 && productImagesUrl[3]!=undefined && <div onClick={()=>{removeImage(3)}} className="size-[14px] me-2"> 
-                     <img   src="https://zoci-data.s3.ap-south-1.amazonaws.com/productImages/1740223367652_GreenDelete.png"/>
-                     </div>}
-                      {preview && (
+                    <div className="flex justify-between items-center">
+                      {productImagesUrl["additional2"] === null && (
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => imageHandler(e, "additional2")}
+                        />
+                      )}
+
+                      {preview["additional2"] !== null && (
+                        <div
+                          onClick={() => removeImage("additional2")}
+                          className="left-[20px] size-[14px] me-2 cursor-pointer"
+                        >
+                          <img
+                            src="https://zoci-data.s3.ap-south-1.amazonaws.com/productImages/1740223367652_GreenDelete.png"
+                            alt="Delete"
+                          />
+                        </div>
+                      )}
+
+                      {preview["additional2"] != null && (
                         <img
-                          className="pt-1 rounded-full"
-                          src={
-                            preview[3] ??
-                            "https://zoci-data.s3.ap-south-1.amazonaws.com/productImages/1739966281003_no-image-found-360x250.webp"
-                          }
+                          className="pt-1 rounded-full size-[100px]"
+                          src={preview["additional2"] ?? noImage}
                           alt="Preview"
-                          width="50px"
                         />
                       )}
                     </div>
-                  </div>
-                </div>
+                  </Col>
+                </Row>
+                {/* </div> */}
               </Col>
               <Col span={12}>
                 <Typography.Text className="text-[14px] font-semibold">
                   Upload Video
                 </Typography.Text>
                 <div className="flex gap-3 items-center">
-                
-                <div className="pt-2">
-                  <input
-                    type="file"
-                    accept="video/*"
-                    onChange={(e) => {
-                      videoHandler(e);
-                    }}
-                  />
-                
-                </div>
-               {videoUrl.length !=0 &&  <div className="size-[14px] me-2" onClick={()=>{removeImage(1)}} >
-                     <img  src="https://zoci-data.s3.ap-south-1.amazonaws.com/productImages/1740223367652_GreenDelete.png"/>
-                     </div>}
+                  <div className="pt-2">
+                    <input
+                      type="file"
+                      accept="video/*"
+                      onChange={(e) => {
+                        videoHandler(e);
+                      }}
+                    />
+                    {videoUrl?.length > 0 && (
+                      <div className="mt-2">
+                        <video src={videoUrl[0]} autoPlay width="200" />
+                       
+                      </div>
+                    )}
+                  </div>
                 </div>
               </Col>
             </Row>

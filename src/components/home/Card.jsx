@@ -85,7 +85,7 @@ const Card = ({ item }) => {
   return (
     <>
       <div className="relative card ">
-        <Link to={`/product/${item?._id}`}>
+        <Link to={`/product/${item?.title?.charAt(0)?.toLowerCase()+item?.title?.slice(1)}/${item?._id}`}>
           <div
             onMouseEnter={() => {
               setThumbnailButton(true);
@@ -100,8 +100,9 @@ const Card = ({ item }) => {
                 {!thumbnailButton && (
                   <img
                     className=" rounded-t-2xl w-full  h-full object-cover "
-                    src={item.images[0]}
+                    src={item.images.productImage}
                     alt="product image "
+
                   />
                 )}
                 {thumbnailButton && (
@@ -130,7 +131,7 @@ const Card = ({ item }) => {
               >
                 <div>
                   <h5 className="md:text-[20px] text-[20px] font-semibold  text-white">
-                    {item?.title}
+                    {item?.title?.charAt(0)?.toUpperCase()+item?.title?.slice(1)}
                   </h5>
                 </div>
                 <div className="flex items-center justify-between py-2 ">
@@ -181,7 +182,7 @@ const Card = ({ item }) => {
               }}
               className="bg-[#214344] h-[35px] w-[35px] flex justify-center  items-center rounded-full p-2 cursor-pointer  "
             >
-              <img className="w-[20px] h-[18px]" src={wishlist} />
+              <img className="w-[20px] h-[18px]" src={wishlist} alt="wishlist"/>
             </div>
           </Tooltip>
           {/* desktop screen  */}
@@ -195,7 +196,7 @@ const Card = ({ item }) => {
                     }}
                     className="h-[35px] w-[35px] flex justify-center items-center rounded-full bg-[#214344] hover:bg-[#214344]  p-2"
                   >
-                    <img className="h-[20px] w-[20px]" src={bag} />
+                    <img className="h-[20px] w-[20px]" src={bag} alt="bag"/>
                   </div>
                 </Tooltip>
               )}
@@ -205,7 +206,7 @@ const Card = ({ item }) => {
                   <RWebShare
                     data={{
                       text: item?.title,
-                      url: `https://zoci.in/product/${item?._id}`,
+                      url: `https://zoci.in/product/${item?.title?.charAt(0)?.toLowerCase()+item?.title?.slice(1)}/${item?._id}`,
                       title: "Zoci",
                     }}
                     onClick={() => console.log("shared successfully!")}
@@ -227,6 +228,7 @@ const Card = ({ item }) => {
                     <img
                       className="w-[20px] h-[20px] ps-0.5"
                       src={similarYellow}
+                      alt="similar"
                     />
                   </div>
                 </Tooltip>
@@ -244,7 +246,7 @@ const Card = ({ item }) => {
                   }}
                   className="h-[35px] w-[35px] flex justify-center items-center rounded-full bg-[#214344] hover:bg-[#214344]  p-2"
                 >
-                  <img className="h-[20px] w-[20px]" src={bag} />
+                  <img className="h-[20px] w-[20px]" src={bag} alt="bag"/>
                 </div>
               </Tooltip>
 
@@ -252,9 +254,9 @@ const Card = ({ item }) => {
                 <RWebShare
                   data={{
                     text: item?.title,
-                    url: `https://celestial-rho.vercel.app`,
+                    url: `https://zoci.in/product/${item?.title?.charAt(0)?.toLowerCase()+item?.title?.slice(1)}/${item?._id}`,
                     title: "Zoci",
-                  }}
+                  }}a
                   onClick={() => console.log("shared successfully!")}
                 >
                   <div className=" bg-[#214344] flex justify-center items-center h-[35px] w-[35px] p-2 rounded-full ">
@@ -272,6 +274,7 @@ const Card = ({ item }) => {
                   <img
                     className="w-[20px] h-[20px] ps-0.5"
                     src={similarYellow}
+                    alt="similar"
                   />
                 </div>
               </Tooltip>

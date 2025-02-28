@@ -96,6 +96,7 @@ const Cart = ({ setCartOpen }) => {
                     <div className="h-[100px] w-[100px]">
                       <img
                         src={item?.images[0]}
+                        alt="productimage"
                         className="w-full h-full rounded-xl"
                       />
                     </div>

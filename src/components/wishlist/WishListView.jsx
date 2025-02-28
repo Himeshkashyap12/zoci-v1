@@ -60,6 +60,7 @@ const WishlistView = () => {
                     <img
                       src={item.image[0]}
                       className="w-full h-full rounded-xl"
+                      alt="wishlist"
                     />
                   </div>
                   <div className="flex flex-col pt-2">

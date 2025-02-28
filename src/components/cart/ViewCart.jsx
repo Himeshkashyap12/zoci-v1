@@ -64,6 +64,7 @@ const ViewCart = () => {
                       <div className="h-[120px] w-[120px]">
                         <img
                           src={item?.images[0]}
+                          alt="img"
                           className="w-full h-full rounded-xl"
                         />
                       </div>

@@ -1,27 +1,42 @@
-import React, {  useState } from "react";
+import React, {  useEffect, useState } from "react";
 import SubCategary from "./SubCategary";
 import { Link } from "react-router";
 import Testimonial from "./Testimonial";
 import TopSellerProduct from "./Products";
 import { useDispatch } from "react-redux";
+import { getallCategaryApi } from "../../feature/admin/adminApi";
+import { addAdminCategary } from "../../feature/admin/adminSlice";
+
 const CategarySection = () => {
   const [categary, setCategary] = useState("Women");
   const buttonactive = { background: "#214344", color: "#f0d5a0" };
   const buttonInActive = { color: "#214344", border: "3px solid #214344" };
-  // const dispatch=useDispatch();
+  const dispatch=useDispatch();
+
   const getCategary =async (key) => {
     setCategary(key)
-
-     
-  //   try{
-
-  //     const data={madeFor:key}
-  //     const res=await getallCategaryApi(data)
-  //     (dispatch)(res.categories);
-  //   }catch(error){
-  //     console.log(error);
-  // };
+    if(key==="Men"){ dispatch(addAdminCategary([
+      {title:"Launching Soon"},
+      {title:"Launching Soon"},
+      {title:"Launching Soon"},
+      {title:"Launching Soon"},
+      {title:"Launching Soon"},
+      {title:"Launching Soon"},
+      {title:"Launching Soon"},
+    ]))
+  } else{
+    try{
+      const data={madeFor:key??"Women"}
+      const res=await getallCategaryApi(data)      
+      dispatch(addAdminCategary(res?.categories));
+    }catch(error){
+      console.log(error);
+  };
 }
+}
+useEffect(() => { 
+  getCategary("Women");
+},[])
   return (
     <>
       <div className="bg-[#efe6dc] ">

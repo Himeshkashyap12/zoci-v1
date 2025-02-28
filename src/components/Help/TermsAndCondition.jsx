@@ -9,7 +9,7 @@ const TermsAndCondition = () => {
     <>
       <div className="flex flex-col  sm:pt-[110px] pt-[70px] ">
         <div className="flex flex-col justify-center items-center bg-[#efe6dc] sm:px-20 px-5 py-10">
-          <Typography.Text className="text-[30px] font-semibold">
+          <Typography.Text className="sm:text-[30px] text-[24px]  font-semibold">
             TERMS AND CONDITIONS
           </Typography.Text>
           <div className="flex gap-5">

@@ -7,7 +7,7 @@ import { Typography } from "antd";
 import { useEffect, useState } from "react";
 import closeIcon from "../../assets/icons/closeIconGreen.png";
 
-const CustomSearch = ({ items, search, setOpen, setIsModalOpen }) => {
+const CustomSearch = ({ setOpen, setIsModalOpen }) => {
   const dispatch = useDispatch();
   const [searchInput, setSearchInut] = useState("");
   const searchData = useSelector((state) => state.product.searchData);
@@ -28,6 +28,7 @@ const CustomSearch = ({ items, search, setOpen, setIsModalOpen }) => {
     searchHandler();
   }, [searchInput]);
   const closeModal = () => {
+    dispatch(searchProducts([]));
     setIsModalOpen(false);
   };
   return (
@@ -45,7 +46,7 @@ const CustomSearch = ({ items, search, setOpen, setIsModalOpen }) => {
             className="flex  justify-center cursor-pointer w-[40px] h-[40px] mx-auto  bg-[#fff] rounded-full p-2 mt-5  items-center  "
           >
             <div className="h-[20px] w-[20px]  ">
-              <img className="w-full" src={closeIcon} />
+              <img className="w-full" src={closeIcon} alt="closeIcon" />
             </div>
           </div>
           <div className="px-5 w-[400px] mx-auto   pt-10">
@@ -60,21 +61,23 @@ const CustomSearch = ({ items, search, setOpen, setIsModalOpen }) => {
           <div className="h-[350px]  overflow-auto py-5">
             {searchData?.length === 0 && (
               <h1 className="text-[20px] text-center">
-                <Empty />
+                {/* <Empty /> */} No Products Found
               </h1>
             )}
             {searchData?.map((item) => (
               <div className=" px-5">
+                
                 <Link
                   onClick={() => setOpen(false)}
-                  to={`/product/${item._id}`}
+                  to={`/product/${item?.title?.charAt(0)?.toLowerCase()+item?.title?.slice(1)}/${item?._id}`}
                   key={item._id}
                   className="flex justify-between px-2 pt-5 bg-[#efe6dc] rounded-xl shadow-xl py-5 mb-3"
                 >
                   <div className="flex gap-3">
                     <div className="h-[120px] w-[120px]">
                       <img
-                        src={item?.images[0]}
+                        src={item?.images?.productImage}
+                        alt="productImage"
                         className="w-full h-full rounded-xl"
                       />
                     </div>

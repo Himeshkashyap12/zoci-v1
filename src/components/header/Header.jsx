@@ -80,7 +80,7 @@ const Header = () => {
                   className={"relative max-sm:hidden  cursor-pointer"}
                 >
                   <div className="h-[32px] w-[31px] pt-[2px] ">
-                    <img src={wishlist} />
+                    <img src={wishlist} alt="wishlist" />
                   </div>
                   {wishCounter > 0 && (
                     <div className="flex justify-center   text-[#214344] items-center absolute  text-[10px] text-center  -top-1  -right-3 h-[16px] w-[16px] rounded-full bg-[#F0D5A0]">
@@ -96,7 +96,7 @@ const Header = () => {
                   className="relative"
                 >
                   <div className="md:h-[28px] h-[20px] md:w-[25px] w-[16px]  cursor-pointer">
-                    <img className="object-fit" src={bag} />
+                    <img className="object-fit" src={bag} alt="bag"/>
                   </div>
                   {cartCounter > 0 && (
                     <div className="flex justify-center  text-[#214344] items-center absolute  text-[10px] text-center  -top-1  -right-3 h-[16px] w-[16px] rounded-full bg-[#F0D5A0]">
@@ -108,7 +108,7 @@ const Header = () => {
             </div>
             <div>
               <Link to={"/"}>
-                <img src={headerImage} className="lg:h-[70px] h-[35px]" />
+                <img src={headerImage} className="lg:h-[70px] h-[35px]" alt="header" />
               </Link>
             </div>
             <div className="flex gap-[51px]  cursor-pointer">
@@ -119,7 +119,7 @@ const Header = () => {
                   }}
                   className="max-sm:hidden h-[28px] w-[28px] cursor-pointer"
                 >
-                  <img src={serach} className="object-fit" />
+                  <img src={serach} className="object-fit" alt="serach" />
                 </div>
                 <div
                   onClick={() => {
@@ -127,7 +127,7 @@ const Header = () => {
                   }}
                 >
                   <div className=" md:h-[12px] md:w-[24px] h-[8px] w-[18px]">
-                    <img className="object-fit" src={menuIcon} />
+                    <img className="object-fit" src={menuIcon}  alt="menu"/>
                   </div>
                 </div>
               </div>
@@ -146,6 +146,8 @@ const Header = () => {
         <EasyMenuHeader
           setCartCounter={setCartCounter}
           setWishCounter={setWishCounter}
+          setCartStatus={setCartStatus}
+          setCartOpen={setCartOpen}
         />
         <CustomDrawer
           cartStatus={cartStatus}

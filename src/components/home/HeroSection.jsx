@@ -19,7 +19,7 @@ const HeroSection=()=>{
           <button onClick={()=>{navigate("/aboutus")}} className="px-7 bg-[transparent]    backdrop-blur-lg py-1 rounded-full md:text-[20px] text-[20px]   text-[#fff] mt-8">Know More <RightOutlined /></button> 
         <div className="sm:pt-20 pt-[180px]">
         <div className="sm:h-[60px] sm:w-[36px] h-[40px] w-[26px] animate-bounce absolute transition-all duration-[5000] ease-in-out left-0 right-0 mx-auto">
-             <img src={scrollDown} className="h-full w-full"/>
+             <img src={scrollDown} className="h-full w-full" alt="scroll"/>
           </div>
           </div>
       </div>

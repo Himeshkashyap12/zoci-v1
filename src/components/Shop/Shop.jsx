@@ -10,7 +10,7 @@ import filterBanner from "../../assets/filterBanner.jpg";
 import { RightOutlined } from "@ant-design/icons";
 import filterIcon from "../../assets/icons/filterIcon.png";
 import { useLocation } from "react-router";
-const Shop = () => {
+const Shop = () => {  
   const location = useLocation();
   const dispatch = useDispatch();
   const data = useSelector((state) => state?.shop?.shop);
@@ -18,24 +18,33 @@ const Shop = () => {
   const [filter, setFiter] = useState(true);
   const headermenu = useSelector((state) => state.header.headermenu);
   const getProducts = async () => {
+    
     const pagination = { page: 1, limit: 10 };
-    const data = await getProductFilterApi(pagination);
-    dispatch(addproductToshop(data?.products));
-  };
+    try {
+      const data = await getProductFilterApi(pagination);
+     
+      // setPageData({totalPages:res.,currentPage:null,totalProducts:null});
+      dispatch(addproductToshop(data?.products));
+    } catch (error) {
+      if(error.response.data.message==="No products found"){
+        dispatch(addproductToshop([]));};
+  }; 
   useEffect(() => {
-    if (location.state !== "similer") {
+    
+    // if (location.state !== "similer") {
       getProducts();
-    }
+    // }
   }, []);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+}
   return (
     <>
       <Row className="md:pt-[110px] pt-[70px]  ">
         <div className="relative w-full">
           <div className="md:h-[236px] h-[150px] ">
-            <img className="w-full h-full" src={filterBanner} alt="" />
+            <img className="w-full h-full" src={filterBanner} alt="filter" />
           </div>
           <div className="absolute top-[30%] md:left-10 left-2">
             <h3 className="text-[#214344] text-[24px] font-bold">
@@ -54,7 +63,7 @@ const Shop = () => {
             </div>
             <div className="flex gap-1 md:pt-14 pt-2">
               <h5 className="text-[14px] font-[400] text-[#214344]">
-                Showing 1-20 of 20 results
+                Showing 1-{data?.length<=10 ? data?.length : 10*2} of {data?.length} results
               </h5>
             </div>
           </div>
@@ -73,7 +82,7 @@ const Shop = () => {
                     className="size-[50px]  p-1  bg-[#214344]  cursor-pointer rounded-l-full  flex justify-center items-center "
                   >
                     <div className="size-[24px]">
-                      <img className="w-full h-full" src={filterIcon} />
+                      <img className="w-full h-full" src={filterIcon}  alt="filter"/>
                     </div>
                   </div>
                 )}
