@@ -9,6 +9,7 @@ import { addproductToshop } from "../../feature/shop/shopSlice";
 import filterBanner from "../../assets/filterBanner.jpg";
 import { RightOutlined } from "@ant-design/icons";
 import filterIcon from "../../assets/icons/filterIcon.png";
+
 const Shop = () => {  
   const dispatch = useDispatch();
   const data = useSelector((state) => state?.shop?.shop);
