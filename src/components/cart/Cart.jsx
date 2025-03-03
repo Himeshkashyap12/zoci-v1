@@ -12,7 +12,7 @@ import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import OrderModal from "../order/order.jsx";
 const Cart = ({ setCartOpen }) => {
-  const cartData = useSelector((state) => state?.cart?.cart);
+  const cartData = useSelector((state) => state?.cart?.cart);  
   const cart = useSelector((state) => state.cart.cartLenght);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch();
@@ -95,7 +95,7 @@ const Cart = ({ setCartOpen }) => {
                   <div className=" flex gap-3">
                     <div className="h-[100px] w-[100px]">
                       <img
-                        src={item?.images[0]}
+                        src={item?.images?.productImage}
                         alt="productimage"
                         className="w-full h-full rounded-xl"
                       />

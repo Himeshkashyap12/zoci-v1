@@ -333,7 +333,7 @@ const ProductDetails = () => {
                   strokeColor={"#214344"}
                   showInfo={false}
                   trailColor="white"
-                  percent={item?.quantity}
+                  percent={100-(Math.floor((item?.sold *100)/ item?.quantity) )}
                   status="active"
                 />
                 <div className="flex justify-between">

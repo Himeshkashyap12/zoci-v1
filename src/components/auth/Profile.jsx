@@ -47,7 +47,6 @@ const Profile = ({ setSentOtp, setWishCounter, setCartCounter }) => {
               Mobile:
             </Typography.Text>
             <Typography.Text className="text-[#214344] text-[16px] font-[400]">
-              {" "}
               {users.mobile}
             </Typography.Text>
           </div>

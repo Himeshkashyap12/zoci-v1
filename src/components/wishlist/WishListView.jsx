@@ -58,7 +58,7 @@ const WishlistView = () => {
                 <div className=" flex gap-3">
                   <div className="h-[100px] w-[100px]">
                     <img
-                      src={item.image[0]}
+                      src={item?.image?.productImage}
                       className="w-full h-full rounded-xl"
                       alt="wishlist"
                     />

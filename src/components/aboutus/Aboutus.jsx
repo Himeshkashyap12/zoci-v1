@@ -3,9 +3,10 @@ import modalImage from "../../assets/aboutusmodel.jpg";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useEffect } from "react";
 const AboutUs = () => {
+  const navigate=useNavigate()
   var settings = {
     dots: false,
     infinite: true,
@@ -22,7 +23,7 @@ const AboutUs = () => {
         <Col xl={12} lg={12} md={12} sm={24} xs={24}>
           <div className="flex flex-col gap-4 md:ps-20 px-5 py-20 ">
             <div>
-              <Button className="font-semibold text-[#fff] bg-black rounded-full px-8 py-1 border-none hover:!text-[#000]">
+              <Button onClick={()=>navigate("/shop")} className="font-semibold text-[#fff] bg-black rounded-full px-8 py-1 border-none hover:!text-[#000]">
                 Shop
               </Button>
             </div>

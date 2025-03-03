@@ -63,7 +63,7 @@ const ViewCart = () => {
                     <div className=" flex gap-3">
                       <div className="h-[120px] w-[120px]">
                         <img
-                          src={item?.images[0]}
+                          src={item?.images?.productImage}
                           alt="img"
                           className="w-full h-full rounded-xl"
                         />

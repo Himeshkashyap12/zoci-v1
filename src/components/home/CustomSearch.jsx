@@ -33,7 +33,7 @@ const CustomSearch = ({ setOpen, setIsModalOpen }) => {
   };
   return (
     <>
-      <div className="relative ">
+      <div className="relative">
         <div
           className={`${
             searchData.length > 0 ? "h-[500px]" : "h-[220px]"

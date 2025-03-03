@@ -10,6 +10,8 @@ import "./admin.css";
 const AdminOrders = () => {
   const dispatch = useDispatch();
   const data = useSelector((state) => state?.admin?.order);
+  console.log(data,"order");
+  
   const [totalPages, setTotalPages] = useState(0);
   const pageHandler = async (current) => {
     const page = { page: current, limit: 10 };
@@ -45,7 +47,7 @@ const AdminOrders = () => {
         return (
           <div className="flex !justify-center ">
             <div className="size-[50px] ">
-              <img className="rounded-full" src={text[0]?.images?.productImage} alt="productimage" />
+              <img className="rounded-full" src={text[0]?.images?.productImage??"https://zoci-data.s3.ap-south-1.amazonaws.com/productImages/1740822019441_images%20%281%29.png"} alt="productimage" />
             </div>
           </div>
         );

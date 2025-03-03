@@ -30,7 +30,7 @@ const CustomFilter = () => {
           </Button>
           <Button
             onClick={() => {
-              filterSubcategary("madeFor", "Men");
+              filterSubcategary("sort", "newest");
             }}
             className=" w-[150px] py-2 hover:!text-[#214344]  hover:!border-[#214344]  rounded-full bg-[#214344] text-[#F0D5A0]  text-[14px]"
           >
@@ -38,7 +38,7 @@ const CustomFilter = () => {
           </Button>
           <Button
             onClick={() => {
-              filterSubcategary("trending");
+              filterSubcategary("sort","newest");
             }}
             className=" w-[150px] py-2 hover:!text-[#214344]  hover:!border-[#214344]  rounded-full bg-[#214344] text-[#F0D5A0]  text-[14px]"
           >
@@ -46,7 +46,7 @@ const CustomFilter = () => {
           </Button>
           <Button
             onClick={() => {
-              filterSubcategary("madeFor", "Men");
+              filterSubcategary("madefor", "Men");
             }}
             className=" w-[150px] py-2 hover:!text-[#214344]  hover:!border-[#214344]  rounded-full bg-[#214344] text-[#F0D5A0]  text-[14px]"
           >

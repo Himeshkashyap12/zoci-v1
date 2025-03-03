@@ -84,7 +84,7 @@ const OrderModal = ({ isModalOpen, setIsModalOpen, item, cart }) => {
       const res = await payment(data);
       toast.success(res.message);
       if (cart) getCartDataHandler();
-      localStorage.setItem("cart", parseInt(cart.length) - 1);
+      localStorage.setItem("cart", parseInt(cart?.length) - 1);
       setIsModalOpen(false);
     } catch (error) {
       console.log(error);
@@ -152,12 +152,11 @@ const OrderModal = ({ isModalOpen, setIsModalOpen, item, cart }) => {
 
     const paymentObject = new window.Razorpay(options);
     paymentObject.on("payment.failed", function (response) {
-      console.error("Payment failed:", response.error);
       setIsModalOpen(false);
       alert("Payment failed, try again");
       paymentWindow.close();
     });
-    paymentObject.open("", "_self", "width=500,height=700");
+    paymentObject.open();
   };
 
   const getUserHandler = async () => {

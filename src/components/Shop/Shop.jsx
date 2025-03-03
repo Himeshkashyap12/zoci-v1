@@ -9,9 +9,7 @@ import { addproductToshop } from "../../feature/shop/shopSlice";
 import filterBanner from "../../assets/filterBanner.jpg";
 import { RightOutlined } from "@ant-design/icons";
 import filterIcon from "../../assets/icons/filterIcon.png";
-import { useLocation } from "react-router";
 const Shop = () => {  
-  const location = useLocation();
   const dispatch = useDispatch();
   const data = useSelector((state) => state?.shop?.shop);
   const categary = useSelector((state) => state.shop.categary);
@@ -29,16 +27,15 @@ const Shop = () => {
       if(error.response.data.message==="No products found"){
         dispatch(addproductToshop([]));};
   }; 
+}
   useEffect(() => {
     
-    // if (location.state !== "similer") {
       getProducts();
-    // }
   }, []);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-}
+
   return (
     <>
       <Row className="md:pt-[110px] pt-[70px]  ">
@@ -96,7 +93,6 @@ const Shop = () => {
             )}
           </div>
         </div>
-
         <Col span={24}>
           <div className="md:px-20 px-5  bg-[#eee5db] cursor-pointer ">
             <div className="py-5 cursor-pointer flex justify-center">

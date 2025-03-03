@@ -63,7 +63,8 @@ const WishList=({setCartOpen})=>{
        <div className="flex justify-between px-5 pt-5  w-full">
         <div  className=" flex gap-3">
             <div className="h-[100px] w-[100px]">
-        <img src={item.image[0]} className="w-full h-full rounded-xl" alt=" item"/>
+        <img src={item?.image?.productImage}
+         className="w-full h-full rounded-xl" alt=" item"/>
         </div>
         <div className="flex flex-col pt-2">
             <Typography.Text className="text-[16px] font-[400] ">{item?.title}</Typography.Text>
