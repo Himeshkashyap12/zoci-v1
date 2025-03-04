@@ -17,13 +17,10 @@ const Shop = () => {
   const [filter, setFiter] = useState(true);
   const headermenu = useSelector((state) => state.header.headermenu);
   const getProducts = async () => {
-    
     const pagination = { page: 1, limit: 10 };
     try {
       const data = await getProductFilterApi(pagination);
-     
-      // setPageData({totalPages:res.,currentPage:null,totalProducts:null});
-      dispatch(addproductToshop(data?.products));
+        dispatch(addproductToshop(data?.products));
     } catch (error) {
       if(error.response.data.message==="No products found"){
         dispatch(addproductToshop([]));};
