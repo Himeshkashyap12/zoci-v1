@@ -41,6 +41,7 @@ const Shop = () => {
           <div className="md:h-[236px] h-[150px] ">
             <img className="w-full h-full" src={filterBanner} alt="filter" />
           </div>
+          
           <div className="absolute top-[30%] md:left-10 left-2">
             <h3 className="text-[#214344] text-[24px] font-bold">
               {categary === ""
