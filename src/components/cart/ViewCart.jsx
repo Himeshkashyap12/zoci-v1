@@ -48,20 +48,20 @@ const ViewCart = () => {
     window.scrollTo(0, 0);
   }, []);
   return (
-    <div className="view-cart pt-[110px] px-20 py-20 bg-[#efe6dc]">
+    <div className="view-cart pt-[110px] sm:px-20 px-5 sm:py-20 py-5 bg-[#efe6dc]">
       <Typography.Text className="text-[30px] font-semibold">
         Your cart
       </Typography.Text>
       <Row gutter={[20, 20]}>
-        <Col span={16} className="pt-2">
-          <div className="h-[400px] overflow-auto ps-3 pe-5">
+        <Col xl={16} lg={16} md={16} sm={24} xs={24} className="pt-2">
+          <div className="sm:h-[400px] h-[200px] overflow-auto ps-3 pe-5">
             {cartData?.length > 0 ? (
               cartData?.map((item) => {
                 sum += item.price * item.quantity;
                 return (
                   <div className="flex justify-between px-5 pt-5 bg-[#efe6dc] rounded-xl shadow-xl py-5 mb-3 ">
                     <div className=" flex gap-3">
-                      <div className="h-[120px] w-[120px]">
+                      <div className="sm:size-[120px] size-[100px] ">
                         <img
                           src={item?.images?.productImage}
                           alt="img"
@@ -96,7 +96,7 @@ const ViewCart = () => {
               <Empty />
             )}
           </div>
-          <div className="coupan flex gap-5 pt-5">
+          <div className="coupan flex gap-5 sm:pt-5">
             <Input
               className="px-4 py-1 rounded-full hover:border-[#214344] "
               placeholder="Enter Coupon"
@@ -106,7 +106,7 @@ const ViewCart = () => {
             </Button>
           </div>
         </Col>
-        <Col span={8} className="pt-2 ">
+        <Col xl={8} lg={8} md={8} sm={24} xs={24} className="pt-2 ">
           <div className="shadow-2xl rounded-2xl">
             <Card
               title={

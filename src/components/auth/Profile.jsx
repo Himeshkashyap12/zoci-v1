@@ -20,12 +20,12 @@ const Profile = ({ setSentOtp, setWishCounter, setCartCounter }) => {
       toast.success(res.message);
     } catch (error) {
       console.log(error);
-      toast.error(error.response.data.message);
     }
   };
   const getUserHandler = async () => {
+    const userid=localStorage.getItem("userId")
     try {
-      const res = await getUserData();
+      const res = await getUserData(userid);
       dispatch(addUserData(res.data));
     } catch (error) {
       console.log(error);
@@ -56,8 +56,7 @@ const Profile = ({ setSentOtp, setWishCounter, setCartCounter }) => {
               Role:
             </Typography.Text>
             <Typography.Text className="text-[#214344] text-[16px] font-[400]">
-              {" "}
-              {users.role}
+              {users?.role}
             </Typography.Text>
           </div>
           <div className="flex gap-1">
@@ -65,8 +64,7 @@ const Profile = ({ setSentOtp, setWishCounter, setCartCounter }) => {
               Referral Code:
             </Typography.Text>
             <Typography.Text className="text-[#214344] text-[16px] font-[400]">
-              {" "}
-              {users.referralCode}
+              {users?.referralCode}
             </Typography.Text>
           </div>
           <div

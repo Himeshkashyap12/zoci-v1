@@ -24,7 +24,7 @@ const TermsAndCondition = () => {
             </Typography.Text>
             <Typography.Text className="text-[16px]">
               The jewelry designs, written, visual and audio content, and
-              website design and processes are the property of Zoci and its
+              website design and processes are the property of Zoci pvt. ltd. and its
               affiliates/vendors and are protected by The Indian and
               international copyright laws.
             </Typography.Text>
@@ -34,11 +34,11 @@ const TermsAndCondition = () => {
               Trademarks
             </Typography.Text>
             <Typography.Text className="text-[16px]">
-              The trademarks or trade dress of Zoci and our affiliates may not
+              The trademarks or trade dress of Zoci pvt. ltd.  and our affiliates may not
               be used without our written permission. Trademarks or trade dress
-              include the Zoci name, logo and other graphics, page headers,
-              button icons, scripts and service names of Zoci products and
-              programs, are the property of Zoci and its affiliates and are
+              include the Zoci pvt. ltd. name, logo and other graphics, page headers,
+              button icons, scripts and service names of Zoci pvt. ltd. products and
+              programs, are the property of Zoci pvt. ltd. and its affiliates and are
               protected by The Indian and international trademark laws. All
               other trademarks that appear on this site are the property of
               their respective owners, who may or may not be affiliated with,

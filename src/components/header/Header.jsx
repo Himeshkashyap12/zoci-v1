@@ -10,7 +10,7 @@ import bag from "../../assets/icons/bagYellow.png";
 import wishlist from "../../assets/wishlist.png";
 import menuIcon from "../../assets/icons/menuYellow.png";
 import CustomSearch from "../home/CustomSearch";
-import { headermenuHandler } from "../../feature/header/headerSlice";
+import { headerActiveTab, headermenuHandler } from "../../feature/header/headerSlice";
 const Header = () => {
   const [open, setOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
@@ -29,7 +29,9 @@ const Header = () => {
     dispatch(headermenuHandler(false));
   };
   const cartShowDrawer = (status) => {
+    if(cartCounter === 0 || wishCounter === 0) return  dispatch(headermenuHandler(true),dispatch(headerActiveTab("profile")))
     setCartOpen(true);
+
     setCartStatus(status);
   };
 

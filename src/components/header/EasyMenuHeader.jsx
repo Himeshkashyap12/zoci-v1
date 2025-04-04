@@ -33,38 +33,44 @@ import { addCategary, addproductToshop } from "../../feature/shop/shopSlice";
 import { TbBrandLinkedin, TbPointFilled } from "react-icons/tb";
 import { searchProducts } from "../../feature/product/productSlice";
 import { toast } from "react-toastify";
-import { headermenuHandler } from "../../feature/header/headerSlice";
+import {
+  headerActiveTab,
+  headermenuHandler,
+} from "../../feature/header/headerSlice";
 const siderStyle = {
   height: "full",
   textAlign: "center",
   color: "#fff",
   backgroundColor: "#214344",
 };
-const EasyMenuHeader = ({ setCartCounter, setWishCounter,setCartOpen,setCartStatus }) => {
+const EasyMenuHeader = ({
+  setCartCounter,
+  setWishCounter,
+  setCartOpen,
+  setCartStatus,
+}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [searchInput,setSearchInput]=useState('');
+  const [searchInput, setSearchInput] = useState("");
   // const [searchData,setSearchData]=useState([]);
-  const [activeTab, setActiveTab] = useState("home");
-  const searchData = useSelector((state) => state.product.searchData);
-  const open = useSelector((state) => state.header.headermenu);
+  const activeTab = useSelector((state) => state.header?.headerActive);
+  const searchData = useSelector((state) => state.product?.searchData);
+  const open = useSelector((state) => state.header?.headermenu);
   const onClose = () => {
     dispatch(headermenuHandler(false));
   };
 
   const filterSubcategary = async (data) => {
-    console.log(data);
-    
     try {
       const filters = { category: data };
       const res = await getProductFilterApi({ filters });
-      dispatch(addproductToshop(res?.products));
       dispatch(addCategary(data));
+      dispatch(addproductToshop(res?.products));
     } catch (error) {
-      if(error.response.data.message==="No products found"){
+      if (error.response.data.message === "No products found") {
         dispatch(addproductToshop([]));
         dispatch(addCategary(data));
-      };
+      }
     }
   };
 
@@ -75,20 +81,19 @@ const EasyMenuHeader = ({ setCartCounter, setWishCounter,setCartOpen,setCartStat
       dispatch(searchProducts(res.products));
     } catch (error) {
       console.log(error);
-      if(error.response.data.message==="No products found"){
+      if (error.response.data.message === "No products found") {
         dispatch(searchProducts([]));
-      };
+      }
     }
   };
 
-  useEffect(()=>{
-    if(searchInput.length===0){
-       dispatch(searchProducts([])); 
-    }else{
-      searchHandler();    
+  useEffect(() => {
+    if (searchInput.length === 0) {
+      dispatch(searchProducts([]));
+    } else {
+      searchHandler();
     }
-    
-  },[searchInput])
+  }, [searchInput]);
   return (
     <Drawer
       placement={"left"}
@@ -108,12 +113,12 @@ const EasyMenuHeader = ({ setCartCounter, setWishCounter,setCartOpen,setCartStat
                 onClick={onClose}
               >
                 <div className=" w-[20px] h-[20px]  rounded-full flex items-center justify-center  ">
-                  <img src={closeIcon}  alt="closeIcon"/>
+                  <img src={closeIcon} alt="closeIcon" />
                 </div>
               </div>
               <Tooltip placement="left" title={"Home"}>
                 <button
-                  onClick={() => setActiveTab("home")}
+                  onClick={() => dispatch(headerActiveTab("home"))}
                   className={` rounded-full p-2   ${
                     activeTab === "home" ? "bg-[#F0D5A0] " : "bg-transparent"
                   } `}
@@ -129,7 +134,9 @@ const EasyMenuHeader = ({ setCartCounter, setWishCounter,setCartOpen,setCartStat
               </Tooltip>
               <Tooltip placement="left" title={"Shop"}>
                 <button
-                  onClick={() => {navigate("/shop"),dispatch(headermenuHandler(false))}}
+                  onClick={() => {
+                    navigate("/shop"), dispatch(headermenuHandler(false));
+                  }}
                   className={` rounded-full p-2   ${
                     activeTab === "cart" ? "bg-[#F0D5A0] " : "bg-transparent"
                   }`}
@@ -148,7 +155,7 @@ const EasyMenuHeader = ({ setCartCounter, setWishCounter,setCartOpen,setCartStat
               <Tooltip placement="left" title={"Add to Wishlist"}>
                 <div className=" rounded-full   cursor-pointer">
                   <button
-                    onClick={() => setActiveTab("wishlist")}
+                    onClick={() => dispatch(headerActiveTab("wishlist"))}
                     className={`p-2  rounded-full  ${
                       activeTab === "wishlist"
                         ? "bg-[#F0D5A0] "
@@ -172,7 +179,7 @@ const EasyMenuHeader = ({ setCartCounter, setWishCounter,setCartOpen,setCartStat
               <Tooltip placement="left" title={"catalogue"}>
                 <div className='className="bg-[#214344] rounded-full  cursor-pointer"'>
                   <button
-                    onClick={() => setActiveTab("catalogue")}
+                    onClick={() => dispatch(headerActiveTab("catalogue"))}
                     className={`text-white   ${
                       activeTab === "catalogue"
                         ? "bg-[#F0D5A0] "
@@ -196,7 +203,7 @@ const EasyMenuHeader = ({ setCartCounter, setWishCounter,setCartOpen,setCartStat
               <Tooltip placement="left" title={"Profile"}>
                 <div className='className="bg-[#214344] rounded-full  cursor-pointer"'>
                   <button
-                    onClick={() => setActiveTab("profile")}
+                    onClick={() => dispatch(headerActiveTab("profile"))}
                     className={`text-white    ${
                       activeTab === "profile"
                         ? "bg-[#F0D5A0] "
@@ -221,7 +228,7 @@ const EasyMenuHeader = ({ setCartCounter, setWishCounter,setCartOpen,setCartStat
                 to={"https://www.instagram.com/accounts/login/?hl=en"}
                 target="_blank"
               >
-              <FaInstagram style={{ fontSize: "20px", color: "#F0D5A0" }} />
+                <FaInstagram style={{ fontSize: "20px", color: "#F0D5A0" }} />
               </Link>
               <Link to={"https://www.facebook.com"} target="_blank">
                 <FaFacebook style={{ fontSize: "20px", color: "#F0D5A0" }} />
@@ -260,43 +267,75 @@ const EasyMenuHeader = ({ setCartCounter, setWishCounter,setCartOpen,setCartStat
 
         <div className=" pt-[55px] home-tab">
           {activeTab === "home" && (
-            <div className="px-10 relative">
+            <div className="sm:px-10 px-5 relative">
               <div className="relative ">
                 <input
                   placeholder="Search your products"
                   onChange={(e) => {
                     setSearchInput(e.target.value);
                   }}
-                  className=" bg-[#fff] rounded-full px-5 py-2 md:w-[300px]    "
+                  className=" bg-[#fff] rounded-full px-5 py-2 sm:w-[370px] w-[250px]  mx-auto    "
                 />
                 <div className="absolute top-2 right-2">
                   <SearchOutlined style={{ fontSize: "20px" }} />
                 </div>
-              </div>
-              {searchData.map((item, idx) => {
-                
-                return (
-                  <div className="pt-2" key={idx}>
-                  <Link to={`/product/${item?.title?.charAt(0)?.toLowerCase()+item?.title?.slice(1)}/${item?._id}`} onClick={()=>{dispatch(headermenuHandler(false))}}  >
-                    <div className="bg-[#fff] rounded-md">
-                      <div className="flex gap-5 px-2 py-1 shadow-lg rounded-md">
-                        <div className="size-[50px] ">
-                          <img className="rounded-xl" src={item?.images?.productImage}  alt="productimage"/>
+
+                <div>
+                  <div
+                    className={` ${
+                      searchData?.length > 0
+                        ? "h-[400px] absolute z-10"
+                        : "h-[0]"
+                    }  w-[250px] sm:w-[370px] overflow-auto`}
+                  >
+                    {searchData?.length === 0 && searchInput.length > 0 && (
+                      <p className="text-center font-semibold  ">
+                        No data Found
+                      </p>
+                    )}
+                    {searchData.map((item, idx) => {
+                      return (
+                        <div className="pt-2  " key={idx}>
+                          <Link
+                            to={`/product/${
+                              item.title.includes(" ")
+                                ? item.title.split(" ").join("-")
+                                : item?.title?.charAt(0)?.toLowerCase() +
+                                  item?.title?.slice(1)
+                            }/${item?._id}`}
+                            onClick={() => {
+                              dispatch(headermenuHandler(false));
+                            }}
+                          >
+                            <div className="bg-[#fff] rounded-md">
+                              <div className="flex gap-5 px-2 py-1 shadow-lg rounded-md">
+                                <div className="size-[50px] ">
+                                  <img
+                                    className="rounded-xl"
+                                    src={item?.images?.productImage}
+                                    alt="productimage"
+                                  />
+                                </div>
+                                <div className="flex flex-col">
+                                  <Typography.Text className="text-[14px] font-semibold">
+                                    {item?.title}
+                                  </Typography.Text>
+                                  <Typography.Text>
+                                    Rs.{item?.price}
+                                  </Typography.Text>
+                                </div>
+                              </div>
+                            </div>
+                          </Link>
                         </div>
-                        <div className="flex flex-col">
-                          <Typography.Text className="text-[14px] font-semibold">
-                            {item?.title}
-                          </Typography.Text>
-                          <Typography.Text>Rs.{item?.price}</Typography.Text>
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
+                      );
+                    })}
                   </div>
-                );
-              })}
+                </div>
+              </div>
             </div>
           )}
+
           {activeTab == "home" && (
             <div className="flex flex-col px-10 pt-5 gap-2">
               <NavLink
@@ -331,19 +370,19 @@ const EasyMenuHeader = ({ setCartCounter, setWishCounter,setCartOpen,setCartStat
                           <NavLink
                             onClick={() => {
                               filterSubcategary("Pendants"),
-                                dispatch(headermenuHandler(false));
+                              dispatch(headermenuHandler(false));
                             }}
                             className={"hover:text-[#214344] "}
                             to={"/shop"}
                           >
                             <div className="flex gap-2 items-center text-[#214344]">
                               <TbPointFilled />
-                              Pendants
+                              Pendants & necklaces
                             </div>
                           </NavLink>
                           <NavLink
                             onClick={() => {
-                              filterSubcategary("Earings"),
+                              filterSubcategary("Earrings"),
                                 dispatch(headermenuHandler(false));
                             }}
                             className={"hover:text-[#214344]"}
@@ -351,7 +390,7 @@ const EasyMenuHeader = ({ setCartCounter, setWishCounter,setCartOpen,setCartStat
                           >
                             <div className="flex gap-2 items-center text-[#214344]">
                               <TbPointFilled />
-                              Earings
+                              Earrings
                             </div>
                           </NavLink>
                           <NavLink
@@ -390,7 +429,7 @@ const EasyMenuHeader = ({ setCartCounter, setWishCounter,setCartOpen,setCartStat
                           >
                             <div className="flex gap-2 items-center">
                               <TbPointFilled />
-                              Cufflinks
+                              Other products
                             </div>
                           </NavLink>
                         </div>
@@ -401,7 +440,9 @@ const EasyMenuHeader = ({ setCartCounter, setWishCounter,setCartOpen,setCartStat
               </NavLink>
               <NavLink
                 onClick={() => {
-                  dispatch(headermenuHandler(false)),setCartStatus("cart"),setCartOpen(true);
+                  dispatch(headermenuHandler(false)),
+                    setCartStatus("cart"),
+                    setCartOpen(true);
                 }}
                 className="text-[#214344] text-[16px] font-[600] hover:text-[#214344]"
               >

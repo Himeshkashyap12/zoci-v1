@@ -1,8 +1,9 @@
-import api from "../../axios/axios";
-// This is api of products
+import api from "../../axios/axios"; 
 
 export const addToWishlistData = async (data) => {
   const token = localStorage.getItem("token");
+  console.log(token);
+  
 
   try {
     const res = await api.post(`/product/addtowishlist`, data, {

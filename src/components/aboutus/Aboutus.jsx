@@ -6,7 +6,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { Link, useNavigate } from "react-router";
 import { useEffect } from "react";
 const AboutUs = () => {
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   var settings = {
     dots: false,
     infinite: true,
@@ -14,169 +14,84 @@ const AboutUs = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
-   useEffect(() => {
-            window.scrollTo(0, 0);
-          }, []);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <>
-      <Row className="bg-[#9f9f9f] pt-[120px]  w-full">
-        <Col xl={12} lg={12} md={12} sm={24} xs={24}>
-          <div className="flex flex-col gap-4 md:ps-20 px-5 py-20 ">
-            <div>
-              <Button onClick={()=>navigate("/shop")} className="font-semibold text-[#fff] bg-black rounded-full px-8 py-1 border-none hover:!text-[#000]">
-                Shop
-              </Button>
-            </div>
-            <Typography.Text className="text-[40px] font-bold  text-[#fff]">
-              Zoci jewellery
+      <Row className="pt-[120px]  w-full">
+        <Col span={24}>
+          <div className="flex flex-col gap-4  px-20 pb-5 ">
+            <Typography.Text className="text-[24px] font-bold text-center">
+              About ZOCI
             </Typography.Text>
-            <Typography.Text className="text-[16px] text-justify text-[#214344]">
-              Zoci Showrooms in Mumbai epitomize luxury and elegance, offering
-              an exquisite array of finely crafted jewellery pieces. Located in
-              the bustling heart of the city, these showrooms are a haven for
-              jewellery enthusiasts and connoisseurs alike. Zoci is renowned for
-              its impeccable craftsmanship, showcasing a diverse collection that
-              ranges from timeless classics to contemporary designs. Each piece
-              at Zoci is a testament to the brand's commitment to quality and
-              innovation, blending traditional artistry with modern aesthetics.
-              With a focus on customer satisfaction, Zoci Showrooms provide a
-              personalized shopping experience, ensuring that every visit is
-              memorable and every purchase is cherished.
+            <Typography.Text className="text-[16px] text-center text-[#214344]">
+              <strong>ZOCI</strong> is a luxury jewellerybrand that proudly emerges from the
+              esteemed legacy of Manish Jewellers, a renowned name in the
+              jewelleryindustry from Mau, UP. As a branch of our parent company,
+              we carry forward the tradition of excellence and craftsmanship,
+              infused with a fresh perspective and modern aesthetic
             </Typography.Text>
           </div>
         </Col>
-        <Col xl={12} lg={12} md={12} sm={24} xs={24}>
-          <div className="w-full px-5"></div>
-        </Col>
-      </Row>
-      <Row className="bg-[#efe6dc]">
-        <Col xl={12} lg={12} md={12} sm={24} xs={24}>
-          <div className="flex flex-col gap-4 md:ps-20 px-5 py-20 ">
-            <div>
-              <Button className="font-semibold text-[12px] text-[#000] hover:!text-[#000] bg-[#b5c7ff] rounded-full px-4 py-1 border-none tracking-wide">
-                EXPERIENCE TEAM
-              </Button>
-            </div>
-            <Typography.Text className="text-[35px] font-semibold  text-[#000]">
-              Strong Together
+        <Col span={24}>
+          <div className="flex flex-col gap-4  px-20 pb-5 ">
+            <Typography.Text className="text-[24px] font-bold text-center">
+              About Our Founder -Sawan
             </Typography.Text>
-            <Typography.Text className="text-[16px] text-justify text-[#214344]">
-              Ninetheme is powered by a simple idea: Women are superheroes. Our
-              mission is to lift women up for a better tomorrow. In crafting
-              products that seamlessly fit you and your everyday, we donate 2%
-              of our revenue to women's organizations that are closing the
-              gender gap.
+            <Typography.Text className="text-[16px] text-center text-[#214344]">
+              <strong>Sawan</strong>, the visionary founder of ZOCI, is a young entrepreneur who
+              has grown up surrounded by the art of jewellery-making. As the son
+              of Manish Sarraf founder of Manish jewellers, he has inherited a
+              deep understanding of the craft and a passion for innovation.
+              Sawan's journey with ZOCI is a testament to his dedication to
+              taking his family's legacy forward, while carving his own niche in
+              the industry
             </Typography.Text>
-            <Typography.Text className="text-[14px] font-bold  pt-10">
-              Join us in making world-shifting change.
+            <Typography.Text className="text-[16px] text-center text-[#214344]">
+              With a keen eye for detail and a love for luxury, Sawan has
+              curated a collection of majestic marvels in 925 silver, adorned
+              with CZ stones and exquisite enamelling. His vision is to create
+              jewellerythat not only makes a statement but also tells a story of
+              craftsmanship, quality, and style.
             </Typography.Text>
           </div>
         </Col>
-        <Col xl={12} lg={12} md={12} sm={24} xs={24}></Col>
-      </Row>
-      <Row className="bg-[#efe6dc]">
-        <Col
-          xl={12}
-          lg={12}
-          md={12}
-          sm={24}
-          xs={24}
-          className="md:px-20 px-8 py-20"
-        >
-          <Slider {...settings}>
-            <div className="w-full">
-              <img src={modalImage} alt="modalImage" />
-            </div>
-            <div>
-              <img src={modalImage} alt="modalImage"/>
-            </div>
-            <div>
-              <img src={modalImage}  alt="modalImage"/>
-            </div>
-            <div>
-              <img src={modalImage}  alt="modalImage"/>
-            </div>
-            <div>
-              <img src={modalImage} alt="modalImage"/>
-            </div>
-            <div>
-              <img src={modalImage}alt="modalImage" />
-            </div>
-          </Slider>
-        </Col>
-        <Col xl={12} lg={12} md={12} sm={24} xs={24}>
-          <div className="flex flex-col gap-4 md:ps-20 px-5 py-20 ">
-            <div>
-              <Button className="font-semibold text-[12px] hover:!text-[#000] text-[#000] bg-[#ECDBAE] rounded-full px-4 py-1 border-none tracking-wide">
-                Modern Products
-              </Button>
-            </div>
-            <Typography.Text className="md:text-[35px] text-[24px] font-semibold  text-[#000]">
-              18 years of experience
+        <Col span={24}> 
+          <div className="flex flex-col gap-4 px-20 pb-5 ">
+            <Typography.Text className="text-[24px] font-bold text-center">
+              Our Philosophy*
             </Typography.Text>
-            <Typography.Text className="text-[16px] text-justify text-[#214344]">
-              Ninetheme is powered by a simple idea: Women are superheroes. Our
-              mission is to lift women up for a better tomorrow. In crafting
-              products that seamlessly fit you and your everyday, we donate 2%
-              of our revenue to women's organizations that are closing the
-              gender gap.
+            <Typography.Text className="text-[16px] text-center text-[#214344]">
+              At ZOCI, we believe in the art of storytelling through jewellery.
+              We strive to create pieces that are not only beautiful but also
+              meaningful, inspired by the rich cultural heritage of India. Our
+              mission is to provide exceptional quality, craftsmanship, and
+              service, making luxury jewelleryaccessible to discerning clients
+              who appreciate the finer things in life
             </Typography.Text>
-            <Link
-              to={"/shop"}
-              className="text-[14px] font-bold text-[#214344] hover:text-[#214344]  pt-10"
-            >
-              Buy Products.
-            </Link>
           </div>
         </Col>
-      </Row>
-      <Row className="bg-[#efe6dc]">
-        <Col xl={12} lg={12} md={12} sm={24} xs={24}>
-          <div className="flex flex-col gap-4 md:ps-20 px-5 py-20 ">
-            <div>
-              <Button className="font-semibold text-[12px] text-[#FFF] hover:!text-[#000] bg-[#599078] rounded-full px-4 py-1 border-none tracking-wide">
-                RESPONSIBLE FOR NATURE
-              </Button>
-            </div>
-            <Typography.Text className="md:text-[35px] text-[24px] font-semibold  text-[#000]">
-              Modern jobs with modern tools
+        <Col span={24}>
+          <div className="flex flex-col gap-4  px-20 pb-5 ">
+            <Typography.Text className="text-[24px] font-bold text-center">
+              Our Craft
             </Typography.Text>
-            <Typography.Text className="text-[16px] text-justify text-[#214344]">
-              Ninetheme is powered by a simple idea: Women are superheroes. Our
-              mission is to lift women up for a better tomorrow. In crafting
-              products that seamlessly fit you and your everyday, we donate 2%
-              of our revenue to women's organizations that are closing the
-              gender gap.
+            <Typography.Text className="text-[16px] text-center text-[#214344]">
+              We specialize in crafting exquisite jewellerypieces in 925 silver,
+              using high-quality CZ stones and intricate enamellingtechniques.
+              Our designs are inspired by the beauty of nature, the grandeur of
+              Indian architecture, and the elegance of modern style. Each piece
+              is carefully crafted to perfection, reflecting our commitment to
+              excellence and our passion for the art of jewellery-making .
             </Typography.Text>
-            <Link
-              to={"/shop"}
-              className="text-[14px] font-bold text-[#214344] hover:text-[#214344]  pt-10"
-            >
-              Buy Products.
-            </Link>
-          </div>
-        </Col>
-        <Col xl={12} lg={12} md={12} sm={24} xs={24}></Col>
-      </Row>
-      <Row className="bg-[#f0d5a0]">
-        <div className="flex flex-col justify-center items-center gap-4 max-md:px-5 py-20 md:w-[70%] mx-auto ">
-          <div>
-            <Button className="font-semibold text-[12px] text-[#fff] hover:!text-[#000] bg-[#000] rounded-full px-4 py-1 border-none tracking-wide">
-              Notes
-            </Button>
-          </div>
+            <Typography.Text className="text-[16px] font-semibold text-center text-[#214344]">
+            Join us on this journey, as we unveil the world of ZOCI -where
+            luxury meets legacy, and craftsmanship meets creativity.
+            </Typography.Text>
 
-          <Typography.Text className="md:text-[40px]  text-[24px] font-semibold text-center text-[#214344]">
-            The most important advantage of working with an experienced
-            specialist is time saving, do not eliminate it!
-          </Typography.Text>
-          <Link
-            to={"/shop"}
-            className="text-[16px] font-bold text-[#214344] hover:text-[#214344] bg-[#fff]  px-3 py-2 mt-10 rounded-full"
-          >
-            Shop Now.
-          </Link>
-        </div>
+          </div>
+        </Col>
       </Row>
     </>
   );

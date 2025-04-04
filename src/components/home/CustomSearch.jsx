@@ -59,17 +59,13 @@ const CustomSearch = ({ setOpen, setIsModalOpen }) => {
             />
           </div>
           <div className="h-[350px]  overflow-auto py-5">
-            {searchData?.length === 0 && (
-              <h1 className="text-[20px] text-center">
-                {/* <Empty /> */} No Products Found
-              </h1>
-            )}
+            
             {searchData?.map((item) => (
               <div className=" px-5">
                 
                 <Link
                   onClick={() => setOpen(false)}
-                  to={`/product/${item?.title?.charAt(0)?.toLowerCase()+item?.title?.slice(1)}/${item?._id}`}
+                  to={`/product/${item.title.includes(" ") ? item.title.split(" ").join("-") : item?.title?.charAt(0)?.toLowerCase()+item?.title?.slice(1)}/${item?._id}`}
                   key={item._id}
                   className="flex justify-between px-2 pt-5 bg-[#efe6dc] rounded-xl shadow-xl py-5 mb-3"
                 >

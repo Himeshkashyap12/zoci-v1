@@ -42,7 +42,7 @@ const CreateAdminProduct = () => {
     additional2: null,
   });
   const [metalType, setMetalType] = useState("Gold");
-  const [category, setCategary] = useState("Nackless");
+  const [category, setCategary] = useState("Nacklace");
   const editData = location?.state?.product;
   console.log(editData, "editData");
 
@@ -51,14 +51,13 @@ const CreateAdminProduct = () => {
 
   const [productFormInput, setProductFormInput] = useState({
     title: "",
-    price: "",
+    price: 0,
     description: "",
     quantity: "",
-    length: "",
-    length: "",
+    length: 0,
     madefor: "",
     metalColor: "",
-    compare_at_price: "",
+    compare_at_price: 0,
     sku: "",
     lengthUnit: "",
     metalShape: "",
@@ -83,10 +82,19 @@ const CreateAdminProduct = () => {
   });
 
   const createProductInputHandler = (e) => {
+  if(e.target.name==='price' || e.target.name==='compare_at_price' || e.target.name==="length" ){
+    setProductFormInput({
+      ...productFormInput,
+      [e.target.name]: Number(e.target.value),
+    });
+  }else{
     setProductFormInput({
       ...productFormInput,
       [e.target.name]: e.target.value,
     });
+  }
+    
+    
   };
   function deepCompareArraysOnly(oldObj, newObj) {
     const changes = {};
@@ -124,8 +132,11 @@ const CreateAdminProduct = () => {
   }
 
   const createProductHandler = async () => {
-    if (!editData && (productImagesUrl?.productImage===null || productImagesUrl?.modalImage===null || productImagesUrl?.additional1===null || productImagesUrl?.additional2==null || videoUrl?.length < 1 )) {
-      return toast.error("Please add all images and videos");
+    if ( productImagesUrl?.productImage===null || productImagesUrl?.modalImage===null || videoUrl?.length===0) {
+      return toast.error("Required media files are missing");
+    }
+    if(productFormInput?.title==="" || productFormInput?.sku=="" || productFormInput?.price===0 || productFormInput?.quantity===""   || productFormInput?.description===""  ){ 
+      return toast.error("Required fields are missing");
     }
     const data = {
       ...productFormInput,
@@ -135,6 +146,7 @@ const CreateAdminProduct = () => {
       category: category,
     };
 
+    
     if (!editData) {
       try {
         const res = await createProductApi(data);
@@ -246,7 +258,7 @@ const CreateAdminProduct = () => {
             <Row gutter={[20, 20]}>
               <Col span={12}>
                 <Typography.Text className="text-[14px] font-semibold">
-                  Categary
+                  Categary <span className="text-red-500">*</span>
                 </Typography.Text>
                 <div className="pt-2">
                   <Select
@@ -262,7 +274,7 @@ const CreateAdminProduct = () => {
               </Col>
               <Col span={12}>
                 <Typography.Text className="text-[14px] font-semibold">
-                  Metal Type
+                  Metal Type <span className="text-red-500">*</span>
                 </Typography.Text>
                 <div className="pt-2">
                   <Select
@@ -271,6 +283,7 @@ const CreateAdminProduct = () => {
                     onChange={handleChange}
                     className="w-full rounded-md"
                     options={[
+                      { value: "Gold", label: "Gold" },
                       { value: "Gold(18kt)", label: "Gold (18kt)" },
                       { value: "Gold(22kt)", label: "Gold (22kt)" },
                       { value: "Gold(24kt)", label: "Gold (24kt)" },
@@ -288,7 +301,7 @@ const CreateAdminProduct = () => {
               <Col span={12}>
                 <Form.Item>
                   <Typography.Text className="text-[14px] font-semibold">
-                    SKU Id
+                    SKU Id  <span className="text-red-500">*</span>
                   </Typography.Text>
                   <div className="pt-2">
                     <Input
@@ -304,7 +317,7 @@ const CreateAdminProduct = () => {
               <Col span={12}>
                 <Form.Item>
                   <Typography.Text className="text-[14px] font-semibold">
-                    Product Name
+                    Product Name <span className="text-red-500">*</span>
                   </Typography.Text>
                   <div className="pt-2">
                     <Input
@@ -322,7 +335,7 @@ const CreateAdminProduct = () => {
               <Col span={12}>
                 <Form.Item>
                   <Typography.Text className="text-[14px] font-semibold">
-                    Price
+                    Price <span className="text-red-500">*</span>
                   </Typography.Text>
                   <div className="pt-2">
                     <Input
@@ -338,7 +351,7 @@ const CreateAdminProduct = () => {
               <Col span={12}>
                 <Form.Item>
                   <Typography.Text className="text-[14px] font-semibold">
-                    Compare at Price
+                    Compare at Price 
                   </Typography.Text>
                   <div className="pt-2">
                     <Input
@@ -356,7 +369,7 @@ const CreateAdminProduct = () => {
             <Row gutter={[20, 20]}>
               <Col span={12}>
                 <Typography.Text className="text-[14px] font-semibold">
-                  Quantity
+                  Quantity  <span className="text-red-500">*</span>
                 </Typography.Text>
                 <div className="pt-2">
                   <Input
@@ -386,7 +399,7 @@ const CreateAdminProduct = () => {
             <Row gutter={[20, 20]} className="pt-[24px]">
               <Col span={12} className="px-1">
                 <Typography.Text className="text-[14px] font-semibold">
-                  Size
+                  Size 
                 </Typography.Text>
                 <div className="pt-2">
                   <Input
@@ -400,7 +413,7 @@ const CreateAdminProduct = () => {
               </Col>
               <Col span={12} className="px-1">
                 <Typography.Text className="text-[14px] font-semibold">
-                  Size Unit
+                  Size Unit 
                 </Typography.Text>
                 <div className="pt-2">
                   <Input
@@ -416,7 +429,7 @@ const CreateAdminProduct = () => {
             <Row gutter={[20, 20]} className="pt-[24px] ">
               <Col span={12}>
                 <Typography.Text className="text-[14px] font-semibold">
-                  Metal Color
+                  Metal Color 
                 </Typography.Text>
                 <div className="pt-2">
                   <Input
@@ -447,7 +460,7 @@ const CreateAdminProduct = () => {
             <Row gutter={[20, 20]} className="pt-[24px] ">
               <Col span={24}>
                 <Typography.Text className="text-[14px] font-semibold">
-                  Description
+                  Description <span className="text-red-500">*</span>
                 </Typography.Text>
                 <div className="pt-2">
                   <TextArea
@@ -463,7 +476,7 @@ const CreateAdminProduct = () => {
             <Row>
               <Col span={12} className="pt-[24px] pb-5">
                 <Typography.Text className="text-[14px] font-semibold">
-                  Made for
+                  Made for <span className="text-red-500">*</span>
                 </Typography.Text>
                 <div className="pt-2">
                   <Radio.Group

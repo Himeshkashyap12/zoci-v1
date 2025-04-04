@@ -13,17 +13,24 @@ import "./advancefilter.css";
 import { RWebShare } from "react-web-share";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
+import { Circles } from "react-loader-spinner";
+import Loading from "../loading/Loading";
+import { headerActiveTab, headermenuHandler } from "../../feature/header/headerSlice";
+import Cookies from 'js-cookie';
 // This is my card .start here
 const ShopCard = ({ item, shop }) => {
   const [open, setOpen] = useState(false);
+  const [loadingVideo, setVideoLoading] = useState(true);
+  const [imageLoading, setImageLoading] = useState(true);
   const [thumbnailButton, setThumbnailButton] = useState(false);
   const [cartStatus, setCartStatus] = useState("");
   const cart = useSelector((state) => state.cart.cart);
   const wishlistData = useSelector((state) => state?.wish.wishlist);
-  var token = localStorage.getItem("token");
-  const dispatch=useDispatch()
+    const token = Cookies.get("token");
+
+  const dispatch = useDispatch();
   const addCartHandler = async (item, status) => {
-    if (!token) return toast.error("Please login first");
+    if (!token) return  dispatch(headermenuHandler(true),dispatch(headerActiveTab("profile")))
     setCartStatus(status);
     const user = localStorage.getItem("userId");
     const data = {
@@ -33,7 +40,7 @@ const ShopCard = ({ item, shop }) => {
       price: item.price,
     };
     try {
-      const res = await addToCartData(data, token);      
+      const res = await addToCartData(data, token);
       setOpen(true);
       toast.success(res?.message);
       localStorage.setItem("cart", parseInt(cart.length) + 1);
@@ -48,7 +55,7 @@ const ShopCard = ({ item, shop }) => {
   };
 
   const addToWishlistHandler = async (item, status) => {
-    if (!token) return toast.error("Please login first");
+    if (!token) return dispatch(headermenuHandler(true),dispatch(headerActiveTab("profile")))
     setCartStatus(status);
     const data = { userId: localStorage.getItem("userId"), prodId: item?._id };
     try {
@@ -65,7 +72,13 @@ const ShopCard = ({ item, shop }) => {
   return (
     <>
       <div className="relative shopcard">
-       <Link to={`/product/${item?.title?.charAt(0)?.toLowerCase()+item?.title?.slice(1)}/${item?._id}`}>
+        <Link
+          to={`/product/${
+            item.title.includes(" ")
+              ? item.title.split(" ").join("-")
+              : item?.title?.charAt(0)?.toLowerCase() + item?.title?.slice(1)
+          }/${item?._id}`}
+        >
           <div
             onMouseEnter={() => {
               setThumbnailButton(true);
@@ -77,18 +90,45 @@ const ShopCard = ({ item, shop }) => {
           >
             <div className=" relative">
               <div className=" border-[#214344] rounded-xl sm:h-[370px] h-[165px]  ">
+                {imageLoading && (
+                  <div className="absolute  inset-0 flex justify-center items-center rounded-xl  backdrop-blur-sm z-10">
+                                           <Loading/>
+
+                   </div>
+                )}
                 {!thumbnailButton && (
+                  <>
+                  <div className="sm:hidden h-full">
                   <img
-                    className="rounded-t-2xl sm:border-[5px] border-[3px] border-[#214344] w-full  h-full object-cover "
-                    src={item?.images.productImage}
-                    alt="product image "
+                    onLoad={() => setImageLoading(false)}
+                    className=" rounded-t-2xl w-full  h-full object-cover  "
+                    src={item.images.productImage}
+                    alt="product image"
                   />
+                  </div>
+                  <div className=" hidden sm:block h-full">
+                  <img
+                    onLoad={() => setImageLoading(false)}
+                    className=" rounded-t-2xl w-full  h-full object-cover"
+                    src={item.images.modalImage}
+                    alt="product image"
+                  />
+                  </div>
+                  </>
                 )}
                 {thumbnailButton && (
-                  <div className="w-full   border-[3px] border-[#214344] rounded-t-[19.5px]">
+                  <div className="w-full   border-[5px] border-[#214344] rounded-t-[19.5px]">
+                    {loadingVideo && (
+                      <div className="absolute inset-0 flex justify-center items-center rounded-xl backdrop-blur-sm z-10">
+                        {/* <Circles height={80} width={80} color="#F0D5A0" /> */}
+                        <Loading/>
+
+                      </div>
+                    )}
                     <video
                       className="w-full sm:h-[370px] h-[165px] rounded-t-2xl object-cover"
                       muted
+                      onLoadedData={() => setVideoLoading(false)}
                       loop
                       autoPlay
                     >
@@ -108,11 +148,17 @@ const ShopCard = ({ item, shop }) => {
               <div
                 className={`sm:px-5 px-2 sm:py-4 pb-2  flex flex-col bg-[#214344] sm:gap-2 gap-1  rounded-b-3xl`}
               >
+               <Tooltip title={item?.title} placement="top" color="#214344">
+                
                 <div>
                   <h5 className="md:text-[16px] text-[16px] font-[500]   text-white">
-                  {item?.title?.charAt(0)?.toUpperCase()+item?.title?.slice(1)}
+                    {item?.title?.length > 30
+                      ? item?.title.slice(0, 30) + "..."
+                      : item?.title?.charAt(0)?.toUpperCase() +
+                        item?.title?.slice(1)}
                   </h5>
                 </div>
+                </Tooltip>
                 <div className="flex items-center justify-between ">
                   <div className="flex gap-2 items-center ">
                     <span className="text-[15px] font-semibold text-[#F0D5A0] ">
@@ -123,9 +169,9 @@ const ShopCard = ({ item, shop }) => {
                 <div className=" max-sm:hidden">
                   <Flex vertical>
                     <Progress
+                      percent={Math.floor((item?.sold * 100) / item?.quantity)}
                       showInfo={false}
                       trailColor="white"
-                      percent={null}
                       status="active"
                     />
                     <div className="flex flex-wrap justify-between">
@@ -134,7 +180,7 @@ const ShopCard = ({ item, shop }) => {
                           Sold :
                         </Typography.Text>
                         <Typography.Text className="font-bold text-[14px] text-[#fff] ">
-                          {item?.sold}
+                          {item?.sold??0}
                         </Typography.Text>
                       </div>
                       <div className="flex gap-1">
@@ -163,26 +209,26 @@ const ShopCard = ({ item, shop }) => {
               onClick={() => {
                 addToWishlistHandler(item, "wishlist");
               }}
-              className="bg-[#214344] rounded-full sm:p-2 p-1.5 cursor-pointer"
+              className="bg-[#214344] cursor-pointer flex justify-center items-center sm:size-[40px] size-[24px] rounded-full"
             >
-              <img src={wishlist}  alt="wishlist"/>
+              <img className="sm:size-[20px] size-[10px]" src={wishlist} alt="wishlist" />
             </div>
           </Tooltip>
           {/* {thumbnailButton &&<Tooltip placement="left" title={"Compare"}> <button  className="text-[#fff] bg-[#214344] p-2 rounded-full text-sm"><ReloadOutlined   style={{fontSize:"20px" ,color:"#F0D5A0"}} /></button></Tooltip>} */}
 
           {/* desktop screen */}
-          <div className="max-sm:hidden sm:block card-icon absolute left-10 top-10  hover:block hover:left-0  transition-all duration-500 ease-in overflow-hidden">
+          <div className="max-sm:hidden sm:block card-icon absolute top-10  hover:block hover:left-0  transition-all duration-200 ease-in-out  overflow-hidden">
             <div className="flex gap-1.5 flex-col ">
               {thumbnailButton && (
                 <Tooltip placement="left" title={"Cart"}>
-                  <button
+                  <div
                     onClick={() => {
                       addCartHandler(item, "cart");
                     }}
-                    className="text-white bg-[#214344] hover:bg-[#214344]  text-sm  p-2  rounded-full text-center"
+                    className="text-white bg-[#214344] hover:bg-[#214344]  text-sm  flex justify-center items-center size-[40px]  rounded-full text-center"
                   >
-                    <img className="h-[20px] w-[20px]" src={bag}  alt="bag"/>
-                  </button>
+                    <img className="h-[20px] w-[18px]" src={bag} alt="bag" />
+                  </div>
                 </Tooltip>
               )}
               {thumbnailButton && (
@@ -190,14 +236,19 @@ const ShopCard = ({ item, shop }) => {
                   <RWebShare
                     data={{
                       text: item?.title,
-                      url: `https://zoci.in/product/${item?.title?.charAt(0)?.toLowerCase()+item?.title?.slice(1)}/${item?._id}`,
+                      url: `https://zoci.in/product/${
+                        item.title.includes(" ")
+                          ? item.title.split(" ").join("-")
+                          : item?.title?.charAt(0)?.toLowerCase() +
+                            item?.title?.slice(1)
+                      }/${item?._id}`,
                       title: "Zoci",
                     }}
                     onClick={() => console.log("shared successfully!")}
                   >
-                    <div className="text-[#fff] bg-[#214344] p-2 rounded-full text-sm">
+                    <div className="text-[#fff] bg-[#214344]   size-[40px] flex justify-center items-center rounded-full text-sm">
                       <ShareAltOutlined
-                        style={{ fontSize: "20px", color: "#F0D5A0" }}
+                        style={{ fontSize: "18px", color: "#F0D5A0" }}
                       />
                     </div>
                   </RWebShare>
@@ -207,30 +258,35 @@ const ShopCard = ({ item, shop }) => {
           </div>
           {/* desktop screen */}
           {/* Mobile screen */}
-          <div className="sm:hidden block  card-icon absolute left-0 top-7  hover:block hover:left-0  transition-all duration-100 overflow-hidden">
+          <div className="sm:hidden block  card-icon absolute  top-7  ">
             <div className="flex gap-1 flex-col ">
               <Tooltip placement="left" title={"Cart"}>
-                <button
+                <div
                   onClick={() => {
                     addCartHandler(item, "cart");
                   }}
                   className="text-white bg-[#214344] hover:bg-[#214344]  text-sm  p-2 size-[24px] rounded-full text-center"
                 >
-                  <img src={bag}  alt="bag"/>
-                </button>
+                  <img src={bag} alt="bag" />
+                </div>
               </Tooltip>
               <Tooltip placement="left" title={"Share"}>
                 <RWebShare
                   data={{
                     text: item?.title,
-                    url: `https://zoci.in/product/${item?.title?.charAt(0)?.toLowerCase()+item?.title?.slice(1)}/${item?._id}`,
+                    url: `https://zoci.in/product/${
+                      item.title.includes(" ")
+                        ? item.title.split(" ").join("-")
+                        : item?.title?.charAt(0)?.toLowerCase() +
+                          item?.title?.slice(1)
+                    }/${item?._id}`,
                     title: "Zoci",
                   }}
                   onClick={() => console.log("shared successfully!")}
                 >
-                  <div className="text-[#fff] bg-[#214344] p-1  rounded-full text-sm">
+                  <div className="text-[#fff] bg-[#214344] p-[2px] flex justify-center items-center size-[24px]  rounded-full text-sm">
                     <ShareAltOutlined
-                      style={{ fontSize: "14px", color: "#F0D5A0" }}
+                      style={{ fontSize: "10px", color: "#F0D5A0" }}
                     />
                   </div>
                 </RWebShare>

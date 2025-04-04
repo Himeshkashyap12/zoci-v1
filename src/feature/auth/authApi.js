@@ -51,9 +51,10 @@ export const logOutApi = async () => {
   }
 };
 
-export const getUserData = async () => {
+export const getUserData = async (userid) => {
+  
   try {
-    const res = await api.get(`/user/${userId}`, {
+    const res = await api.get(`/user/${userid}`, {
       headers: {
         Authorization: `Bearer ${token}`,
         // Sending token in the header

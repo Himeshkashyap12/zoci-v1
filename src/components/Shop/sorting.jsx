@@ -7,6 +7,7 @@ import { addproductToshop } from "../../feature/shop/shopSlice";
 import filterIcon from "../../assets/icons/greenFilter.png";
 import closeIcon from "../../assets/icons/closeIconGreen.png";
 import "./advancefilter.css";
+
 const Sorting = ({  setFiter }) => {
   const [sort, setSort] = useState("high");
   const dispatch = useDispatch();
@@ -86,7 +87,7 @@ const Sorting = ({  setFiter }) => {
             <Select
               className="hover:text-[#fff]"
               placeholder={
-                <p className="text-[#214344] text-[16px]">Short by</p>
+                <p className="text-[#214344] text-[16px]">Sort by</p>
               }
               bordered={false} 
               style={{

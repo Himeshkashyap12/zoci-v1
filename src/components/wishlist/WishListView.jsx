@@ -42,13 +42,15 @@ const WishlistView = () => {
 
   return (
     <>
-      <div className="pt-[110px] px-20 py-5 bg-[#efe6dc]">
+      <div className="pt-[110px] sm:px-20 px-5 py-5 bg-[#efe6dc]">
         <Typography.Text className="text-[30px] font-semibold">
           Your Wishlist
         </Typography.Text>
 
         {wishListData?.length > 0 ? (
           wishListData?.map((item, idx) => {
+        let randomFloat = Math.floor(Math.random() * ((item?.quantity-1) - 0) );
+
             sum += item.price;
             return (
               <div
@@ -65,30 +67,31 @@ const WishlistView = () => {
                   </div>
                   <div className="flex flex-col pt-2">
                     <Typography.Text className="text-[16px] font-semibold ">
-                      {item?.title}
+                      {item?.title?.charAt(0).toUpperCase() +
+                        item?.title?.slice(1)}
                     </Typography.Text>
                     <Typography.Text className="text-[16px] font-bold">
-                      Rs {item?.price}{" "}
+                      Rs {item?.price}
                     </Typography.Text>
                     <Typography.Text className="text-[14px] text-[#214344] ">
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry. Lorem Ipsum has been the industry's{" "}
+                     {item?.description}
                     </Typography.Text>
                     {/* <button>+</button> */}
                     <Flex vertical>
                       <Progress
+                        strokeColor={"#214344"}
                         showInfo={false}
                         trailColor="white"
-                        percent={null}
+                        percent={Math.floor((randomFloat/ item?.quantity) * 100)}
                         status="active"
                       />
-                      <div className="flex justify-between">
+                      <div className="flex flex-wrap justify-between sm:w-[300px] w-[150px]">
                         <div className="flex gap-1">
                           <Typography.Text className="font-semibold text-[14px] text-[#214344] ">
-                            Sold :{" "}
+                            Sold :
                           </Typography.Text>
                           <Typography.Text className="font-bold text-[14px] text-[#214344] ">
-                            {item?.sold}
+                            {randomFloat}
                           </Typography.Text>
                         </div>
                         <div className="flex gap-1">

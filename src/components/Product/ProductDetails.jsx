@@ -24,6 +24,7 @@ import { addToWishlistData } from "../../feature/wishlist/wishlistApi";
 import { useRazorpay } from "react-razorpay";
 import OrderModal from "../order/order";
 import { toast } from "react-toastify";
+import { headerActiveTab, headermenuHandler } from "../../feature/header/headerSlice";
 
 const ProductDetails = () => {
   const { error, isLoading } = useRazorpay();
@@ -41,7 +42,7 @@ const ProductDetails = () => {
   const cart = useSelector((state) => state.cart.cart);
   const wishlistData = useSelector((state) => state?.wish.wishlist);
   var token = localStorage.getItem("token");
-  const n=3;
+  const n=3 ;
   const getData = async () => {
     try {
       const data = await getProductDetailsApi(id);
@@ -60,7 +61,7 @@ const ProductDetails = () => {
   };
 
   const addCartHandler = async (item) => {
-    if (!token) return toast.error("Please login first");
+    if (!isAuth) return dispatch(headermenuHandler(true),dispatch(headerActiveTab("profile")))
     setCartStatus("cart");
     const data = {
       userId: user,
@@ -84,7 +85,7 @@ const ProductDetails = () => {
   };
 
   const addTowishlistHandler = async (item) => {
-    if (!token) return toast.error("Please login first");
+    if (!isAuth) return  dispatch(headermenuHandler(true),dispatch(headerActiveTab("profile")))
     const data = { userId: localStorage.getItem("userId"), prodId: item?._id };
 
     try {
@@ -98,7 +99,7 @@ const ProductDetails = () => {
     }
   };
   const buynowHandler = () => {
-    if (!isAuth) return toast.error("Please login first");
+    if (!isAuth) return dispatch(headermenuHandler(true),dispatch(headerActiveTab("profile")));
     setIsModalOpen(true);
   };
   useEffect(() => {
@@ -123,7 +124,7 @@ const ProductDetails = () => {
     window.scrollTo(0, 0);
   }, []);
   return (
-    <div className="relative">
+   <div className="relative">
       {isLoading && <p>Loading Razorpay...</p>}
       {error && <p>Error loading Razorpay: {error}</p>}
       <Row className="md:pt-[120px] pt-[70px] bg-[#efe6dc] md:px-20   pb-5">
@@ -137,7 +138,7 @@ const ProductDetails = () => {
               xs={{ span: 24, order: 2 }}
             >
               <div className="flex lg:flex-col  items-center    max-lg:py-3  gap-[24px] max-lg:justify-center">
-                <div
+              {item?.images?.productImage!=null && (<div
                   onClick={() => {
                     activeImageHAndler(item?.images?.productImage, 1);
                   }}
@@ -146,14 +147,12 @@ const ProductDetails = () => {
                     "border-[2px] border-[#214343] rounded-md"
                   } `}
                 >
-                  {item?.images?.productImage!=null && (
                     <img
                       className="w-[100%] h-[100%] rounded"
                       src={item?.images?.productImage}
                       alt="productImage"
                     />
-                  )}
-                </div>
+                </div>)}
                 <div
                   onClick={() => {
                     activeImageHAndler(item?.images?.modalImage, 2);
@@ -171,7 +170,7 @@ const ProductDetails = () => {
                     />
                   )}
                 </div>
-                <div
+                {item?.images?.additional1 !==null && (  <div
                   onClick={() => {
                     activeImageHAndler(item?.images?.additional1, 3);
                   }}
@@ -180,15 +179,15 @@ const ProductDetails = () => {
                     "border-[2px] border-[#214343] rounded-md"
                   } `}
                 >
-                  {item?.images?.additional1 !==null && (
+                 
                     <img
                       className="w-[100%] h-[100%] rounded"
                       src={item?.images?.additional1}
                       alt="additional1"
                     />
-                  )}
-                </div>
-                <div
+                  
+                </div>)}
+                {item?.images?.additional2 !==null && ( <div
                   onClick={() => {
                     activeImageHAndler(item?.images?.additional2, 4);
                   }}
@@ -197,14 +196,13 @@ const ProductDetails = () => {
                     "border-[2px] border-[#214343] rounded-md"
                   } `}
                 >
-                  {item?.images?.additional2 !==null && (
+                 
                     <img
                       className="w-[100%] h-[100%] rounded"
                       src={item?.images?.additional2}
                       alt="additional2"
                     />
-                  )}
-                </div>
+                </div>  )}
                 <div
                   onClick={() => {
                     activeImageHAndler(item?.video[0], 5);
@@ -239,10 +237,10 @@ const ProductDetails = () => {
                 <TbPointFilled style={{ color: "#214344" }} />
 
                 <Typography.Text className="text-[14px] font-semibold text-[#214344]">
-                  {item?.category?.toUpperCase()}{" "}
+                  {item?.category?.toUpperCase()}
                 </Typography.Text>
               </div>
-              <div className="md:h-[430px]     md:w-[430px] mx-auto relative max-md:pt-2">
+              <div className="xxl:size-[700px] sm:size-[430px] size-[330px] mx-auto relative max-md:pt-2">
                 {activeImageId===5 && (
                   <div className=" w-full h-full flex justify-center items-center rounded-md ">
                   <video className="w-full h-full object-cover rounded-xl" autoPlay muted loop>
@@ -280,16 +278,14 @@ const ProductDetails = () => {
                     Home
                   </Typography.Text>
                   <TbPointFilled />
-
                   <Typography.Text className="text-[14px] text-[#214344] font-semibold">
-                    {item?.category?.toUpperCase()}{" "}
+                    {item?.category?.toUpperCase()}
                   </Typography.Text>
                 </div>
                 <div className="flex max-sm:flex-col justify-between md:items-center">
                   <div>
                     <h5 className="md:text-[30px] text-[24px] font-semibold tracking-tight text-[#214344]">
                     {item?.title?.charAt(0)?.toUpperCase()+item?.title?.slice(1)}
-
                     </h5>
                   </div>
                   <div>
@@ -320,7 +316,7 @@ const ProductDetails = () => {
                 <span className="text-xl font-semibold text-[#214344] ">
                   Rs. {item?.price}
                 </span>
-                {item?.compare_at_price && (
+                {item?.compare_at_price!=0 && (
                   <>
                     <span className="text-lg text-red-300 line-through ">
                       Rs. {item?.compare_at_price}
@@ -333,7 +329,7 @@ const ProductDetails = () => {
                   strokeColor={"#214344"}
                   showInfo={false}
                   trailColor="white"
-                  percent={100-(Math.floor((item?.sold *100)/ item?.quantity) )}
+                  percent={Math.floor((item?.sold* 100/ item?.quantity))}
                   status="active"
                 />
                 <div className="flex justify-between">
@@ -342,7 +338,7 @@ const ProductDetails = () => {
                       Sold :
                     </Typography.Text>
                     <Typography.Text className="font-bold text-[16px] text-[#214344] ">
-                      {item?.sold}
+                    {item?.sold??0}
                     </Typography.Text>
                   </div>
                   <div className="flex gap-1">
@@ -355,7 +351,7 @@ const ProductDetails = () => {
                   </div>
                 </div>
               </Flex>
-              <div className="flex justify-between  md:px-7  items-center pt-[12px] pb-[15px]  ">
+              <div className="flex justify-between  md:px-7  items-center pt-[12px] pb-[20px]  ">
                 <button
                   onClick={() => {
                     addCartHandler(item, "cart");
@@ -368,7 +364,7 @@ const ProductDetails = () => {
                 </button>
                 <button
                   onClick={() => buynowHandler()}
-                  class="bg-[#214344] rounded-full w-[350px] text-[15px] font-seemibold md:py-4 py-2  text-[#fff] max-md:w-[200px]"
+                  class="bg-[#214344] rounded-full w-[350px] text-[18px] font-semibold md:py-3 py-2  text-[#fff] max-md:w-[200px]"
                 >
                   Buy Now
                 </button>
@@ -384,7 +380,7 @@ const ProductDetails = () => {
               <div className="flex flex-col   gap-[20px] ">
                 <div className="w-[100%] shadow-xl bg-[#fffcf2]   rounded-full flex justify-start md:px-5 ps-4 pe-6  items-center h-[50px]">
                   <div className=" flex items-center h-[20px] w-[20px]">
-                    <img className="w-[100%] " src={bag} alt="bag" />
+                    <img className="w-[100%]" src={bag} alt="bag" />
                   </div>
                   <marquee direction="left">
                     <Typography.Text className="max-sm:ps-1 sm:ps-4 text-[16px]">
@@ -416,7 +412,7 @@ const ProductDetails = () => {
                                 {item?.metalType}
                               </Typography.Text>
                             </div>
-                            <div className="flex gap-2">
+                            {item?.metalColor && <div className="flex gap-2">
                               <Typography.Text className="text-[14px] font-semibold text-[#214344]">
                                 Metal color :
                               </Typography.Text>
@@ -424,7 +420,7 @@ const ProductDetails = () => {
                                 {item?.metalColor?.charAt(0)?.toUpperCase() +
                                   item?.metalColor?.slice(1)}
                               </Typography.Text>
-                            </div>
+                            </div>}
                           </div>
                         ),
                       },

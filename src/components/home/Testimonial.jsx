@@ -10,11 +10,11 @@ const Testimonial = () => {
       <Row className="py-10 relative  flex justify-between">
         <Col xl={8} lg={8} md={8} sm={24} xs={24}>
           <div className="flex flex-col justify-center items-center gap-5 w-[70%] mx-auto p-5">
-            <div className="w-[230px] mx-auto flex justify-center h-[300px] relative ">
+            <div className="w-[230px] h-[300px] mx-auto flex justify-center  relative ">
               {/* Rotate only the parent container */}
               <img
-                className=" rounded-full border-[5px] border-[#214344] "
-                src={"https://zoci-data.s3.ap-south-1.amazonaws.com/productImages/1740736559262_Manya.png"}
+                className="w-full rounded-full border-[5px] border-[#214344] object-fit "
+                src={"https://zoci-data.s3.ap-south-1.amazonaws.com/productImages/1743507695885_manya.jpg"}
                 alt="manya"
               />
             </div>
@@ -39,9 +39,9 @@ const Testimonial = () => {
             <div className="w-[230px] mx-auto flex justify-center h-[300px] relative  ">
               {/* Rotate only the parent container */}
               <img
-                className=" rounded-full border-[5px] border-[#BFA785] "
-                src={"https://zoci-data.s3.ap-south-1.amazonaws.com/productImages/1740736491260_Priti.jpg"}
-                alt="manya"
+                className=" rounded-full border-[5px] border-[#BFA785] object-fit "
+                src={"https://zoci-data.s3.ap-south-1.amazonaws.com/productImages/1743507640390_Priti.jpg"}
+                alt="priti"
               />
             </div>
             <h4 className="text-[18px] font-[400] underline text-[#BFA785]">
@@ -60,9 +60,9 @@ const Testimonial = () => {
             <div className="w-[230px] mx-auto flex justify-center h-[300px] relative ">
               {/* Rotate only the parent container */}
               <img
-                className=" rounded-full border-[5px] border-[#214344]"
-                src={"https://zoci-data.s3.ap-south-1.amazonaws.com/productImages/1740736619361_Divyanshi.jpg"}
-                alt="manya"
+                className=" rounded-full border-[5px] border-[#214344] object-fit"
+                src={"https://zoci-data.s3.ap-south-1.amazonaws.com/productImages/1743507570582_Divyanshi.jpg"}
+                alt="divyanshi"
               />
             </div>
             <h4 className="text-[16px] font-[400] underline text-[#214344]">

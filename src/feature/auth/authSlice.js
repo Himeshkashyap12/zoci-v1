@@ -1,12 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
-const token = localStorage.getItem("token");
+import Cookies from 'js-cookie';
+const token = Cookies.get('token');
 const initialState= {
     role:localStorage.getItem("role"),
     userData:{},
     user:null,
     token:token || null,
-    isAuthenticated:!!token
+    isAuthenticated:!!token,
+    mobile:""
 }
+
 
 const authSlice = createSlice({
   name: "auth",
@@ -17,17 +20,20 @@ const authSlice = createSlice({
         state.user=action.payload?.users._id;
         state.token=action.payload.token;
         state.isAuthenticated=true;
-        localStorage.setItem("token",action.payload.token)
+        Cookies.set('token', action.payload?.token, { expires: 1 });
     },
     logout:(state,action)=>{
         state.user=null;
         state.token=null;
         state.isAuthenticated=false;
-        localStorage.removeItem("token");
+        Cookies.remove("token");
         localStorage.removeItem("userId");
         localStorage.removeItem("role");
         localStorage.removeItem("wish");
         localStorage.removeItem("cart");
+    },
+    handleMobile:(state,action)=>{
+      state.mobile=action.payload
     },
     addUserData:(state,action)=>{
       state.userData=action.payload
@@ -36,5 +42,5 @@ const authSlice = createSlice({
   
   },
 });
-export const {loginSuccess,logout,addUserData}=authSlice.actions
+export const {loginSuccess,logout,addUserData,handleMobile}=authSlice.actions
 export default authSlice.reducer;

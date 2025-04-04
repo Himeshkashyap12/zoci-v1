@@ -14,17 +14,21 @@ const WishList=({setCartOpen})=>{
     const wishlistData=useSelector(state=>state?.wish.wishlist)
     const navigate=useNavigate();
     const user=localStorage.getItem("userId")
+   const isAuth=useSelector(state=>state?.auth?.isAuthenticated)
    
     const getwishlistDataHandler=async()=>{
         if(!localStorage.getItem("token")) return toast.error("Please login first");
-        try {
-            const data=await getWishlistData()
-            
-            dispatch(addToWishList(data?.wishlist))
-        } catch (error) {  
-            console.log(error);  
+        
+            try {
+                const data=await getWishlistData()
+                
+                dispatch(addToWishList(data?.wishlist))
+            } catch (error) {  
+                console.log(error);  
+            }
         }
-    }
+        
+    
    
     const deleteWishlistHandler=async(item)=>{
       const items={userId:user,prodId: item.prodId }
@@ -38,6 +42,13 @@ const WishList=({setCartOpen})=>{
         toast.error(error?.response?.data?.message)
             throw error;
         }
+    }
+    const wishlistViewHandler=()=>{
+        if(!isAuth) return toast.error("Please login first");
+        if(localStorage.getItem("role")==="admin") return toast.error("Admin can't view wishlist");
+        navigate("/wishlist");
+        setCartOpen(false)
+
     }
     
     useEffect(()=>{
@@ -67,7 +78,7 @@ const WishList=({setCartOpen})=>{
          className="w-full h-full rounded-xl" alt=" item"/>
         </div>
         <div className="flex flex-col pt-2">
-            <Typography.Text className="text-[16px] font-[400] ">{item?.title}</Typography.Text>
+            <Typography.Text className="text-[16px] font-[400] ">   {item?.title?.charAt(0).toUpperCase()+ item?.title?.slice(1)}</Typography.Text>
             <Typography.Text className="text-[16px] font-bold">Rs {item?.price}</Typography.Text>
         </div>
         </div>
@@ -82,7 +93,7 @@ const WishList=({setCartOpen})=>{
         })}
               <div className="pt-5">
 
-{wishlistData.length!=0 && <Button className="w-full rounded-full bg-[#214344] font-semibold text-[#fff] hover:!text-[#214344] hover:!border-[#214344]" onClick={()=>{navigate("/wishlist"),setCartOpen(false)}}>Open WishList Page</Button>}
+{wishlistData.length!=0 && <Button className="w-full rounded-full bg-[#214344] font-semibold text-[#fff] hover:!text-[#214344] hover:!border-[#214344]" onClick={()=>{wishlistViewHandler()}}>Open WishList Page</Button>}
 </div>
 </div>
     

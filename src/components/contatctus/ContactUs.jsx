@@ -92,7 +92,7 @@ const ContactUs = () => {
           </Form.Item>
 
           <Form.Item>
-            <Button  classNames={"bg-[#214344] border-[#214344]"} htmlType="submit" className="w-full">
+            <Button  classNames={"bg-[#214344] hover:!bg-[#214344] text-[#fff]  hover:!text-[#fff] rounded-full border-[#214344]"} htmlType="submit" className="w-full">
               Send Message
             </Button>
           </Form.Item>

@@ -1,5 +1,5 @@
 import { EditOutlined, PlusCircleOutlined } from "@ant-design/icons";
-import { Avatar, Space, Table, Typography } from "antd";
+import { Avatar, Space, Table, Tooltip, Typography } from "antd";
 import "./admin.css";
 import { Link, useNavigate } from "react-router";
 import deleteIcon from "../../assets/icons/GreenDelete.png";
@@ -25,7 +25,12 @@ const AdminProducts = () => {
 
       dispatch(addAdminProducts(res.products));
     } catch (error) {
-      console.log(error);
+      console.log(error.response.data.message);
+      
+       if (error?.response?.data?.message === "No products found") {
+              dispatch(addAdminProducts([]));
+            }
+       console.log(error);
     }
   };
   const deleteProductHandler = async (id) => {
@@ -55,10 +60,10 @@ const AdminProducts = () => {
           <>
             <div className="h-[50px] w-[50px] flex justify-center items-center">
               <Avatar
-                style={{ height: "50px", width: "50px" }}
+                style={{ height: "70px", width: "70px" }}
                 size={70}
                 className="rounded-full"
-                src={text.productImage}
+                src={text?.productImage}
               />
             </div>
           </>
@@ -81,22 +86,23 @@ const AdminProducts = () => {
       dataIndex: "description",
       key: "description",
       width: 300,
-      render: (text) =>  <Typography.Text className="text-[#214344]">{text}</Typography.Text>
+      render: (text) =>   <Tooltip title={text} placement="bottom"><Typography.Text   className="text-[#214344]">{text.slice(0, 75)+ " ...."}</Typography.Text></Tooltip>
     },
     {
       title: <Typography.Text className="text-[#fff]">Price</Typography.Text>,
       dataIndex: "price",
       key: "price",
       width: 130,
-      render: (text) =>  <Typography.Text className="text-[#214344]">{text}</Typography.Text>
+      render: (text) =>  <Typography.Text className="text-[#214344]">Rs. {text}</Typography.Text>
     },
     {
       title: (
-        <Typography.Text className="text-[#fff]">Quantity</Typography.Text>
+        <Typography.Text className="text-[#fff]">Available Quantity</Typography.Text>
       ),
       dataIndex: "quantity",
       key: "quantity",
-      width: 130,
+      width: 200,
+      align: "center",
       render: (text) => <Typography.Text className="text-[#214344]">{text}</Typography.Text>
     },
     {
@@ -150,7 +156,7 @@ const AdminProducts = () => {
         </div>
         <div className="px-5">
           <Table
-            scroll={1000}
+            scroll={1500}
             headerColor={"red"}
             dataSource={data}
             columns={columns}

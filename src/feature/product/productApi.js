@@ -35,22 +35,24 @@ export const getProductFilterApi = async ({
       ...search,
       ...sortby,
       ...filters,
-       // Spread filters dynamically
+      // Spread filters dynamically
     };
 
     const response = await api.get("/product/getAllProduct", { params });
 
     return response.data;
   } catch (error) {
-    throw  error;
+    throw error;
   }
 };
 
 export const getProductbyMinAndMaxPrice = async (pricerange) => {
   try {
-    const response = await api.get(`/product/getAllProduct?minPrice=${pricerange.min}&&maxPrice=${pricerange.max}`);
+    const response = await api.get(
+      `/product/getAllProduct?minPrice=${pricerange.min}&&maxPrice=${pricerange.max}`
+    );
     return response.data;
   } catch (error) {
-    throw  error;
+    throw error;
   }
 };

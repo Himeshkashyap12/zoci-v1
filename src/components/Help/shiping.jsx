@@ -61,36 +61,7 @@ const ShipingPolicy = () => {
              hello@zoci.in to guide you.
             </Typography.Text>
           </div>
-          <div className="flex flex-col gap-2">
-            <Typography.Text className="text-[30px] font-semibold">
-              Cash on Delivery [COD]
-            </Typography.Text>
-            <Typography.Text className="text-[16px]">
-              1. Enjoy Cash on Delivery on all your orders Upto Rs. 2000
-            </Typography.Text>
-            <Typography.Text className="text-[16px]">
-              2. COD charges are depends on size & location of the product. The
-              same can be seen while you are placing the order.
-            </Typography.Text>
-            <Typography.Text className="text-[16px]">
-              3. Any other payment method cannot be used for COD orders.
-            </Typography.Text>
-            <Typography.Text className="text-[16px]">
-              4. ONLY Cash Payment in Indian Rupees is accepted as payment.
-            </Typography.Text>
-            <Typography.Text className="text-[16px]">
-              5 . Cash on Delivery is not applicable on the designer products.
-              If you want to buy designer products, you would need to opt for
-              Online payment options.
-            </Typography.Text>
-            <Typography.Text className="text-[16px]">
-              We offer cash on delivery (COD) at many locations in India
-              limiting on certain pin code. The website will automatically give
-              you the option of COD if the pincode is served through this
-              facility or else you can email us your area PIN code on
-              hello@zoci.in so that we can check and revert.
-            </Typography.Text>
-          </div>
+        
           <div className="flex flex-col gap-2">
             <Typography.Text className="text-[30px] fonst-semibold">
               IMPORTANT SHIPPING INFORMATION

@@ -1,5 +1,13 @@
-export const  formatDate=(dbDate) =>{
+export const formatDate = (dbDate) => {
     const date = new Date(dbDate);
-    const options = {  day: '2-digit', month: 'long', year: 'numeric' };
-    return date.toLocaleDateString('en-US', options);
+    const options = { 
+        day: '2-digit', 
+        month: 'short', 
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+       
+        hour12: true // You can set this to false for 24-hour format
+    };
+    return date.toLocaleString('en-US', options);
 }

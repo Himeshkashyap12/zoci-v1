@@ -1,14 +1,16 @@
 import { Button } from "antd";
 import { getProductFilterApi } from "../../feature/product/productApi";
-import { addproductToshop } from "../../feature/shop/shopSlice";
+import { addCategary, addproductToshop } from "../../feature/shop/shopSlice";
 import { useDispatch } from "react-redux";
-const CustomFilter = () => {
+const CustomFilter = ({setTotalPage}) => {
   const dispatch = useDispatch();
   const filterSubcategary = async (data, status) => {
     try {
       const filters = { [data]: status };
       const res = await getProductFilterApi({ filters });
+      setTotalPage(res?.totalProducts)
       dispatch(addproductToshop(res?.products));
+      dispatch(addCategary(""))
     } catch (error) {
    if(error?.response?.data?.message==="No products found"){
       dispatch(addproductToshop([]));};
@@ -30,7 +32,7 @@ const CustomFilter = () => {
           </Button>
           <Button
             onClick={() => {
-              filterSubcategary("sort", "newest");
+              filterSubcategary("sort", "best");
             }}
             className=" w-[150px] py-2 hover:!text-[#214344]  hover:!border-[#214344]  rounded-full bg-[#214344] text-[#F0D5A0]  text-[14px]"
           >
@@ -38,7 +40,7 @@ const CustomFilter = () => {
           </Button>
           <Button
             onClick={() => {
-              filterSubcategary("sort","newest");
+              filterSubcategary("sort","trending");
             }}
             className=" w-[150px] py-2 hover:!text-[#214344]  hover:!border-[#214344]  rounded-full bg-[#214344] text-[#F0D5A0]  text-[14px]"
           >

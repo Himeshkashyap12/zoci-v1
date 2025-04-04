@@ -30,6 +30,7 @@ const OrderModal = ({ isModalOpen, setIsModalOpen, item, cart }) => {
     });
   };
   const orderFormHandler = async () => {
+    if(localStorage.getItem("role")==="admin") return toast.error("Admin can't place order");
     if(orderInput?.pincode?.length !==6) return toast.error("Please enter valid pincode");
     if (
       orderInput.firstname == "" ||

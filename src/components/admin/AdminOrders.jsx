@@ -76,7 +76,7 @@ const AdminOrders = () => {
       ),
       dataIndex: "products",
       key: "products",
-      width: 150,
+      width: 200,
       render: (text) => {
         return (
           <>
@@ -132,7 +132,7 @@ const AdminOrders = () => {
         return (
           <>
             <Typography.Text className={`text-[#214344]`}>
-              {text}
+              Rs. {text}
             </Typography.Text>
           </>
         );

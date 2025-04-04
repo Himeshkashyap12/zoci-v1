@@ -16,13 +16,13 @@ const CategarySection = () => {
   const getCategary =async (key) => {
     setCategary(key)
     if(key==="Men"){ dispatch(addAdminCategary([
-      {title:"Launching Soon"},
-      {title:"Launching Soon"},
-      {title:"Launching Soon"},
-      {title:"Launching Soon"},
-      {title:"Launching Soon"},
-      {title:"Launching Soon"},
-      {title:"Launching Soon"},
+      {title:"Launching soon"},
+      {title:"Launching soon"},
+      {title:"Launching soon"},
+      {title:"Launching soon"},
+      {title:"Launching soon"},
+      {title:"Launching soon"},
+      {title:"Launching soon"},
     ]))
   } else{
     try{
@@ -45,7 +45,7 @@ useEffect(() => {
             <h3 className="pt-9 text-[#214344] font-[450] md:text-[65px] text-[24px] text-center">
               Shop By Category
             </h3>
-            <h3 className=" text-[#214344] font-semibold  md:text-[20px] text-[12px] fontt-[600] text-center">
+            <h3 className=" text-[#214344] font-semibold  md:text-[24px] text-[14px] fontt-[600] text-center">
               Browse through your favorite categories. We’ve got them all!
             </h3>
           </div>
@@ -78,7 +78,7 @@ useEffect(() => {
           <h3 className=" text-[#214344] font-[450] md:text-[65px] text-[24px] text-center">
             Top Sellers
           </h3>
-          <h3 className=" text-[#214344] font-semibold text-[12px] text-center">
+          <h3 className=" text-[#214344] font-semibold md:text-[24px] text-[14px] text-center">
             Our most loved products
           </h3>
           <div className="md:flex max-md:hidden md:gap-5 justify-start md:justify-between  px-5 items-center pt-5">

@@ -1,5 +1,5 @@
 import { Card, Col, Row } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ring from "../../assets/rings.jpg";
 import { getallCategaryApi } from "../../feature/admin/adminApi";
 import { addAdminCategary } from "../../feature/admin/adminSlice";
@@ -31,6 +31,9 @@ const Catalogue = () => {
      };
    }
   };
+  useEffect(() => {
+    getCategary("Women");
+  }, []);
 
   return (
     <>
@@ -64,7 +67,7 @@ const Catalogue = () => {
           <Row gutter={[20, 20]} className="pt-[34px]">
             {catalogueData?.map((item, idx) => {
               return (
-                <Col xl={8} lg={8} md={8} sm={8} xs={12}>
+                <Col key={idx} xl={8} lg={8} md={8} sm={8} xs={12}>
                   <div
                     onMouseEnter={() => {
                       setHoverActive(true), setHoverId(idx);
@@ -101,8 +104,8 @@ const Catalogue = () => {
                     >
                       <div
                         style={{
-                          width: 50,
-                          height: 10,
+                          width: 70,
+                          height: 6,
                           backgroundColor: "#fff",
                           display: "flex",
                           justifyContent: "center",
@@ -112,8 +115,8 @@ const Catalogue = () => {
                         }}
                       >
                         <div className="absolute flex items-center  justify-center   ">
-                          <div className="w-[50px] h-[60px] flex items-center justify-center">
-                            <img className="w-full h-[30px] " src={ring} alt="ring"/>
+                          <div className="size-[50px] flex items-center justify-center">
+                            <img className="w-full size-[30px] " src={item?.images?.categoryImage ?? "https://zoci-data.s3.ap-south-1.amazonaws.com/productImages/1741236911889_No_image_available.svg.webp"} alt="ring"/>
                           </div>
                           {hoverActive && hoverId === idx && (
                             <h4 className="absolute left-0 right-0 mx-auto flex justify-center text-[12px]   text-[#214344] font-bold    ">

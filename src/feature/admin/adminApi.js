@@ -140,23 +140,4 @@ export const deleteProductImage= async (data) => {
     throw error;
   }
 
-
-
-  // fetch('https://zoci-backend.onrender.com/api/upload/deleteProductImage', {
-  //   method: 'DELETE',
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //     'Authorization': `Bearer ${token}`,
-  //   },
-  //   body: JSON.stringify({
-  //     imageUrl: data.imageUrl,
-  //   }),
-  // })
-  //   .then(response => response.json())
-  //   .then(data => {
-  //     return data
-  //   })
-  //   .catch(error => {
-  //     console.error('Error deleting image:', error);
-  //   });
-  };
+};

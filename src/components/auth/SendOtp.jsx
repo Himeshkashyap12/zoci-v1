@@ -3,26 +3,39 @@ import { useState } from "react";
 import { sendOtp } from "../../feature/auth/authApi";
 import { Link } from "react-router";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { handleMobile } from "../../feature/auth/authSlice";
 
 const SendOtp = ({ setSentOtp, setMobile, setSingnin }) => {
+  const dispatch=useDispatch()
   const [input, setInput] = useState({
     mobile: "",
   });
   const inputHandler = (e) => {
+  if(isNaN(e.target.value)){
+    return;
+  }
+ 
     setInput((prevInput) => ({
       ...prevInput,
       [e.target.name]: e.target.value,
     }));
+  
   };
 
   const sendOtpHandler = async () => {
-    if (input.mobile.length < 10 || input.mobile == "")
+    console.log(input,"ghfgdgd");
+
+    if (input.mobile.length < 10 || input.mobile == ""){
+
       return toast.error("Please enter valid mobile number");
+  }
     try {
       const res = await sendOtp(input);
+      dispatch(handleMobile({mobile:input?.mobile}))
       setSentOtp(false);
       if (res.status) {
-        setMobile(input.mobile);
+        setMobile(input?.mobile);
         toast.success(res.message);
       }
     } catch (error) {
@@ -41,7 +54,7 @@ const SendOtp = ({ setSentOtp, setMobile, setSingnin }) => {
       >
         <div className="flex flex-col gap-2 pt-5 ">
           <Input
-            type="number"
+            type="text"
             name="mobile"
             value={input.mobile}
             onChange={(e) => {

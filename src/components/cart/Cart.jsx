@@ -18,10 +18,11 @@ const Cart = ({ setCartOpen }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   let sum = 0;
+  const isAuth=useSelector(state=>state?.auth.isAuthenticated)
   const getCartDataHandler = async () => {
-    if (!localStorage.getItem("token"))
+    if (!localStorage.getItem("token")) {
       return toast.error("Please login first");
-
+    }else{
     try {
       const data = await getCartData();
 
@@ -31,7 +32,16 @@ const Cart = ({ setCartOpen }) => {
         dispatch(addToCart([]));
       }
     }
+  }
   };
+
+  const viewCartHandler = () => {
+    if(!isAuth) return toast.error("Please login first");
+    if(localStorage.getItem("role")==="admin") return toast.error("Admin can't view cart");
+    navigate("/viewcart")
+     setCartOpen(false);
+
+  }
   const cartCounterHandler = async (items, status) => {
     let quantity = items.quantity;
     if (quantity === 0 && status === "minus") return;
@@ -160,9 +170,7 @@ const Cart = ({ setCartOpen }) => {
                 <div>
                   <Button
                     className="bg-[#214344] text-[#fff] text-[16px] md:w-[210px] w-[150px] font-[400] rounded-full py-5 hover:!border-[#214344] hover:!text-[#214344]"
-                    onClick={() => {
-                      navigate("/viewcart"), setCartOpen(false);
-                    }}
+                    onClick={() => {viewCartHandler()}}
                   >
                     View Cart
                   </Button>

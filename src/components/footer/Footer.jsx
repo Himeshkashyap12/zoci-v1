@@ -37,7 +37,7 @@ const Footer = () => {
   };
   
   return (
-    <div className="footer bg-[#214344]  pt-20 ">
+    <div className="footer bg-[#214344]  pt-20 " id="footer">
       <div className="md:px-20 px-5 ">
         <Row>
           <Col xl={6} lg={6} md={8} sm={12} xs={24}>
@@ -63,7 +63,7 @@ const Footer = () => {
                 >
                   Shop
                 </Link>
-                <Link className="text-[#fff] hover:text-[#fff] text-[16px] ">
+                <Link className="text-[#fff] hover:text-[#fff] text-[18px] ">
                   Cart
                 </Link>
                 <Link to={"/aboutus"} className="text-[#fff] hover:text-[#fff] text-[18px] ">
@@ -76,7 +76,7 @@ const Footer = () => {
                   Blog
                 </Link>
                 <Link className="text-[#fff] hover:text-[#fff] text-[18px] ">
-                  FAQ
+                  FAQ 's 
                 </Link>
                 <Link to={"/contact-us"} className="text-[#fff] hover:text-[#fff] text-[18px] ">
                   Contact Us
@@ -90,44 +90,18 @@ const Footer = () => {
           <Col xl={6} lg={6} md={8} sm={12} xs={24}>
             <div className="max-sm:pt-7">
               <h6 className="text-[24px]  text-[#F0D5A0] font-semibold">
-                THE COLLECTION
+               Shop
               </h6>
               <div className="flex flex-col gap-3 pt-10 ">
+               
                 <Link
                   className="text-[#fff] hover:text-[#fff] text-[18px] cursor-pointer"
                   to={"/shop"}
                   onClick={() => {
-                    filterSubcategary("Signature Collection");
+                    filterSubcategary("Earrings");
                   }}
                 >
-                  Signature Collection
-                </Link>
-                <Link
-                  className="text-[#fff] hover:text-[#fff] text-[18px] cursor-pointer"
-                  to={"/shop"}
-                  onClick={() => {
-                    filterSubcategary("Personalized Pieces");
-                  }}
-                >
-                  Personalized Pieces
-                </Link>
-                <Link
-                  className="text-[#fff] hover:text-[#fff] text-[18px] cursor-pointer"
-                  to={"/shop"}
-                  onClick={() => {
-                    filterSubcategary("Regular Upkeep");
-                  }}
-                >
-                  Regular Upkeep
-                </Link>
-                <Link
-                  className="text-[#fff] hover:text-[#fff] text-[18px] cursor-pointer"
-                  to={"/shop"}
-                  onClick={() => {
-                    filterSubcategary("Earings");
-                  }}
-                >
-                  Earings
+                  Earrings
                 </Link>
                 <Link
                   className="text-[#fff] hover:text-[#fff] text-[18px] cursor-pointer"
@@ -136,7 +110,7 @@ const Footer = () => {
                     filterSubcategary("Pendants");
                   }}
                 >
-                  Pendants
+                  Pendants & necklaces
                 </Link>
                 <Link
                   className="text-[#fff] hover:text-[#fff] text-[18px] cursor-pointer"
@@ -145,7 +119,7 @@ const Footer = () => {
                     filterSubcategary("Chains");
                   }}
                 >
-                  Chains
+                  Rings
                 </Link>
                 <Link
                   className="text-[#fff] hover:text-[#fff] text-[18px] cursor-pointer"
@@ -156,26 +130,22 @@ const Footer = () => {
                 >
                   Bracelet
                 </Link>
-                <Link
-                  className="text-[#fff] hover:text-[#fff] text-[18px] cursor-pointer"
-                  to={"/shop"}
-                  onClick={() => {
-                    filterSubcategary("Cufflinks");
-                  }}
-                >
-                 Cufflinks
-                </Link>
-                <Link
-                  className="text-[#fff] hover:text-[#fff] text-[18px] cursor-pointer"
-                  to={"/shop"}
-                  onClick={() => {
-                    filterSubcategary("Brooches & Tie clips");
-                  }}
-                >
-            Brooches & Tie clips        
-                    </Link>
               </div>
             </div>
+            <div className="pt-14">
+              <h6 className="text-[24px]  text-[#F0D5A0] font-semibold pb-[38px]">
+               The collection
+              </h6>
+              <Link
+                  className="text-[#fff] hover:text-[#fff] text-[18px] cursor-pointer "
+                  to={"/shop"}
+                  onClick={() => {
+                    // filterSubcategary("Bracelet");
+                  }}
+                >
+                  Signature Collection
+                </Link>
+              </div>
           </Col>
           <Col xl={6} lg={6} md={8} sm={12} xs={24}>
             <div className="max-sm:pt-7">
@@ -214,6 +184,9 @@ const Footer = () => {
                 <Link to={"/return-and-exchange"}  className="text-[#fff] hover:text-[#fff] text-[18px] ">
                   Refund and exchange policy
                 </Link>
+                <Link to={"/faq"}  className="text-[#fff] hover:text-[#fff] text-[18px] ">
+                 FAQ's
+                </Link>
               </div>
             </div>
           </Col>
@@ -241,7 +214,7 @@ const Footer = () => {
           </div>
           <div>
             <h6 className="text-[#fff] text-[14px] font-semibold">
-              DESIGN & DEVELOPED BY TAP FOR TECH
+              DESIGN & DEVELOPED BY CELESTIAL IT VERSE 
             </h6>
           </div>
         </div>

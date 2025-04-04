@@ -30,6 +30,7 @@ import ReturnAndExchangePage from "./pages/helpPage/ReturnAndExchangePage";
 import PrivacyPolicyPage from "./pages/helpPage/PrivacyPolicyPage";
 import ShipingPolicyPage from "./pages/helpPage/ShippingPage";
 import ContactUsPage from "./pages/contactusPage/ContactUsPage";
+import FaqPage from "./pages/faqPage/FaqPage";
 function App() {
   return (
     <>
@@ -45,6 +46,7 @@ function App() {
             />
             <Route path="shop" element={<ShopPage />} />
             <Route path="aboutus" element={<AboutUsPage />} />
+            <Route path="faq" element={<FaqPage />} />
             <Route
               path="viewcart"
               element={

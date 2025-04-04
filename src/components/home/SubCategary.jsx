@@ -64,20 +64,12 @@ const settings = {
 const SubCategary = ({ categary }) => {
   const [hoverSub, setHoverSub] = useState();
   const [hoverId, setHoverId] = useState(null);
-  const categaryData=useSelector(state=>state.admin.category)
+  const categaryData=useSelector(state=>state?.admin?.category)
   
   const hoverSubHandler = (idx) => {
     setHoverSub(true);
     setHoverId(idx);
   };
-
-
-
-
-  
-
-
-
 
   return (
     <div className="md:px-1 px-0  subcategary md:my-10  mx-auto w-full">
@@ -126,18 +118,17 @@ const SubCategary = ({ categary }) => {
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
-                        // border: '2px solid #747676',
                         borderRadius: 4,
                         position: "relative",
                       }}
                     >
                       <div className="absolute flex items-center  justify-center   ">
-                        <div className="w-[90px] h-[60px] flex items-center justify-center">
-                          <img className="w-full h-[40px] " src={diamond} alt="diamond" />
+                        <div className="w-[100px] h-[100px] flex items-center justify-center">
+                          <img className="w-full h-100px] " src={item?.images?.categoryImage??"https://zoci-data.s3.ap-south-1.amazonaws.com/productImages/1741236911889_No_image_available.svg.webp"} alt="diamond" />
                         </div>
                         {hoverSub && hoverId === idx && (
                           <h4 className="absolute left-0 right-0 mx-auto flex justify-center text-[20px]   text-[#214344] font-bold    ">
-                            {item.title}
+                            {item?.title}
                           </h4>
                         )}
                       </div>

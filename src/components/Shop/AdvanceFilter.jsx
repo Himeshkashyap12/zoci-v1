@@ -68,7 +68,7 @@ const AdvanceFilter = ({ open, setOpen }) => {
         dispatch(addproductToshop([]));
 
       };
-    }
+     }
     };
 
   return (
