@@ -1,16 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = { shop: [], categary: "" };
+const initialState = { shop: [], category: "" };
 // tHIS IS MY PRODUCT SLICE
 const shopSlice = createSlice({
   name: "wishlist",
   initialState,
   reducers: {
-    addproductToshop: (state, action) => {
+    addproductToshop: (state, action) => {      
       state.shop = action.payload;
     },
     addCategary: (state, action) => {
-      state.categary = action.payload;
+      console.log("ddsf",action.payload);
+      
+      state.category = action.payload;
     },
   },
 });

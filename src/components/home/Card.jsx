@@ -191,6 +191,7 @@ const Card = ({ item }) => {
                       </div>
                     )}
                     <video
+                     key={item?.video[0]} // Force remounting by using the video source or index
                       className="w-full h-[360px] rounded-t-2xl object-cover"
                       muted
                       loop
@@ -213,6 +214,7 @@ const Card = ({ item }) => {
               <div
                 className={`px-3 pt-2 pb-12 flex flex-col bg-[#214344]  rounded-b-3xl`}
               >
+                <div className="hidden sm:block ">
                 <Tooltip title={item?.title} placement="top" color="#214344">
                   <div>
                     <h5 className="md:text-[20px] text-[20px] font-semibold  text-white">
@@ -222,7 +224,22 @@ const Card = ({ item }) => {
                           item?.title?.slice(1)}
                     </h5>
                   </div>
+                  
                 </Tooltip>
+                </div>
+                <div className="sm:hidden">
+                <Tooltip title={item?.title} placement="top" color="#214344">
+                  <div>
+                    <h5 className="md:text-[20px] text-[20px] font-semibold  text-white">
+                      {item?.title?.length > 25
+                        ? item?.title.slice(0, 25) + "..."
+                        : item?.title?.charAt(0)?.toUpperCase() +
+                          item?.title?.slice(1)}
+                    </h5>
+                  </div>
+                  
+                </Tooltip>
+                </div>
                 <div className="flex items-center justify-between py-2 ">
                   <div className="flex gap-2 items-center ">
                     <span className="text-[15px] font-semibold text-[#F0D5A0] ">

@@ -212,14 +212,30 @@ const ProductDetails = () => {
                     "border-[2px] border-[#214343] rounded-md"
                   } `}
                 >
-                  {item?.video?.length > 0 && (
+                  {/* {item?.video?.length > 0 && (
                   <div className=" w-full h-full flex justify-center items-center rounded-md ">
                   <video className="w-full h-full object-cover rounded-md" autoPlay muted loop >
                   <source src={item?.video[0]} type="video/mp4" />
                   <source src={item?.video[0]} type="video/ogg" />
                 </video>
                 </div>
-                  )}
+                  )} */}
+
+{item?.video?.length > 0 && (
+  <div className="w-full h-full flex justify-center items-center rounded-md">
+    <video
+      key={item?.video[0]} // Force remounting by using the video source or index
+      className="w-full h-full object-cover rounded-md"
+      autoPlay
+      muted
+      loop
+    >
+      <source src={item?.video[0]} type="video/mp4" />
+      <source src={item?.video[0]} type="video/ogg" />
+    </video>
+  </div>
+)}
+
                 </div>
               </div>
             </Col>

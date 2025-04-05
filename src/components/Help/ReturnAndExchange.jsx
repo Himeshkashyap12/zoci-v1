@@ -31,7 +31,7 @@ const ReturnAndExchange = () => {
               </Typography.Text>
               <Typography.Text className="text-[16px] ">
 
-             3) Feel free to reach out to us if thisisthecase
+             3) Feel free to reach out to us if this is the case .
              </Typography.Text>
 
            

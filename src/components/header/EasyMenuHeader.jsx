@@ -64,6 +64,8 @@ const EasyMenuHeader = ({
     try {
       const filters = { category: data };
       const res = await getProductFilterApi({ filters });
+      console.log(res);
+      
       dispatch(addCategary(data));
       dispatch(addproductToshop(res?.products));
     } catch (error) {

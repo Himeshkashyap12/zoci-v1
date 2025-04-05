@@ -126,6 +126,7 @@ const ShopCard = ({ item, shop }) => {
                       </div>
                     )}
                     <video
+                      key={item?.video[0]} // Force remounting by using the video source or index
                       className="w-full sm:h-[370px] h-[165px] rounded-t-2xl object-cover"
                       muted
                       onLoadedData={() => setVideoLoading(false)}
@@ -148,17 +149,32 @@ const ShopCard = ({ item, shop }) => {
               <div
                 className={`sm:px-5 px-2 sm:py-4 pb-2  flex flex-col bg-[#214344] sm:gap-2 gap-1  rounded-b-3xl`}
               >
-               <Tooltip title={item?.title} placement="top" color="#214344">
-                
-                <div>
-                  <h5 className="md:text-[16px] text-[16px] font-[500]   text-white">
-                    {item?.title?.length > 30
-                      ? item?.title.slice(0, 30) + "..."
-                      : item?.title?.charAt(0)?.toUpperCase() +
-                        item?.title?.slice(1)}
-                  </h5>
-                </div>
-                </Tooltip>
+               <div className="hidden sm:block ">
+                              <Tooltip title={item?.title} placement="top" color="#214344">
+                                <div>
+                                  <h5 className="md:text-[20px] text-[20px] font-semibold  text-white">
+                                    {item?.title?.length > 25
+                                      ? item?.title.slice(0, 25) + "..."
+                                      : item?.title?.charAt(0)?.toUpperCase() +
+                                        item?.title?.slice(1)}
+                                  </h5>
+                                </div>
+                                
+                              </Tooltip>
+                              </div>
+                              <div className="sm:hidden">
+                              <Tooltip title={item?.title} placement="top" color="#214344">
+                                <div>
+                                  <h5 className="md:text-[20px] text-[20px] font-semibold  text-white">
+                                    {item?.title?.length > 12
+                                      ? item?.title.slice(0, 12) + "..."
+                                      : item?.title?.charAt(0)?.toUpperCase() +
+                                        item?.title?.slice(1)}
+                                  </h5>
+                                </div>
+                                
+                              </Tooltip>
+                              </div>
                 <div className="flex items-center justify-between ">
                   <div className="flex gap-2 items-center ">
                     <span className="text-[15px] font-semibold text-[#F0D5A0] ">

@@ -8,14 +8,20 @@ const CustomFilter = ({setTotalPage}) => {
     try {
       const filters = { [data]: status };
       const res = await getProductFilterApi({ filters });
-      setTotalPage(res?.totalProducts)
+      setTotalPage(res?.totalProducts)      
       dispatch(addproductToshop(res?.products));
-      dispatch(addCategary(""))
+      dispatch(addCategary(status))
     } catch (error) {
    if(error?.response?.data?.message==="No products found"){
-      dispatch(addproductToshop([]));};
+      dispatch(addproductToshop([]))};
+      dispatch(addCategary(status))
+      setTotalPage(0)      
+
+
     }
   };
+
+  
 
   return (
     <>

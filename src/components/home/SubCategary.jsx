@@ -3,7 +3,10 @@ import { Card } from "antd";
 import diamond from "../../assets/diamond.webp";
 import {  useState } from "react";
 import "./subcategary.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getProductFilterApi } from "../../feature/product/productApi";
+import { addCategary, addproductToshop } from "../../feature/shop/shopSlice";
+import { useNavigate } from "react-router";
 const settings = {
   className: "center",
   dots: false,
@@ -65,23 +68,43 @@ const SubCategary = ({ categary }) => {
   const [hoverSub, setHoverSub] = useState();
   const [hoverId, setHoverId] = useState(null);
   const categaryData=useSelector(state=>state?.admin?.category)
-  
+  const dispatch=useDispatch();
+  const navigate=useNavigate();
   const hoverSubHandler = (idx) => {
     setHoverSub(true);
     setHoverId(idx);
   };
+
+  const filterSubcategary = async (data) => {
+      try {
+        const filters = { category: data };
+        const res = await getProductFilterApi({ filters });        
+        dispatch(addCategary(data));
+        dispatch(addproductToshop(res?.products));
+        navigate("/shop")
+      } catch (error) {
+        if (error.response.data.message === "No products found") {
+          dispatch(addproductToshop([]));
+          dispatch(addCategary(data));
+          navigate("/shop")
+        }
+      }
+    };
 
   return (
     <div className="md:px-1 px-0  subcategary md:my-10  mx-auto w-full">
       <div className="   md:w-[78%] w-[100%] mx-auto  ">
         <Slider {...settings}>
           {categaryData?.map((item, idx) => {
+            console.log(item);
+            
             return (
               <>
                 <div
                   key={idx}
                   onMouseEnter={() => hoverSubHandler(idx)}
                   onMouseLeave={() => setHoverSub(false)}
+                  onClick={()=>{filterSubcategary(item?.title)}}
                   className="cursor-pointer"
                   style={{
                     display: "flex",

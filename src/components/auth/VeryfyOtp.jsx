@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { Link } from "react-router";
 import Cookies from 'js-cookie';
+import { headermenuHandler } from "../../feature/header/headerSlice";
 const VerifyOtp=()=>{
       const [otp, setOtp] = useState("");
       const [resendTime,setResendTime]=useState(true)
@@ -39,6 +40,8 @@ const VerifyOtp=()=>{
             localStorage.setItem("cart",res.data?.cart?.length)
             localStorage.setItem("wish",res.data?.wishlist?.length)
             dispatch(loginSuccess({ token: res.data.token, users: res.data }));
+            dispatch(headermenuHandler(false))
+
           }
         } catch (error) {
           console.log(error);

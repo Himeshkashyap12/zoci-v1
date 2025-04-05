@@ -12,24 +12,64 @@ import filterIcon from "../../assets/icons/filterIcon.png";
 
 const Shop = () => {  
   const dispatch = useDispatch();
-  const data = useSelector((state) => state?.shop?.shop);
-  const categary = useSelector((state) => state.shop.categary);
+  const data = useSelector((state) => state?.shop?.shop);   
+
+  const category = useSelector((state) => state.shop.category);
+  console.log(category,"dad");
+  
   const [filter, setFiter] = useState(true);
   const headermenu = useSelector((state) => state.header.headermenu);
-  const getProducts = async () => {
-    const pagination = { page: 1, limit: 10 };
+  const [page, setPage] = useState(1);
+  const [totalPage,setTotalPage]=useState(null)
+  const getProducts = async (pageNumber,filters) => {
+    // const pagination = { page: pageNumber, limit: 10 };
     try {
-      const data = await getProductFilterApi(pagination);
-        dispatch(addproductToshop(data?.products));
+      const response = await getProductFilterApi({ page: pageNumber, limit: 10 ,filters});
+      console.log(response.products);
+      setTotalPage(response?.totalProducts);
+      if (response?.products?.length > 0) {
+        dispatch(addproductToshop(pageNumber === 1 ? response?.products : [...data, ...response?.products]));
+      }
     } catch (error) {
-      if(error.response.data.message==="No products found"){
-        dispatch(addproductToshop([]));};
-  }; 
-}
+      if (error.response?.data?.message === "No products found") {
+        dispatch(addproductToshop([]));
+      setTotalPage(0);
+
+      }
+    }
+  };
+
+  // Observe footer visibility
   useEffect(() => {
-    
-      getProducts();
+    const footer = document.getElementById("footer"); // Make sure your footer has id="footer"
+    if (!footer) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setPage((prev) => prev + 1);
+        }
+      },
+      { root: null, threshold: 0.1 } // When 10% of the footer is visible
+    );
+
+    observer.observe(footer);
+
+    return () => {
+      observer.unobserve(footer);
+    };
   }, []);
+
+  useEffect(() => { 
+    if(category===""){
+      getProducts(page);
+    } else{
+      const filters={category:category}
+    getProducts(page,filters);
+    }
+      
+  }, [page]);
+  
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -41,12 +81,12 @@ const Shop = () => {
           <div className="md:h-[236px] h-[150px] ">
             <img className="w-full h-full" src={filterBanner} alt="filter" />
           </div>
-          
+
           <div className="absolute top-[30%] md:left-10 left-2">
             <h3 className="text-[#214344] text-[24px] font-bold">
-              {categary === ""
+              {category === ""
                 ? "Shop"
-                : categary.charAt(0).toUpperCase() + categary.slice(1)}
+                : category?.charAt(0)?.toUpperCase() + category?.slice(1)}
             </h3>
             <div className="flex gap-3 items-center pt-3">
               <p className="text-[#214344] text-[14px] font-[500]">Home</p>
@@ -54,12 +94,12 @@ const Shop = () => {
               <p className="text-[#214344] text-[14px] font-[500]">Shop</p>
               <RightOutlined style={{ fontSize: "12px", color: "#214344" }} />
               <p className="text-[#214344] text-[14px] font-[500]">
-                {categary.toUpperCase()}
+                {category?.toUpperCase()}
               </p>
             </div>
             <div className="flex gap-1 md:pt-14 pt-2">
               <h5 className="text-[14px] font-[400] text-[#214344]">
-                Showing 1-{data?.length<=10 ? data?.length : 10*2} of {data?.length} results
+                Showing 1-{data?.length<=10 ? data?.length : 10*page} of {totalPage} results
               </h5>
             </div>
           </div>
@@ -95,7 +135,7 @@ const Shop = () => {
         <Col span={24}>
           <div className="md:px-20 px-5  bg-[#eee5db] cursor-pointer ">
             <div className="py-5 cursor-pointer flex justify-center">
-              <CustomFilter />
+              <CustomFilter setTotalPage={setTotalPage} />
             </div>
           </div>
           <div className="sm:px-10 px-2 bg-[#eee5db]  py-20">
@@ -108,3 +148,4 @@ const Shop = () => {
 };
 
 export default Shop;
+

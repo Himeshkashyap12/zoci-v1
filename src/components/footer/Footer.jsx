@@ -75,12 +75,7 @@ const Footer = () => {
                 <Link className="text-[#fff] hover:text-[#fff] text-[18px] ">
                   Blog
                 </Link>
-                <Link className="text-[#fff] hover:text-[#fff] text-[18px] ">
-                  FAQ 's 
-                </Link>
-                <Link to={"/contact-us"} className="text-[#fff] hover:text-[#fff] text-[18px] ">
-                  Contact Us
-                </Link>
+              
                {localStorage.getItem("role")==="admin" && <Link to={"/admin/products"} className="text-[#fff] hover:text-[#fff] text-[18px] ">
                   Go to admin pannel
                 </Link>}
@@ -134,7 +129,7 @@ const Footer = () => {
             </div>
             <div className="pt-14">
               <h6 className="text-[24px]  text-[#F0D5A0] font-semibold pb-[38px]">
-               The collection
+                COLLECTIONS
               </h6>
               <Link
                   className="text-[#fff] hover:text-[#fff] text-[18px] cursor-pointer "
@@ -187,6 +182,9 @@ const Footer = () => {
                 <Link to={"/faq"}  className="text-[#fff] hover:text-[#fff] text-[18px] ">
                  FAQ's
                 </Link>
+                <Link to={"/contact-us"} className="text-[#fff] hover:text-[#fff] text-[18px] ">
+                  Contact Us
+                </Link>
               </div>
             </div>
           </Col>
@@ -212,11 +210,11 @@ const Footer = () => {
               COPYRIGHT © {year} ZOCI ALL RIGHTS RESERVED
             </h6>
           </div>
-          <div>
+          <Link to={"https://celestialitverse.com"}>
             <h6 className="text-[#fff] text-[14px] font-semibold">
               DESIGN & DEVELOPED BY CELESTIAL IT VERSE 
             </h6>
-          </div>
+          </Link>
         </div>
       </Row>
     </div>
