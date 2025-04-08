@@ -70,6 +70,7 @@ const AdminOrders = () => {
         );
       },
     },
+    
     {
       title: (
         <Typography.Text className="text-[#fff]">Product Name </Typography.Text>

@@ -12,7 +12,11 @@ const SignIn = ({ setSingnin }) => {
     mobile: "",
     password: "",
   });
+
   const inputHandler = (e) => {
+      if(e.target.name==="mobile" && isNaN(e.target.value)){
+        return;
+      }
     setInput((prevInput) => ({
       ...prevInput,
       [e.target.name]: e.target.value,
@@ -61,7 +65,7 @@ const SignIn = ({ setSingnin }) => {
     >
       <div className="w-[100%] flex flex-col gap-3  justify-center ">
         <Input
-          type="number"
+          type="text"
           name="mobile"
           value={input.mobile}
           onChange={(e) => {

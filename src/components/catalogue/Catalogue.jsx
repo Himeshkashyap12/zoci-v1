@@ -4,6 +4,9 @@ import ring from "../../assets/rings.jpg";
 import { getallCategaryApi } from "../../feature/admin/adminApi";
 import { addAdminCategary } from "../../feature/admin/adminSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { getProductFilterApi } from "../../feature/product/productApi";
+import { addCategary, addproductToshop } from "../../feature/shop/shopSlice";
+import { headermenuHandler } from "../../feature/header/headerSlice";
 const Catalogue = () => {
   const [activeTab, setActiveTab] = useState("Women");
   const [hoverActive, setHoverActive] = useState(false);
@@ -31,6 +34,21 @@ const Catalogue = () => {
      };
    }
   };
+  const filterSubcategary = async (data) => {
+        try {
+          const filters = { category: data };
+          const res = await getProductFilterApi({ filters });        
+          dispatch(addCategary(data));
+          dispatch(addproductToshop(res?.products));
+          navigate("/shop")
+        } catch (error) {
+          if (error.response.data.message === "No products found") {
+            dispatch(addproductToshop([]));
+            dispatch(addCategary(data));
+            navigate("/shop")
+          }
+        }
+      };
   useEffect(() => {
     getCategary("Women");
   }, []);
@@ -69,6 +87,7 @@ const Catalogue = () => {
               return (
                 <Col key={idx} xl={8} lg={8} md={8} sm={8} xs={12}>
                   <div
+                  onClick={()=>{filterSubcategary(item?.title), dispatch(headermenuHandler(false));}}
                     onMouseEnter={() => {
                       setHoverActive(true), setHoverId(idx);
                     }}
@@ -104,19 +123,19 @@ const Catalogue = () => {
                     >
                       <div
                         style={{
-                          width: 70,
-                          height: 6,
+                         
                           backgroundColor: "#fff",
                           display: "flex",
                           justifyContent: "center",
                           alignItems: "center",
-                          borderRadius: 4,
+                          // borderRadius: 4,
                           position: "relative",
                         }}
+                        className="!rounded-full"
                       >
                         <div className="absolute flex items-center  justify-center   ">
-                          <div className="size-[50px] flex items-center justify-center">
-                            <img className="w-full size-[30px] " src={item?.images?.categoryImage ?? "https://zoci-data.s3.ap-south-1.amazonaws.com/productImages/1741236911889_No_image_available.svg.webp"} alt="ring"/>
+                          <div className="size-[100px] flex items-center justify-center rounded-full">
+                            <img className=" rounded-full " src={item?.images?.categoryImage ?? "https://zoci-data.s3.ap-south-1.amazonaws.com/productImages/1741236911889_No_image_available.svg.webp"} alt="ring"/>
                           </div>
                           {hoverActive && hoverId === idx && (
                             <h4 className="absolute left-0 right-0 mx-auto flex justify-center text-[12px]   text-[#214344] font-bold    ">

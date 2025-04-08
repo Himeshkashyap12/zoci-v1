@@ -32,7 +32,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { addCategary, addproductToshop } from "../../feature/shop/shopSlice";
 import { TbBrandLinkedin, TbPointFilled } from "react-icons/tb";
 import { searchProducts } from "../../feature/product/productSlice";
-import { toast } from "react-toastify";
 import {
   headerActiveTab,
   headermenuHandler,
@@ -65,7 +64,7 @@ const EasyMenuHeader = ({
       const filters = { category: data };
       const res = await getProductFilterApi({ filters });
       console.log(res);
-      
+
       dispatch(addCategary(data));
       dispatch(addproductToshop(res?.products));
     } catch (error) {
@@ -137,7 +136,9 @@ const EasyMenuHeader = ({
               <Tooltip placement="left" title={"Shop"}>
                 <button
                   onClick={() => {
-                    navigate("/shop"), dispatch(headermenuHandler(false));
+                    navigate("/shop"),
+                      dispatch(headermenuHandler(false)),
+                      dispatch(addCategary(""));
                   }}
                   className={` rounded-full p-2   ${
                     activeTab === "cart" ? "bg-[#F0D5A0] " : "bg-transparent"
@@ -227,21 +228,29 @@ const EasyMenuHeader = ({
             </div>
             <div className=" flex flex-col gap-3">
               <Link
-                to={"https://www.instagram.com/accounts/login/?hl=en"}
+                to={
+                  "https://www.instagram.com/zoci.india?igsh=MW8xcWdjM2lhdXZrZg=="
+                }
                 target="_blank"
               >
                 <FaInstagram style={{ fontSize: "20px", color: "#F0D5A0" }} />
               </Link>
-              <Link to={"https://www.facebook.com"} target="_blank">
+              <Link
+                to={"https://www.facebook.com/share/1A8ocApuzL/"}
+                target="_blank"
+              >
                 <FaFacebook style={{ fontSize: "20px", color: "#F0D5A0" }} />
               </Link>
-              <Link to={"https://www.pinterest.com"} target="_blank">
+              <Link to={"https://pin.it/5YApQr8VQ"} target="_blank">
                 <FaPinterestP style={{ fontSize: "20px", color: "#F0D5A0" }} />
               </Link>
-              <Link to={"https://www.youtube.com"} target="_blank">
+              <Link
+                to={"https://youtube.com/@zociindia?si=KfKyF0LbJgIBjdDO"}
+                target="_blank"
+              >
                 <FaYoutube style={{ fontSize: "20px", color: "#F0D5A0" }} />
               </Link>
-              <Link to={"https://web.whatsapp.com"} target="_blank">
+              <Link to={"https://wa.me/9616773377"} target="_blank">
                 <WhatsAppOutlined
                   style={{ fontSize: "20px", color: "#F0D5A0" }}
                 />
@@ -371,8 +380,8 @@ const EasyMenuHeader = ({
                         <div className="flex flex-col gap-2">
                           <NavLink
                             onClick={() => {
-                              filterSubcategary("Pendants"),
-                              dispatch(headermenuHandler(false));
+                              filterSubcategary("Necklaces & pendants"),
+                                dispatch(headermenuHandler(false));
                             }}
                             className={"hover:text-[#214344] "}
                             to={"/shop"}
@@ -388,26 +397,15 @@ const EasyMenuHeader = ({
                                 dispatch(headermenuHandler(false));
                             }}
                             className={"hover:text-[#214344]"}
-                            to={"/shop"}
+                            to={{
+                              pathname: "/shop",
+                            }}
                           >
                             <div className="flex gap-2 items-center text-[#214344]">
                               <TbPointFilled />
                               Earrings
                             </div>
-                          </NavLink>
-                          <NavLink
-                            onClick={() => {
-                              filterSubcategary("Chains"),
-                                dispatch(headermenuHandler(false));
-                            }}
-                            className={"hover:text-[#214344]"}
-                            to={"/shop"}
-                          >
-                            <div className="flex gap-2 items-center text-[#214344]">
-                              <TbPointFilled />
-                              Chains
-                            </div>
-                          </NavLink>
+                          </NavLink> 
                           <NavLink
                             onClick={() => {
                               filterSubcategary("Bracelets"),
@@ -423,7 +421,7 @@ const EasyMenuHeader = ({
                           </NavLink>
                           <NavLink
                             onClick={() => {
-                              filterSubcategary("Cufflinks"),
+                              filterSubcategary("Others"),
                                 dispatch(headermenuHandler(false));
                             }}
                             className={"hover:text-[#214344] text-[#214344]"}

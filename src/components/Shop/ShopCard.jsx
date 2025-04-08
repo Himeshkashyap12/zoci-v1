@@ -166,8 +166,8 @@ const ShopCard = ({ item, shop }) => {
                               <Tooltip title={item?.title} placement="top" color="#214344">
                                 <div>
                                   <h5 className="md:text-[20px] text-[20px] font-semibold  text-white">
-                                    {item?.title?.length > 12
-                                      ? item?.title.slice(0, 12) + "..."
+                                    {item?.title?.length > 10
+                                      ? item?.title.slice(0, 10) + "..."
                                       : item?.title?.charAt(0)?.toUpperCase() +
                                         item?.title?.slice(1)}
                                   </h5>

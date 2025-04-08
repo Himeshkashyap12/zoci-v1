@@ -107,6 +107,26 @@ const AdminProducts = () => {
     },
     {
       title: (
+        <Typography.Text className="text-[#fff]">Metal Type</Typography.Text>
+      ),
+      dataIndex: "metalType",
+      key: "metalType",
+      width: 200,
+      align: "center",
+      render: (text) => <Typography.Text className="text-[#214344]">{text}</Typography.Text>
+    },
+    {
+      title: (
+        <Typography.Text className="text-[#fff]">Category</Typography.Text>
+      ),
+      dataIndex: "category",
+      key: "category",
+      width: 200,
+      align: "center",
+      render: (text) => <Typography.Text className="text-[#214344]">{text}</Typography.Text>
+    },
+    {
+      title: (
         <Typography.Text className="text-[#fff] text-center">
           Action
         </Typography.Text>
@@ -156,7 +176,7 @@ const AdminProducts = () => {
         </div>
         <div className="px-5">
           <Table
-            scroll={1500}
+            scroll={{x:1500,y:350}}
             headerColor={"red"}
             dataSource={data}
             columns={columns}

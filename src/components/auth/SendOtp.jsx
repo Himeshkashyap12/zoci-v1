@@ -24,7 +24,6 @@ const SendOtp = ({ setSentOtp, setMobile, setSingnin }) => {
   };
 
   const sendOtpHandler = async () => {
-    console.log(input,"ghfgdgd");
 
     if (input.mobile.length < 10 || input.mobile == ""){
 

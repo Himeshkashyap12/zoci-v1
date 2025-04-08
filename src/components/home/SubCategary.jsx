@@ -1,12 +1,12 @@
 import Slider from "react-slick";
 import { Card } from "antd";
-import diamond from "../../assets/diamond.webp";
 import {  useState } from "react";
 import "./subcategary.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductFilterApi } from "../../feature/product/productApi";
 import { addCategary, addproductToshop } from "../../feature/shop/shopSlice";
 import { useNavigate } from "react-router";
+import { headermenuHandler } from "../../feature/header/headerSlice";
 const settings = {
   className: "center",
   dots: false,
@@ -32,11 +32,11 @@ const settings = {
         centerPadding: "30px",
         centerMode: true,
         dots: false,
-        autoplaySpeed: 2000,
+        autoplaySpeed: 4000,
       },
     },
     {
-      breakpoint: 600,
+      breakpoint: 767,
       settings: {
         slidesToShow: 2,
         slidesToScroll: 1,
@@ -46,7 +46,7 @@ const settings = {
 
         centerMode: true,
         dots: false,
-        autoplaySpeed: 2000,
+        autoplaySpeed: 4000,
         display: "flex",
       },
     },
@@ -57,7 +57,7 @@ const settings = {
         centerPadding: "50px",
         centerMode: true,
         slidesToScroll: 1,
-        autoplaySpeed: 2000,
+        autoplaySpeed: 4000,
         dots: false,
       },
     },
@@ -78,14 +78,17 @@ const SubCategary = ({ categary }) => {
   const filterSubcategary = async (data) => {
       try {
         const filters = { category: data };
-        const res = await getProductFilterApi({ filters });        
+        const res = await getProductFilterApi({ filters });   
+        debugger     
         dispatch(addCategary(data));
         dispatch(addproductToshop(res?.products));
+        dispatch(headermenuHandler(false))
         navigate("/shop")
       } catch (error) {
         if (error.response.data.message === "No products found") {
           dispatch(addproductToshop([]));
           dispatch(addCategary(data));
+          dispatch(headermenuHandler(false))
           navigate("/shop")
         }
       }
@@ -95,9 +98,7 @@ const SubCategary = ({ categary }) => {
     <div className="md:px-1 px-0  subcategary md:my-10  mx-auto w-full">
       <div className="   md:w-[78%] w-[100%] mx-auto  ">
         <Slider {...settings}>
-          {categaryData?.map((item, idx) => {
-            console.log(item);
-            
+          {categaryData?.map((item, idx) => {            
             return (
               <>
                 <div
@@ -135,22 +136,21 @@ const SubCategary = ({ categary }) => {
                   >
                     <div
                       style={{
-                        width: 100,
-                        height: 50,
                         backgroundColor: "#fff",
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
-                        borderRadius: 4,
+                        // borderRadius: 4,
                         position: "relative",
                       }}
-                    >
+                      className="xl:size-[270px] sm:size-[200px] size-[250px] rounded-full"
+                    > 
                       <div className="absolute flex items-center  justify-center   ">
-                        <div className="w-[100px] h-[100px] flex items-center justify-center">
-                          <img className="w-full h-100px] " src={item?.images?.categoryImage??"https://zoci-data.s3.ap-south-1.amazonaws.com/productImages/1741236911889_No_image_available.svg.webp"} alt="diamond" />
+                        <div className=" flex items-center justify-center ">
+                          <img className="w-full h-100px] rounded-full" src={item?.images?.categoryImage??"https://zoci-data.s3.ap-south-1.amazonaws.com/productImages/1741236911889_No_image_available.svg.webp"} alt="diamond" />
                         </div>
                         {hoverSub && hoverId === idx && (
-                          <h4 className="absolute left-0 right-0 mx-auto flex justify-center text-[20px]   text-[#214344] font-bold    ">
+                          <h4 className="absolute left-0 right-0 mx-auto flex justify-center text-[20px]   text-[#214344] font-bold">
                             {item?.title}
                           </h4>
                         )}

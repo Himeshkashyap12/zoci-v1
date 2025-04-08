@@ -6,16 +6,28 @@ import { useDispatch, useSelector } from "react-redux";
 import CustomFilter from "./CustomFlter";
 import Sorting from "./sorting";
 import { addproductToshop } from "../../feature/shop/shopSlice";
-import filterBanner from "../../assets/filterBanner.jpg";
 import { RightOutlined } from "@ant-design/icons";
 import filterIcon from "../../assets/icons/filterIcon.png";
+import ring from "../../assets/shopBannerPc/ring.png";
+import earring from "../../assets/shopBannerPc/earring.png";
+import shop from "../../assets/shopBannerPc/others.png";
+import NecklacesAndpendants from "../../assets/shopBannerPc/NecklacesAndpendants.png";
+import bracelets from "../../assets/shopBannerPc/bracelets.png";
 
-const Shop = () => {  
+// mobile banner
+import braceletbannerMobile from "../../assets/shopbannerMobile/braceletsbannerMobile.png";
+import earringsbannerMobile from "../../assets/shopbannerMobile/earringsbannerMobile.png";
+import PendantsandnecklacesbannerMobile from "../../assets/shopbannerMobile/PendantsandnecklacesbannerMobile.png";
+import ringsbannerMobile from "../../assets/shopbannerMobile/ringsbannerMobile.png";
+import shopbannerMobile from "../../assets/shopbannerMobile/otherproductsbannerMobile.png";
+
+const Shop = () => { 
+  const [bannerImage,setBannerImage]=useState(shop); 
+  const [bannerMobileImage,setBannerMobileImage]=useState(shopbannerMobile); 
   const dispatch = useDispatch();
   const data = useSelector((state) => state?.shop?.shop);   
-
-  const category = useSelector((state) => state.shop.category);
-  console.log(category,"dad");
+  const category = useSelector((state) => state?.shop?.category);  
+  console.log(category);
   
   const [filter, setFiter] = useState(true);
   const headermenu = useSelector((state) => state.header.headermenu);
@@ -25,7 +37,6 @@ const Shop = () => {
     // const pagination = { page: pageNumber, limit: 10 };
     try {
       const response = await getProductFilterApi({ page: pageNumber, limit: 10 ,filters});
-      console.log(response.products);
       setTotalPage(response?.totalProducts);
       if (response?.products?.length > 0) {
         dispatch(addproductToshop(pageNumber === 1 ? response?.products : [...data, ...response?.products]));
@@ -73,32 +84,64 @@ const Shop = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+  useEffect(()=>{
+    switch(category){
+      case "Earrings": 
+         setBannerImage(earring);
+         setBannerMobileImage(earringsbannerMobile)
+         break;
+      case "Rings":
+          setBannerImage(ring);
+          setBannerMobileImage(ringsbannerMobile)
+          break;
+      case "Bracelets":
+            setBannerImage(bracelets);
+            setBannerMobileImage(braceletbannerMobile)
+            break;
+      case "Necklaces":
+              setBannerImage(NecklacesAndpendants);
+              setBannerMobileImage(PendantsandnecklacesbannerMobile)
+              break;
+      case "Pendants":
+                setBannerImage(NecklacesAndpendants);
+                setBannerMobileImage(PendantsandnecklacesbannerMobile)
+                break;
+      default :
+         setBannerImage(shop);  
+         setBannerMobileImage(shopbannerMobile)
+
+    }
+
+  },[category])
 
   return (
     <>
-      <Row className="md:pt-[110px] pt-[70px]  ">
-        <div className="relative w-full">
-          <div className="md:h-[236px] h-[150px] ">
-            <img className="w-full h-full" src={filterBanner} alt="filter" />
+      <Row className="lg:pt-[110px]   pt-[70px]">
+        <div className="relative w-full"> 
+          <div className="md:h-[236px] h-[150px] hidden md:block ">
+            <img className="w-full h-full object-fit" src={bannerImage} alt="filter" />
+          </div>
+          <div className="md:h-[236px] h-[150px] md:hidden ">
+            <img className="w-full h-full object-fit" src={bannerMobileImage} alt="filter" />
           </div>
 
           <div className="absolute top-[30%] md:left-10 left-2">
-            <h3 className="text-[#214344] text-[24px] font-bold">
+            <h3 className="text-[#F0D5A0] text-[24px] font-bold">
               {category === ""
                 ? "Shop"
                 : category?.charAt(0)?.toUpperCase() + category?.slice(1)}
             </h3>
             <div className="flex gap-3 items-center pt-3">
-              <p className="text-[#214344] text-[14px] font-[500]">Home</p>
-              <RightOutlined style={{ fontSize: "14px", color: "#214344" }} />
-              <p className="text-[#214344] text-[14px] font-[500]">Shop</p>
+              <p className="text-[#F0D5A0] text-[14px] font-[500]">Home</p>
+              <RightOutlined style={{ fontSize: "14px", color: "#F0D5A0" }} />
+              <p className="text-[#F0D5A0] text-[14px] font-[500]">Shop</p>
               <RightOutlined style={{ fontSize: "12px", color: "#214344" }} />
-              <p className="text-[#214344] text-[14px] font-[500]">
+              <p className="text-[#F0D5A0] text-[14px] font-[500]">
                 {category?.toUpperCase()}
               </p>
             </div>
             <div className="flex gap-1 md:pt-14 pt-2">
-              <h5 className="text-[14px] font-[400] text-[#214344]">
+              <h5 className="text-[14px] font-[400] text-[#F0D5A0]">
                 Showing 1-{data?.length<=10 ? data?.length : 10*page} of {totalPage} results
               </h5>
             </div>
@@ -106,7 +149,7 @@ const Shop = () => {
         </div>
 
         {/* Sticky Banner */}
-        <div className=" sticky md:top-[110px] top-[70px]     z-[9999]  ">
+        <div className=" sticky md:top-[110px] top-[70px]  z-[9999]  ">
           <div className="absolute right-0">
             {filter ? (
               <div>

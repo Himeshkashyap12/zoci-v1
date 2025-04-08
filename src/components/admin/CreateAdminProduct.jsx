@@ -44,8 +44,6 @@ const CreateAdminProduct = () => {
   const [metalType, setMetalType] = useState("Gold");
   const [category, setCategary] = useState("Nacklace");
   const editData = location?.state?.product;
-  console.log(editData, "editData");
-
   const dispatch = useDispatch();
   const categories = useSelector((state) => state?.admin?.category);
 
@@ -121,7 +119,6 @@ const CreateAdminProduct = () => {
 
     return changes;
   }
-
   // Helper function to compare two arrays deeply
   function arraysAreEqual(arr1, arr2) {
     if (arr1.length !== arr2.length) return false;
@@ -130,7 +127,6 @@ const CreateAdminProduct = () => {
     }
     return true;
   }
-
   const createProductHandler = async () => {
     if ( productImagesUrl?.productImage===null || productImagesUrl?.modalImage===null || videoUrl?.length===0) {
       return toast.error("Required media files are missing");
@@ -145,8 +141,6 @@ const CreateAdminProduct = () => {
       metalType,
       category: category,
     };
-
-    
     if (!editData) {
       try {
         const res = await createProductApi(data);
@@ -165,12 +159,9 @@ const CreateAdminProduct = () => {
         category: category,
       };
       const changedData = deepCompareArraysOnly(editData, newData);
-
-
       if (Object.keys(changedData).length === 0) {
         return toast.info("No changes detected.");
       }
-
       try {
         const res = await editProductApi(changedData, editData._id);
         toast.success(res.message);
@@ -227,8 +218,9 @@ const CreateAdminProduct = () => {
 
   useEffect(() => {
     getCategary();
-
     if (editData) {
+      console.log(editData.metalType);
+      
       setProductFormInput({ ...editData });
       setMetalType(editData?.metalType);
       setPreview(editData?.images);
@@ -263,6 +255,7 @@ const CreateAdminProduct = () => {
                 <div className="pt-2">
                   <Select
                     name="categary"
+                    value={category}
                     defaultValue="Nackless"
                     onChange={(e) => {
                       setCategary(e);
@@ -280,6 +273,7 @@ const CreateAdminProduct = () => {
                   <Select
                     name="metalType"
                     defaultValue="Gold"
+                    value={metalType}
                     onChange={handleChange}
                     className="w-full rounded-md"
                     options={[

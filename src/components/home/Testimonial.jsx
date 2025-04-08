@@ -56,7 +56,7 @@ const Testimonial = () => {
           </div>
         </Col>
         <Col xl={8} lg={8} sm={24} md={8} xs={24}>
-          <div className="flex flex-col justify-center items-center gap-5 w-[100%] mx-auto p-5">
+          <div className="flex flex-col justify-center items-center gap-5 w-[70%] mx-auto p-5">
             <div className="w-[230px] mx-auto flex justify-center h-[300px] relative ">
               {/* Rotate only the parent container */}
               <img
@@ -68,7 +68,7 @@ const Testimonial = () => {
             <h4 className="text-[16px] font-[400] underline text-[#214344]">
               Divyanshi Agarwal
             </h4>
-            <p className="text-[14px] text-center">Todo ... Thank you Zoci ❤</p>
+            <p className="text-[14px] text-center">Bracelet is absolutely stunning, and it adds the perfect touch to any outfit. I love how it looks!❤</p>
           </div>
         </Col>
       </Row>

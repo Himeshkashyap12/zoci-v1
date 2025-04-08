@@ -1,9 +1,7 @@
 import { Col, Row } from "antd";
 import { Link } from "react-router";
 import footerImage from "../../assets/header.png";
-import {
-  WhatsAppOutlined,
-} from "@ant-design/icons";
+import { WhatsAppOutlined } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
 import { getProductFilterApi } from "../../feature/product/productApi";
 import { addCategary, addproductToshop } from "../../feature/shop/shopSlice";
@@ -27,15 +25,14 @@ const Footer = () => {
       dispatch(addCategary(data));
     } catch (error) {
       console.log(error);
-      if(error.response.data.message==="No products found"){
-      dispatch(addproductToshop([]));
+      if (error.response.data.message === "No products found") {
+        dispatch(addproductToshop([]));
 
-      dispatch(addCategary(data));
-
+        dispatch(addCategary(data));
       }
     }
   };
-  
+
   return (
     <div className="footer bg-[#214344]  pt-20 " id="footer">
       <div className="md:px-20 px-5 ">
@@ -66,7 +63,10 @@ const Footer = () => {
                 <Link className="text-[#fff] hover:text-[#fff] text-[18px] ">
                   Cart
                 </Link>
-                <Link to={"/aboutus"} className="text-[#fff] hover:text-[#fff] text-[18px] ">
+                <Link
+                  to={"/aboutus"}
+                  className="text-[#fff] hover:text-[#fff] text-[18px] "
+                >
                   About Us
                 </Link>
                 <Link className="text-[#fff] hover:text-[#fff] text-[18px] ">
@@ -75,20 +75,24 @@ const Footer = () => {
                 <Link className="text-[#fff] hover:text-[#fff] text-[18px] ">
                   Blog
                 </Link>
-              
-               {localStorage.getItem("role")==="admin" && <Link to={"/admin/products"} className="text-[#fff] hover:text-[#fff] text-[18px] ">
-                  Go to admin pannel
-                </Link>}
+
+                {localStorage.getItem("role") === "admin" && (
+                  <Link
+                    to={"/admin/products"}
+                    className="text-[#fff] hover:text-[#fff] text-[18px] "
+                  >
+                    Go to admin pannel
+                  </Link>
+                )}
               </div>
             </div>
           </Col>
           <Col xl={6} lg={6} md={8} sm={12} xs={24}>
             <div className="max-sm:pt-7">
               <h6 className="text-[24px]  text-[#F0D5A0] font-semibold">
-               Shop
+                Shop
               </h6>
               <div className="flex flex-col gap-3 pt-10 ">
-               
                 <Link
                   className="text-[#fff] hover:text-[#fff] text-[18px] cursor-pointer"
                   to={"/shop"}
@@ -111,7 +115,7 @@ const Footer = () => {
                   className="text-[#fff] hover:text-[#fff] text-[18px] cursor-pointer"
                   to={"/shop"}
                   onClick={() => {
-                    filterSubcategary("Chains");
+                    filterSubcategary("Rings");
                   }}
                 >
                   Rings
@@ -132,15 +136,15 @@ const Footer = () => {
                 COLLECTIONS
               </h6>
               <Link
-                  className="text-[#fff] hover:text-[#fff] text-[18px] cursor-pointer "
-                  to={"/shop"}
-                  onClick={() => {
-                    // filterSubcategary("Bracelet");
-                  }}
-                >
-                  Signature Collection
-                </Link>
-              </div>
+                className="text-[#fff] hover:text-[#fff] text-[18px] cursor-pointer "
+                to={"/shop"}
+                onClick={() => {
+                  // filterSubcategary("Bracelet");
+                }}
+              >
+                Signature Collection
+              </Link>
+            </div>
           </Col>
           <Col xl={6} lg={6} md={8} sm={12} xs={24}>
             <div className="max-sm:pt-7">
@@ -164,25 +168,46 @@ const Footer = () => {
                 HELP
               </h6>
               <div className="flex flex-col gap-3 pt-10">
-                <Link to={"/jewelry-careguide"} className="text-[#fff] hover:text-[#fff] text-[18px] ">
+                <Link
+                  to={"/jewelry-careguide"}
+                  className="text-[#fff] hover:text-[#fff] text-[18px] "
+                >
                   Jewelry Care Guide
                 </Link>
-                <Link to={"/privacy-policy"} className="text-[#fff] hover:text-[#fff] text-[18px] ">
+                <Link
+                  to={"/privacy-policy"}
+                  className="text-[#fff] hover:text-[#fff] text-[18px] "
+                >
                   Privacy Policy
                 </Link>
-                <Link to={"shiping"} className="text-[#fff] hover:text-[#fff] text-[18px] ">
+                <Link
+                  to={"shiping"}
+                  className="text-[#fff] hover:text-[#fff] text-[18px] "
+                >
                   Shipping Policy
                 </Link>
-                <Link  to={"/terms-and-conditions"} className="text-[#fff] hover:text-[#fff] text-[18px] ">
+                <Link
+                  to={"/terms-and-conditions"}
+                  className="text-[#fff] hover:text-[#fff] text-[18px] "
+                >
                   Terms and Conditions
                 </Link>
-                <Link to={"/return-and-exchange"}  className="text-[#fff] hover:text-[#fff] text-[18px] ">
+                <Link
+                  to={"/return-and-exchange"}
+                  className="text-[#fff] hover:text-[#fff] text-[18px] "
+                >
                   Refund and exchange policy
                 </Link>
-                <Link to={"/faq"}  className="text-[#fff] hover:text-[#fff] text-[18px] ">
-                 FAQ's
+                <Link
+                  to={"/faq"}
+                  className="text-[#fff] hover:text-[#fff] text-[18px] "
+                >
+                  FAQ's
                 </Link>
-                <Link to={"/contact-us"} className="text-[#fff] hover:text-[#fff] text-[18px] ">
+                <Link
+                  to={"/contact-us"}
+                  className="text-[#fff] hover:text-[#fff] text-[18px] "
+                >
                   Contact Us
                 </Link>
               </div>
@@ -196,12 +221,37 @@ const Footer = () => {
             Follow Us On
           </h4>
           <div className=" flex  gap-3">
-           <Link to={"https://www.instagram.com/accounts/login/?hl=en"} target="_blank"> <FaInstagram style={{ fontSize: "20px", color: "#F0D5A0" }} /></Link>
-           <Link to={"https://www.facebook.com"}    target="_blank"> <FaFacebook style={{ fontSize: "20px", color: "#F0D5A0" }} /></Link>
-           <Link to={"https://www.pinterest.com"} target="_blank">  <FaPinterestP style={{ fontSize: "20px", color: "#F0D5A0" }} /></Link>
-           <Link to={"https://www.youtube.com"}  target="_blank"> <FaYoutube style={{ fontSize: "20px", color: "#F0D5A0" }} /></Link>
-           <Link to={"https://web.whatsapp.com"} target="_blank">  <WhatsAppOutlined style={{ fontSize: "20px", color: "#F0D5A0" }} /></Link>
-           <Link to={"https://in.linkedin.com"}  target="_blank"> <TbBrandLinkedin style={{ fontSize: "24px", color: "#F0D5A0" }} /></Link>
+            <Link
+              to={
+                "https://www.instagram.com/zoci.india?igsh=MW8xcWdjM2lhdXZrZg=="
+              }
+              target="_blank"
+            >
+              <FaInstagram style={{ fontSize: "20px", color: "#F0D5A0" }} />
+            </Link>
+            <Link
+              to={"https://www.facebook.com/share/1A8ocApuzL/"}
+              target="_blank"
+            >
+              <FaFacebook style={{ fontSize: "20px", color: "#F0D5A0" }} />
+            </Link>
+            <Link to={"https://pin.it/5YApQr8VQ"} target="_blank">
+              <FaPinterestP style={{ fontSize: "20px", color: "#F0D5A0" }} />
+            </Link>
+            <Link
+              to={"https://youtube.com/@zociindia?si=KfKyF0LbJgIBjdDO"}
+              target="_blank"
+            >
+              <FaYoutube style={{ fontSize: "20px", color: "#F0D5A0" }} />
+            </Link>
+            <Link to={"https://wa.me/9616773377"} target="_blank">
+              <WhatsAppOutlined
+                style={{ fontSize: "20px", color: "#F0D5A0" }}
+              />
+            </Link>
+            <Link to={"#"} target="_blank">
+              <TbBrandLinkedin style={{ fontSize: "24px", color: "#F0D5A0" }} />
+            </Link>
           </div>
         </div>
         <div className="flex flex-wrap md:justify-between justify-center max-md:gap-5 md:px-20 px-5  w-full py-7">
@@ -212,7 +262,7 @@ const Footer = () => {
           </div>
           <Link to={"https://celestialitverse.com"}>
             <h6 className="text-[#fff] text-[14px] font-semibold">
-              DESIGN & DEVELOPED BY CELESTIAL IT VERSE 
+              DESIGN & DEVELOPED BY CELESTIAL IT VERSE
             </h6>
           </Link>
         </div>

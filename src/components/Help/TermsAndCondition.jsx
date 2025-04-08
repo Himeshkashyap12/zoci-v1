@@ -19,7 +19,7 @@ const TermsAndCondition = () => {
         </div>
         <div className="sm:px-20 px-5 flex flex-col gap-2  py-20">
           <div className="flex flex-col gap-5 pt-3">
-            <Typography.Text className="text-[20px] font-semibold">
+            <Typography.Text className="text-[30px] font-semibold">
               Copyright
             </Typography.Text>
             <Typography.Text className="text-[16px]">

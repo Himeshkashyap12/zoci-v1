@@ -10,7 +10,6 @@ const shopSlice = createSlice({
       state.shop = action.payload;
     },
     addCategary: (state, action) => {
-      console.log("ddsf",action.payload);
       
       state.category = action.payload;
     },

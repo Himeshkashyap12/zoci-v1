@@ -428,6 +428,14 @@ const ProductDetails = () => {
                                 {item?.metalType}
                               </Typography.Text>
                             </div>
+                            <div className="flex gap-2">
+                              <Typography.Text className="text-[14px] font-semibold text-[#214344]">
+                                SKU :
+                              </Typography.Text>
+                              <Typography.Text className="text-[14px] font-[400] text-[#214344]">
+                                {item?.sku}
+                              </Typography.Text>
+                            </div>
                             {item?.metalColor && <div className="flex gap-2">
                               <Typography.Text className="text-[14px] font-semibold text-[#214344]">
                                 Metal color :
