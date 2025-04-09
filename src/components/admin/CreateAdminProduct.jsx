@@ -29,6 +29,8 @@ const CreateAdminProduct = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [videoUrl, setVideoUrl] = useState([]);
+  console.log(videoUrl);
+  
   const [preview, setPreview] = useState({
     modalImage: null,
     productImage: null,
@@ -128,9 +130,11 @@ const CreateAdminProduct = () => {
     return true;
   }
   const createProductHandler = async () => {
-    if ( productImagesUrl?.productImage===null || productImagesUrl?.modalImage===null || videoUrl?.length===0) {
-      return toast.error("Required media files are missing");
-    }
+    console.log(productImagesUrl);
+    
+    // if ( productImagesUrl?.productImage===null || productImagesUrl?.modalImage===null || videoUrl?.length===0) {
+    //   return toast.error("Required media files are missing");
+    // }
     if(productFormInput?.title==="" || productFormInput?.sku=="" || productFormInput?.price===0 || productFormInput?.quantity===""   || productFormInput?.description===""  ){ 
       return toast.error("Required fields are missing");
     }
@@ -200,7 +204,7 @@ const CreateAdminProduct = () => {
       toast.success(res.message);
     } catch (error) {
       console.log(error);
-      toast.error(error.response.data.message);
+      toast.error(error?.response?.data?.message);
     }
   };
   const removeImage = async (i) => {
@@ -503,6 +507,7 @@ const CreateAdminProduct = () => {
                     <div className="flex justify-between items-center">
                       {productImagesUrl["modalImage"] === null && (
                         <input
+                        value={productImagesUrl?.modalImage}
                           type="file"
                           accept="image/*"
                           onChange={(e) => imageHandler(e, "modalImage")}
@@ -537,6 +542,8 @@ const CreateAdminProduct = () => {
                     <div className="flex justify-between items-center">
                       {productImagesUrl["productImage"] === null && (
                         <input
+                        value={productImagesUrl?.productImage}
+
                           type="file"
                           accept="image/*"
                           onChange={(e) => imageHandler(e, "productImage")}
@@ -571,6 +578,7 @@ const CreateAdminProduct = () => {
                     <div className="flex justify-between items-center">
                       {productImagesUrl["additional1"] === null && (
                         <input
+                        value={productImagesUrl?.additional1}
                           type="file"
                           accept="image/*"
                           onChange={(e) => imageHandler(e, "additional1")}
@@ -605,6 +613,7 @@ const CreateAdminProduct = () => {
                     <div className="flex justify-between items-center">
                       {productImagesUrl["additional2"] === null && (
                         <input
+                        value={productImagesUrl?.additional2}
                           type="file"
                           accept="image/*"
                           onChange={(e) => imageHandler(e, "additional2")}
@@ -642,6 +651,7 @@ const CreateAdminProduct = () => {
                 <div className="flex gap-3 items-center">
                   <div className="pt-2">
                     <input
+                      // value={videoUrl}
                       type="file"
                       accept="video/*"
                       onChange={(e) => {

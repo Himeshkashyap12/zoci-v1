@@ -7,11 +7,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProductFilterApi } from "../../feature/product/productApi";
 import { addCategary, addproductToshop } from "../../feature/shop/shopSlice";
 import { headermenuHandler } from "../../feature/header/headerSlice";
+import { useNavigate } from "react-router";
 const Catalogue = () => {
   const [activeTab, setActiveTab] = useState("Women");
   const [hoverActive, setHoverActive] = useState(false);
   const [hoverId, setHoverId] = useState(null);
   const dispatch=useDispatch();
+  const navigate=useNavigate();
   const catalogueData=useSelector(state=>state?.admin?.category)
   const getCategary = async(key) => {
     setActiveTab(key)
@@ -45,7 +47,7 @@ const Catalogue = () => {
           if (error.response.data.message === "No products found") {
             dispatch(addproductToshop([]));
             dispatch(addCategary(data));
-            navigate("/shop")
+            navigate("/shop");
           }
         }
       };

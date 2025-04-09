@@ -122,7 +122,7 @@ const Shop = () => {
             <img className="w-full h-full object-fit" src={bannerImage} alt="filter" />
           </div>
           <div className="md:h-[236px] h-[150px] md:hidden ">
-            <img className="w-full h-full object-fit" src={bannerMobileImage} alt="filter" />
+            <img className="w-full h-full object-cover" src={bannerMobileImage} alt="filter" />
           </div>
 
           <div className="absolute top-[30%] md:left-10 left-2">
@@ -135,7 +135,7 @@ const Shop = () => {
               <p className="text-[#F0D5A0] text-[14px] font-[500]">Home</p>
               <RightOutlined style={{ fontSize: "14px", color: "#F0D5A0" }} />
               <p className="text-[#F0D5A0] text-[14px] font-[500]">Shop</p>
-              <RightOutlined style={{ fontSize: "12px", color: "#214344" }} />
+              <RightOutlined style={{ fontSize: "12px", color: "#F0D5A0" }} />
               <p className="text-[#F0D5A0] text-[14px] font-[500]">
                 {category?.toUpperCase()}
               </p>

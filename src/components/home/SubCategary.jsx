@@ -147,7 +147,7 @@ const SubCategary = ({ categary }) => {
                     > 
                       <div className="absolute flex items-center  justify-center   ">
                         <div className=" flex items-center justify-center ">
-                          <img className="w-full h-100px] rounded-full" src={item?.images?.categoryImage??"https://zoci-data.s3.ap-south-1.amazonaws.com/productImages/1741236911889_No_image_available.svg.webp"} alt="diamond" />
+                          <img className={`${item?.title==="Earrings" && "rotate-90" } w-full h-100px] rounded-full`} src={item?.images?.categoryImage??"https://zoci-data.s3.ap-south-1.amazonaws.com/productImages/1741236911889_No_image_available.svg.webp"} alt="diamond" />
                         </div>
                         {hoverSub && hoverId === idx && (
                           <h4 className="absolute left-0 right-0 mx-auto flex justify-center text-[20px]   text-[#214344] font-bold">
