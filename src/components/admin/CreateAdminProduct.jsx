@@ -197,7 +197,7 @@ const CreateAdminProduct = () => {
       return;
     }
     try {
-      const formData = new FormData();
+      const formData = new FormData(); 
       formData.append("productVideos", selectedVideo);
       const res = await uploadProductVideo(formData);
       setVideoUrl([res?.videos[0]]);
