@@ -112,6 +112,7 @@ function App() {
                 </AdminProtectedRoute>
               }
             />
+            
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
