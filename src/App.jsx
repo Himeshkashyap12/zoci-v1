@@ -31,6 +31,8 @@ import PrivacyPolicyPage from "./pages/helpPage/PrivacyPolicyPage";
 import ShipingPolicyPage from "./pages/helpPage/ShippingPage";
 import ContactUsPage from "./pages/contactusPage/ContactUsPage";
 import FaqPage from "./pages/faqPage/FaqPage";
+import AdminInvoicePage from "./pages/adminInvoice/AdminInvoicePage";
+import GenerateInvoiceForm from "./components/admin/GenerateInvoiceForm";
 function App() {
   return (
     <>
@@ -109,6 +111,22 @@ function App() {
               element={
                 <AdminProtectedRoute>
                   <AdminOrdersPage />
+                </AdminProtectedRoute>
+              }
+            />
+            <Route
+              path="invoice"
+              element={
+                <AdminProtectedRoute>
+                  <AdminInvoicePage />
+                </AdminProtectedRoute>
+              }
+            />
+            <Route
+              path="generate-invoice"
+              element={
+                <AdminProtectedRoute>
+                  <GenerateInvoiceForm />
                 </AdminProtectedRoute>
               }
             />

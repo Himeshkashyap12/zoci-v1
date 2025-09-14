@@ -102,6 +102,25 @@ const AdminLayout = () => {
                   Order
                 </Link>
               </div>
+              <div
+                className={`${
+                  activeTab === 3 && "py-1 rounded-md bg-[#f0d5a0]"
+                }`}
+              >
+                <Link
+                  onClick={() => {
+                    setActiveTab(3);
+                  }}
+                  to={"/admin/invoice"}
+                  className={`text-[14px] px-2 ${
+                    activeTab === 3
+                      ? "text-[#214344] hover:text-[#214344]"
+                      : "text-[#f0d5a0] hover:text-[#f0d5a0]"
+                  }  font-[600] hover:text-[#214344]`}
+                >
+                  Invoice
+                </Link>
+              </div>
             </div>
           </div>
         </Sider>
