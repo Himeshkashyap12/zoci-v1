@@ -143,3 +143,53 @@ export const deleteProductImage= async (data) => {
   }
 
 };
+
+
+export const getAllExhibitionOrder = async (data) => {  
+  const token = localStorage.getItem("token");
+  try {
+    const res = await api.get("/exhibition",
+     {
+      params:{...data}, 
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`, // Sending token in the header
+      },
+    });
+    return await res.data;
+  } catch (error) {
+    throw error;
+  }
+};
+// api/exhibition/invoice
+
+export const generateInvoice = async (data) => {  
+  const token = localStorage.getItem("token");
+  try {
+    const res = await api.post("/exhibition/invoice",data,
+     { 
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`, // Sending token in the header
+      },
+    });
+    return await res.data;
+  } catch (error) {
+    throw error;
+  }
+};
+export const deleteInvoice = async ({id}) => {  
+  const token = localStorage.getItem("token");
+  try {
+    const res = await api.delete(`/exhibition/${id}`,
+     { 
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`, // Sending token in the header
+      },
+    });
+    return await res.data;
+  } catch (error) {
+    throw error;
+  }
+};

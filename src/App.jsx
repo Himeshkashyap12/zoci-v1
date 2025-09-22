@@ -33,7 +33,13 @@ import ContactUsPage from "./pages/contactusPage/ContactUsPage";
 import FaqPage from "./pages/faqPage/FaqPage";
 import AdminInvoicePage from "./pages/adminInvoice/AdminInvoicePage";
 import GenerateInvoiceForm from "./components/admin/GenerateInvoiceForm";
+import { pdfjs } from "react-pdf";
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
+
+// Tell pdfjs where to load the worker file from (CDN)
 function App() {
+
+
   return (
     <>
       <ToastContainer />

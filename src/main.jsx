@@ -13,6 +13,8 @@ import "./assets/fonts/WoodfordBournePro-ThinItalic.ttf"
 import "./assets/fonts/WoodfordBournePro-ExtraLight.ttf"
 import "./assets/fonts/WoodfordBournePro-BoldItalic.ttf"
 import { AxiosInterceptor } from './axios/axiosIntercepter'
+
+
 createRoot(document.getElementById('root')).render(
     <BrowserRouter>
     <Provider store={store}>

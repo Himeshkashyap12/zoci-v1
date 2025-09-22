@@ -118,7 +118,7 @@ const AdminLayout = () => {
                       : "text-[#f0d5a0] hover:text-[#f0d5a0]"
                   }  font-[600] hover:text-[#214344]`}
                 >
-                  Invoice
+                  Exhibition Order
                 </Link>
               </div>
             </div>
