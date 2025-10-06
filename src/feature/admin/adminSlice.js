@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-const initialState={order:[],category:[],products:[],invoiceExhibition:[]}
+const initialState={order:[],category:[],products:[],invoiceExhibition:[],skuData:[]}
 const adminSlice=createSlice({
     name:"admin",
     initialState,
@@ -16,9 +16,12 @@ const adminSlice=createSlice({
         addInvoiceExhibition:(state,action)=>{            
             state.invoiceExhibition=action.payload
         },
+        addSku:(state,action)=>{            
+            state.skuData=action.payload
+        },
 
 
     }
 })
-export const {addAdminOrder,addAdminCategary,addAdminProducts,addInvoiceExhibition}=adminSlice.actions;
+export const {addAdminOrder,addAdminCategary,addAdminProducts,addInvoiceExhibition,addSku}=adminSlice.actions;
 export default adminSlice.reducer;

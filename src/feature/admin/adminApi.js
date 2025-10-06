@@ -193,3 +193,36 @@ export const deleteInvoice = async ({id}) => {
     throw error;
   }
 };
+
+
+export const getSkuSearch = async (data) => {  
+  const token = localStorage.getItem("token");
+  try {
+    const res = await api.post("/exhibition/search-sku",data,
+     {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`, // Sending token in the header
+      },
+    });
+    return await res.data;
+  } catch (error) {
+    throw error;
+  }
+};
+export const previewPdfHandler = async (data) => {
+  const token = localStorage.getItem("token");
+  try {
+    const res = await api.post("/exhibition/preview", data, {
+      responseType: "blob", // 👈 this is the key for PDF
+    });
+
+    // Create blob URL
+    const fileURL = URL.createObjectURL(res.data);
+     window.open(fileURL, "_blank");
+    
+    return fileURL;
+  } catch (error) {
+    throw error;
+  }
+};
