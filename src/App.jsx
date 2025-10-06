@@ -18,7 +18,7 @@ const ViewCartPage = lazy(() => import("./pages/viewCartPage/ViewCartPage"));
 const WishlistPage = lazy(() => import("./pages/wishlistPage/WishListPage"));
 const AdminLayout = lazy(() => import("./components/admin/AdminLayout"));
 const AdminProductPage = lazy(() =>
-  import("./pages/adminProductPage/AdminProductPage")
+  import("./pages/adminProductPage/AdminProductPage") 
 );
 const AdminCreateFormPage = lazy(() =>
   import("./pages/adminCreateForm/AdminCreateFormPage")
@@ -31,7 +31,15 @@ import PrivacyPolicyPage from "./pages/helpPage/PrivacyPolicyPage";
 import ShipingPolicyPage from "./pages/helpPage/ShippingPage";
 import ContactUsPage from "./pages/contactusPage/ContactUsPage";
 import FaqPage from "./pages/faqPage/FaqPage";
+import AdminInvoicePage from "./pages/adminInvoice/AdminInvoicePage";
+import GenerateInvoiceForm from "./components/admin/GenerateInvoiceForm";
+import { pdfjs } from "react-pdf";
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
+
+// Tell pdfjs where to load the worker file from (CDN)
 function App() {
+
+
   return (
     <>
       <ToastContainer />
@@ -112,6 +120,23 @@ function App() {
                 </AdminProtectedRoute>
               }
             />
+            <Route
+              path="invoice"
+              element={
+                <AdminProtectedRoute>
+                  <AdminInvoicePage />
+                </AdminProtectedRoute>
+              }
+            />
+            <Route
+              path="generate-invoice"
+              element={
+                <AdminProtectedRoute>
+                  <GenerateInvoiceForm />
+                </AdminProtectedRoute>
+              }
+            />
+            
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>

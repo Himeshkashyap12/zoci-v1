@@ -288,8 +288,7 @@ const OrderModal = ({ isModalOpen, setIsModalOpen, item, cart }) => {
                   onClick={() => {
                     pay();
                   }}
-                  className="bg-[#214344] !hover:!text-[#fff]   text-white font-semibold py-3 px-6 rounded-lg shadow-md 
-        transition-all duration-500 transform hover:scale-125 "
+                  className="bg-[#214344] !hover:!text-[#fff] text-white font-semibold py-3 px-6 rounded-lg shadow-md transition-all duration-500 transform hover:scale-125 "
                 >
                   Pay Now
                 </Button>

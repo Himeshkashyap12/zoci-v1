@@ -332,13 +332,13 @@ const ProductDetails = () => {
                 <span className="text-xl font-semibold text-[#214344] ">
                   Rs. {item?.price}
                 </span>
-                {item?.compare_at_price!=0 && (
+                {/* {item?.compare_at_price!=0 && (
                   <>
                     <span className="text-lg text-red-300 line-through ">
                       Rs. {item?.compare_at_price}
                     </span>
                   </>
-                )}
+                )} */}
               </div>
               <Flex vertical className="p-0">
                 <Progress

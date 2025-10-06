@@ -58,11 +58,11 @@ const AdminProducts = () => {
       render: (text) => {
         return (
           <>
-            <div className="h-[50px] w-[50px] flex justify-center items-center">
+            <div className="!h-[50px] !w-[50px] flex justify-center items-center">
               <Avatar
                 style={{ height: "70px", width: "70px" }}
                 size={70}
-                className="rounded-full"
+                className="!rounded-full"
                 src={text?.productImage}
               />
             </div>
@@ -77,6 +77,15 @@ const AdminProducts = () => {
       dataIndex: "title",
       key: "title",
       width: 200,
+      render: (text) =>   <Typography.Text className="text-[#214344]">{text}</Typography.Text>
+    },
+      {
+      title: (
+        <Typography.Text className="text-[#fff] font-semibold">SKU Id</Typography.Text>
+      ),
+      dataIndex: "sku",
+      key: "sku",
+      width: 150,
       render: (text) =>   <Typography.Text className="text-[#214344]">{text}</Typography.Text>
     },
     {
@@ -176,7 +185,7 @@ const AdminProducts = () => {
         </div>
         <div className="px-5">
           <Table
-            scroll={{x:1500,y:350}}
+            scroll={{x:1800,y:350}}
             headerColor={"red"}
             dataSource={data}
             columns={columns}

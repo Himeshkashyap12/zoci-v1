@@ -6,5 +6,5 @@ const AboutUsPage=()=>{
         <AboutUs/>
         </>
     )
-}
+} 
 export default AboutUsPage;

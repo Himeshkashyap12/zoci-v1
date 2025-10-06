@@ -311,7 +311,6 @@ console.log(status);
           <Table
             scroll={{ x: 1800 }}
             pagination={false}
-            headerColor={"red"}
             columns={columns}
             dataSource={data}
           />

@@ -143,3 +143,86 @@ export const deleteProductImage= async (data) => {
   }
 
 };
+
+
+export const getAllExhibitionOrder = async (data) => {  
+  const token = localStorage.getItem("token");
+  try {
+    const res = await api.get("/exhibition",
+     {
+      params:{...data}, 
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`, // Sending token in the header
+      },
+    });
+    return await res.data;
+  } catch (error) {
+    throw error;
+  }
+};
+// api/exhibition/invoice
+
+export const generateInvoice = async (data) => {  
+  const token = localStorage.getItem("token");
+  try {
+    const res = await api.post("/exhibition/invoice",data,
+     { 
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`, // Sending token in the header
+      },
+    });
+    return await res.data;
+  } catch (error) {
+    throw error;
+  }
+};
+export const deleteInvoice = async ({id}) => {  
+  const token = localStorage.getItem("token");
+  try {
+    const res = await api.delete(`/exhibition/${id}`,
+     { 
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`, // Sending token in the header
+      },
+    });
+    return await res.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+
+export const getSkuSearch = async (data) => {  
+  const token = localStorage.getItem("token");
+  try {
+    const res = await api.post("/exhibition/search-sku",data,
+     {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`, // Sending token in the header
+      },
+    });
+    return await res.data;
+  } catch (error) {
+    throw error;
+  }
+};
+export const previewPdfHandler = async (data) => {
+  const token = localStorage.getItem("token");
+  try {
+    const res = await api.post("/exhibition/preview", data, {
+      responseType: "blob", // 👈 this is the key for PDF
+    });
+
+    // Create blob URL
+    const fileURL = URL.createObjectURL(res.data);
+     window.open(fileURL, "_blank");
+    
+    return fileURL;
+  } catch (error) {
+    throw error;
+  }
+};
