@@ -18,7 +18,7 @@ const ViewCartPage = lazy(() => import("./pages/viewCartPage/ViewCartPage"));
 const WishlistPage = lazy(() => import("./pages/wishlistPage/WishListPage"));
 const AdminLayout = lazy(() => import("./components/admin/AdminLayout"));
 const AdminProductPage = lazy(() =>
-  import("./pages/adminProductPage/AdminProductPage")
+  import("./pages/adminProductPage/AdminProductPage") 
 );
 const AdminCreateFormPage = lazy(() =>
   import("./pages/adminCreateForm/AdminCreateFormPage")
