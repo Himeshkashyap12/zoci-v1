@@ -80,7 +80,7 @@ const skuSearchHandler=async(e)=>{
      }
      
   } catch (error) {
-    
+    dispatch(addSku([]))
   }
   
 }
@@ -117,7 +117,9 @@ const addSkuHandler=(item)=>{
     return toast.error("Item already exist")
   }else{
  setInvoiceInputHandler({...invoiceInputHandler,invoiceData:[...invoiceInputHandler?.invoiceData,data]})
-  }
+ dispatch(addSku([]));
+ 
+}
   
 }
 const generateInvoiceHandler=async()=>{
@@ -411,14 +413,12 @@ const removeproductHandler=(item)=>{
             </Select>
           </Form.Item>
         </div>
-
     </Form.Item>
     </Col>
     </Row>
      <Row gutter={40} >
      <Col span={12}>
        <Form.Item
-  
       rules={[{ required: true, message: 'Please input your username!' }]}
     > 
     <div className="flex flex-col gap-2">  

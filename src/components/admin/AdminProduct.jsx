@@ -1,5 +1,5 @@
 import { EditOutlined, PlusCircleOutlined } from "@ant-design/icons";
-import { Avatar, Space, Table, Tooltip, Typography } from "antd";
+import { Avatar, Input, Space, Table, Tooltip, Typography } from "antd";
 import "./admin.css";
 import { Link, useNavigate } from "react-router";
 import deleteIcon from "../../assets/icons/GreenDelete.png";
@@ -15,10 +15,11 @@ import { addAdminProducts } from "../../feature/admin/adminSlice";
 const AdminProducts = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [searchData,setSearch]=useState("")
   const [totalPages, setTotalPages] = useState();
   const data = useSelector((state) => state?.admin?.products);
   const pageHandler = async (current) => {
-    const page = { page: current, limit: 10 };
+    const page = { page: current, limit: 10};
     try {
       const res = await getProductFilterApi(page);
       setTotalPages(res?.totalProducts);
@@ -33,6 +34,24 @@ const AdminProducts = () => {
        console.log(error);
     }
   };
+
+  const searchHandler=async()=>{
+    const search={...searchData && {search:searchData}};
+    try {
+      const res = await getProductFilterApi({search});
+      setTotalPages(res?.totalProducts);
+
+      dispatch(addAdminProducts(res.products));
+    } catch (error) {
+      console.log(error.response.data.message);
+      
+       if (error?.response?.data?.message === "No products found") {
+              dispatch(addAdminProducts([]));
+              setTotalPages(null)
+            }
+       console.log(error);
+    }
+  }
   const deleteProductHandler = async (id) => {
     try {
       const res = await deleteProductData(id);
@@ -170,6 +189,9 @@ const AdminProducts = () => {
   useEffect(() => {
     pageHandler();
   }, []);
+  useEffect(()=>{
+     searchHandler()
+  },[searchData])
   return (
     <>
       <div className="">
@@ -184,6 +206,9 @@ const AdminProducts = () => {
           </Link>
         </div>
         <div className="px-5">
+          <div className="py-3">
+          <Input className="w-[300px]" placeholder="search Product by SKU" onChange={(e)=>{setSearch(e.target.value)}}/>
+         </div>
           <Table
             scroll={{x:1800,y:350}}
             headerColor={"red"}
