@@ -71,7 +71,7 @@ const skuSearchHandler=async(e)=>{
       
   if(e.target.value=="") return dispatch(addSku([]));
   try {
-    const data={sku:e.target.value}
+    const data={sku:e.target.value.trim()}
      const res=await  getSkuSearch(data);
      if(res.status_code==200 && res.success){
       dispatch(addSku(res?.products))

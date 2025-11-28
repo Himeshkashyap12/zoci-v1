@@ -36,7 +36,7 @@ const AdminProducts = () => {
   };
 
   const searchHandler=async()=>{
-    const search={...searchData && {search:searchData}};
+    const search={...searchData && {search:searchData.trim()}};
     try {
       const res = await getProductFilterApi({search});
       setTotalPages(res?.totalProducts);
