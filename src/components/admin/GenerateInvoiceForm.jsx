@@ -436,7 +436,7 @@ const cancelInvoiceHandler=()=>{
     <div className="flex flex-col gap-2 relative">  
            <Typography.Text className="text-[#214344] !font-[600] !text-[14px]">Search Products</Typography.Text>
            <Input   onChange={(e)=>{skuSearchHandler(e)}}  className="rounded-full !border-[#214344] "  placeholder="Please Entert SKU" />
-             {skuFilteredData?.length>0 ?
+             {skuFilteredData?.length>0 &&
               <div className="absolute top-16 w-[100%] bg-[#ffff] z-[9999] h-[200px] overflow-auto rounded-md ">
                 {skuFilteredData?.map((item)=>{
                   return(
@@ -456,7 +456,7 @@ const cancelInvoiceHandler=()=>{
                     </div>
                   )
                 })}
-           </div>:<Typography.Text className="text-[red]">No data found or Out of stock</Typography.Text>}
+           </div>}
 
         </div>
 
