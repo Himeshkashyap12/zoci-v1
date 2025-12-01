@@ -36,7 +36,7 @@ const AdminProducts = () => {
   };
 
   const searchHandler=async()=>{
-    const search={...searchData && {search:searchData.trim()}};
+    const search={...searchData && {search: searchData.trim()}};
     try {
       const res = await getProductFilterApi({search});
       setTotalPages(res?.totalProducts);
@@ -207,7 +207,7 @@ const AdminProducts = () => {
         </div>
         <div className="px-5">
           <div className="py-3">
-          <Input className="w-[300px]" placeholder="search Product by SKU" onChange={(e)=>{setSearch(e.target.value)}}/>
+          <Input className="w-[300px]" placeholder="Search Product by title,SKU" onChange={(e)=>{setSearch(e.target.value)}}/>
          </div>
           <Table
             scroll={{x:1800,y:350}}
